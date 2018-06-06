@@ -21,7 +21,7 @@
 #include "memory.h"
 #include "address.h"
 
-#define MAIN_CHAIN_PERIOD       (64 << 10)
+#define MAIN_CHAIN_PERIOD       (xdag_time_t)(64 << 10)
 #define MAX_WAITING_MAIN        1
 #define DEF_TIME_LIMIT          0 // (MAIN_CHAIN_PERIOD / 2)
 #define XDAG_TEST_ERA           0x16900000000ll
@@ -88,7 +88,8 @@ static uint64_t get_timestamp(void)
 {
 	struct timeval tp;
 	gettimeofday(&tp, 0);
-	return (uint64_t)(unsigned long)tp.tv_sec << 10 | ((tp.tv_usec << 10) / 1000000);
+    uint64_t result = (uint64_t)(unsigned long)tp.tv_sec << 10 | ((tp.tv_usec << 10) / 1000000);
+	return result;
 }
 
 // returns a time period index, where a period is 64 seconds long
@@ -987,7 +988,7 @@ static void *work_thread(void *arg)
 {
     int oldcancelstate;
     int oldcanceltype;
-	xdag_time_t data = XDAG_ERA;
+
     xdag_time_t t = XDAG_ERA,conn_time = 0, sync_time = 0, t0;
 	int n_mining_threads = (int)(unsigned)(uintptr_t)arg, sync_thread_running = 0;
 	struct block_internal *ours;
@@ -1001,21 +1002,20 @@ static void *work_thread(void *arg)
 
 	// loading block from the local storage
 	g_xdag_state = XDAG_STATE_LOAD;
+    xdag_app_debug("Work Thread Loading blocks from local storage...");
 	xdag_show_state(0);
-	xdag_app_debug("Loading blocks from local storage start");
-	xdag_load_blocks(t, get_timestamp(), &data, add_block_callback);
-    xdag_app_debug("Loading blocks from local storage finished");
+    xdag_time_t end_time = get_timestamp();
+    xdag_app_debug("load blocks from start time %llu  end time  %llu",t,end_time);
+	xdag_load_blocks_x(t, end_time, (void*)&t, add_block_callback);
 
 begin:
     g_is_block_thread_run = 1;
 	g_xdag_sync_on = 1;
-        
+
 	for (;;) {
 		unsigned nblk;
-		
         //test is canceled while ui disconnected from the pool
         pthread_iscancel(g_block_thread_t);
-
 		t0 = t;
 		t = get_timestamp();
 		nhashes0 = nhashes;
@@ -1032,9 +1032,9 @@ begin:
 				xdag_create_block(0, 0, 0, 0, 0);
 			}
 		}
-		
+
 		pthread_mutex_lock(&block_mutex);
-		
+
 		if (g_xdag_state == XDAG_STATE_REST) {
 			g_xdag_sync_on = 0;
 			pthread_mutex_unlock(&block_mutex);
@@ -1060,7 +1060,8 @@ begin:
 
             goto begin;
 
-		} else if (t > (g_xdag_last_received << 10) && t - (g_xdag_last_received << 10) > 3 * MAIN_CHAIN_PERIOD) {
+		} else if (t > (g_xdag_last_received << 10) && t - (g_xdag_last_received << 10) > (3 * MAIN_CHAIN_PERIOD)) {
+
 			g_xdag_state = (g_light_mode ? (g_xdag_testnet ? XDAG_STATE_TTST : XDAG_STATE_TRYP)
 								 : (g_xdag_testnet ? XDAG_STATE_WTST : XDAG_STATE_WAIT));
 			conn_time = sync_time = 0;
@@ -1079,8 +1080,9 @@ begin:
 			} else if (g_light_mode) {
 				g_xdag_state = (g_xdag_mining_threads > 0 ?
 									 (g_xdag_testnet ? XDAG_STATE_MTST : XDAG_STATE_MINE)
-									 : (g_xdag_testnet ? XDAG_STATE_PTST : XDAG_STATE_POOL));
-			} else if (t - sync_time > 8 * MAIN_CHAIN_PERIOD) {
+                                     : (g_xdag_testnet ? XDAG_STATE_PTST : XDAG_STATE_POOL));
+
+            } else if (t - sync_time > 8 * MAIN_CHAIN_PERIOD) {
 				g_xdag_state = (g_xdag_testnet ? XDAG_STATE_CTST : XDAG_STATE_CONN);
 			} else {
 				g_xdag_state = (g_xdag_testnet ? XDAG_STATE_STST : XDAG_STATE_SYNC);
@@ -1116,9 +1118,7 @@ int xdag_blocks_start(int n_mining_threads, int miner_address)
 	pthread_mutexattr_t attr;
     //pthread_t th;
 	int res;
-	if (g_xdag_testnet) {
-		xdag_era = XDAG_TEST_ERA;
-	}
+
 	//do nothing in windows ,memmap file in linux
 	/*
 	if (xdag_mem_init(g_light_mode && !miner_address ? 0 : (((get_timestamp() - XDAG_ERA) >> 10) + (uint64_t)365 * 24 * 60 * 60) * 2 * sizeof(struct block_internal))) {
@@ -1221,12 +1221,22 @@ xdag_amount_t xdag_get_balance(xdag_hash_t hash)
 	return bi->amount;
 }
 
+//for debug
+static long double amount2cheatcoins(xdag_amount_t amount)
+{
+	return xdag_amount2xdag(amount) + (long double)xdag_amount2cheato(amount) / 1000000000;
+}
+//for debug end
+
 /* sets current balance for the specified address */
 extern int xdag_set_balance(xdag_hash_t hash, xdag_amount_t balance)
 {
 	struct block_internal *bi;
 
-	if (!hash) return -1;
+    if (!hash) {
+        xdag_app_debug("set balance failed hash is null");
+        return -1;
+    }
 	
 	pthread_mutex_lock(&block_mutex);
 	
@@ -1258,7 +1268,10 @@ extern int xdag_set_balance(xdag_hash_t hash, xdag_amount_t balance)
 
 	pthread_mutex_unlock(&block_mutex);
 
-	if (!bi) return -1;
+    if (!bi){
+        xdag_app_debug("set balance failed bi is null");
+        return -1;
+    }
 
 	if (bi->amount != balance) {
 		xdag_hash_t hash0;
@@ -1281,6 +1294,7 @@ extern int xdag_set_balance(xdag_hash_t hash, xdag_amount_t balance)
 		}
 
 		bi->amount = balance;
+        xdag_app_debug("set balance success amount is %.9Lf",amount2cheatcoins(bi->amount));
 	}
 
 	return 0;

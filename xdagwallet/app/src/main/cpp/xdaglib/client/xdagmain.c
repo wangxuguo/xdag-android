@@ -380,6 +380,7 @@ static int out_balances(void)
 	xdag_mem_init((xdag_main_time() - xdag_start_main_time()) << 17);
 	xdag_crypt_init(0);
 	memset(&d, 0, sizeof(struct out_balances_data));
+    xdag_app_debug("Out Balances Loading blocks from local storage...");
 	xdag_load_blocks(xdag_start_main_time() << 16, xdag_main_time() << 16, &i, add_block_callback);
 	xdag_traverse_all_blocks(&d, out_balances_callback);
 	qsort(d.blocks, d.nblocks, sizeof(struct xdag_field), out_sort_callback);
@@ -424,6 +425,8 @@ int xdag_main(const char *pool_arg)
         }
     }
 
+    xdag_app_debug("xdag initialize g_xdag_last_received is %x ",g_xdag_last_received);
+
     memset(&g_xdag_stats, 0, sizeof(g_xdag_stats));
     memset(&g_xdag_extstats, 0, sizeof(g_xdag_extstats));
 
@@ -443,10 +446,10 @@ int xdag_main(const char *pool_arg)
     }
 
     xdag_app_debug("Initializing log system...");
-    if (xdag_signal_init()){
-        xdag_app_err(" xdag signal init error ");
-        return -1;
-    }
+//    if (xdag_signal_init()){
+//        xdag_app_err(" xdag signal init error ");
+//        return -1;
+//    }
 
     xdag_app_debug("Initializing cryptography...");
     if (xdag_crypt_init(1)){
@@ -495,7 +498,6 @@ void xdag_show_state(xdag_hash_t hash)
         return;
 
     if (g_xdag_state < XDAG_STATE_XFER){
-        xdag_app_debug("balance not ready g_xdag_state %d ",g_xdag_state);
         balance_state = en_balance_not_ready;
         strcpy(balance, "Not ready");
     }else{
@@ -511,8 +513,6 @@ void xdag_show_state(xdag_hash_t hash)
 
     strcpy(state, get_state());
 
-    xdag_app_debug(" get hash address %s ",address);
-
     st_xdag_event event;
     memset(&event,0,sizeof(st_xdag_event));
     event.procedure_type = en_procedure_init_wallet;
@@ -525,7 +525,7 @@ void xdag_show_state(xdag_hash_t hash)
     strcpy(event.balance,balance);
     strcpy(event.state,state);
 
-    xdag_app_debug(" update ui address %s balance %s state %s ",event.address,event.balance,event.state);
+    //xdag_app_debug(" update ui address %s balance %s state %s ",event.address,event.balance,event.state);
 
     g_app_callback_func(g_callback_object,&event);
 }
