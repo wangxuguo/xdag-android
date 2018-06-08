@@ -1,6 +1,7 @@
 package com.xdag.wallet;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        startActivity(new Intent(this,XdagMainActivity.class));
         initView();
         initData();
         initPermission();
