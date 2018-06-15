@@ -1,9 +1,27 @@
 <resources>
     <string name="app_name">XdagWallet</string>
     <string name="title_activity_xdag_main">XdagMainActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_main_property">Property</string>
+    <string name="tab_main_contracts">Contracts</string>
+    <string name="tab_main_settings">Mine</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="multi_language">Multi-language</string>
+    <string name="message_center">Message Center</string>
+    <string name="currency_unit">Currency Unit</string>
+    <string name="help_center">Help Center</string>
+    <string name="about_us">About</string>
+    <string name="personal_center">Personal Center</string>
+    <string name="connect_to_pool">Connect to the pool...</string>
+    <string name="total_assets">Total Assets</string>
+    <string name="currency_symbol">$</string>
+    <string name="wallet_management">Wallet Management</string>
+    <string name="transaction_record">Transaction Record</string>
+    <string name="scan">Scan</string>
+    <string name="receive_coin">Receive</string>
+    <string name="send_coin">Send</string>
+    <string name="receiver_address">Receiver Address</string>
+    <string name="transfer_amount">Transfer Amount</string>
+    <string name="note">Note</string>
+    <string name="next">Next</string>
 </resources>

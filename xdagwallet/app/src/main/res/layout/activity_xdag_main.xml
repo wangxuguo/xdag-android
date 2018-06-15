@@ -6,44 +6,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.xdag.wallet.XdagMainActivity">
+    tools:context="com.xdag.wallet.ui.activity.XdagMainActivity">
 
 
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/tab_height"
         android:layout_gravity="bottom"
         app:tabGravity="fill"
-        app:layout_anchorGravity="top"
+        app:tabBackground="@color/color_tab_bg"
+        app:tabIndicatorHeight="0dp"
+        app:layout_anchorGravity="bottom"
         >
 
         <android.support.design.widget.TabItem
             android:id="@+id/tabItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab_text_1" />
+            android:textColor="@color/text_tab_color_layer"
+            android:icon="@drawable/icon_tab_property"
+            android:text="@string/tab_main_property" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/tabItem2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab_text_2" />
+            android:textColor="@color/text_tab_color_layer"
+            android:icon="@drawable/icon_tab_contacts"
+            android:text="@string/tab_main_contracts" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/tabItem3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab_text_3" />
+            android:background="@drawable/tab_bg_drawable"
+            android:textColor="@color/text_tab_color_layer"
+            android:icon="@drawable/icon_tab_settings"
+            android:text="@string/tab_main_settings" />
 
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="443dp"
-        app:layout_anchorGravity="top|fill_vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/tab_height"
+        app:layout_anchor="@+id/tabs"
+        app:layout_anchorGravity="top" />
 
 </android.support.design.widget.CoordinatorLayout>

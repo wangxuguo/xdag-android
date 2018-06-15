@@ -4,7 +4,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xdag.wallet.XdagMainActivity$PlaceholderFragment">
+    tools:context="com.xdag.wallet.ui.activity.XdagMainActivity$PlaceholderFragment">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"

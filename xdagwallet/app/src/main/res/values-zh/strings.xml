@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Xdag钱包</string>
+    <string name="title_activity_xdag_main">xdag钱包</string>
+    <string name="tab_main_property">资产</string>
+    <string name="tab_main_contracts">联系人</string>
+    <string name="tab_main_settings">我的</string>
+    <string name="action_settings">设置</string>
+    <string name="section_format">你好，我来自: %1$d</string>
+    <string name="multi_language">多语言</string>
+    <string name="message_center">消息中心</string>
+    <string name="currency_unit">货币单位</string>
+    <string name="help_center">帮助中心</string>
+    <string name="about_us">关于我们</string>
+    <string name="personal_center">个人中心</string>
+    <string name="currency_symbol">￥</string>
+    <string name="total_assets">总资产</string>
+    <string name="connect_to_pool">正在连接矿池</string>
+    <string name="wallet_management">管理钱包</string>
+    <string name="transaction_record">交易记录</string>
+    <string name="send_coin">发币</string>
+    <string name="receive_coin">收币</string>
+    <string name="scan">扫一扫</string>
+    <string name="receiver_address">接收方地址</string>
+    <string name="transfer_amount">转账金额</string>
+    <string name="note">备注</string>
+    <string name="next">下一步</string>
+
+</resources>

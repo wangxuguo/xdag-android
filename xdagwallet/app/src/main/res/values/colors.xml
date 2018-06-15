@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#506BFD</color>
+    <color name="colorPrimaryDark">#506BFD</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_tab_bg_selected">#7380C7</color>
+    <color name="color_tab_bg">#FFFFFF</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
+    <color name="color_grey">#515151</color>
+    <color name="divider_bg">#BBBBBB</color>
+    <color name="color_message_bg">#EA5358</color>
+    <color name="color_btn_bg">#7C90FD</color>
+    <color name="color_btn_bg_pressed">#7C90FD</color>  <!--TODO-->
 </resources>

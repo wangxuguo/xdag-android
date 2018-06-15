@@ -1,4 +1,4 @@
-package com.xdag.wallet;
+package com.xdag.wallet.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.xdag.wallet.R;
 import com.xdag.wallet.ui.fragment.ContactsFragment;
 import com.xdag.wallet.ui.fragment.PropertyFragment;
 import com.xdag.wallet.ui.fragment.SettingsFragment;
@@ -63,7 +64,7 @@ public class XdagMainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
+//        tabLayout.addOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
@@ -100,6 +101,21 @@ public class XdagMainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    public void onTabSelected(TabLayout.Tab tab) {
+//
+//    }
+//
+//    @Override
+//    public void onTabUnselected(TabLayout.Tab tab) {
+//
+//    }
+//
+//    @Override
+//    public void onTabReselected(TabLayout.Tab tab) {
+//
+//    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -159,4 +175,6 @@ public class XdagMainActivity extends AppCompatActivity {
             return list.size();
         }
     }
+
+
 }
