@@ -24,4 +24,19 @@
     <string name="transfer_amount">Transfer Amount</string>
     <string name="note">Note</string>
     <string name="next">Next</string>
+    <string name="mine_xdag_address">XDAG Address</string>
+    <string name="copy_address">copy address</string>
+    <string name="confirm_pwd">Confirm Pwd</string>
+    <string name="wallet_pwd">Wallet PWD</string>
+    <string name="enter_pwd">Enter you pwd</string>
+    <string name="make_sure">OK</string>
+    <string name="xdag_sending">XDAG sending·····</string>
+    <string name="pay_detail">pay_detail</string>
+
+    <string name="operation_information">Opreation Information</string>
+    <string name="receive_address">Receive Address</string>
+    <string name="send_address">Send Address</string>
+    <string name="amount">Account</string>
+    <string name="xdag">XDAG</string>
+    <string name="finish">finish</string>
 </resources>

@@ -12,4 +12,31 @@
     <color name="color_message_bg">#EA5358</color>
     <color name="color_btn_bg">#7C90FD</color>
     <color name="color_btn_bg_pressed">#7C90FD</color>  <!--TODO-->
+
+    <!--输入框的hint字体颜色-->
+    <color name="color_hint_text">#97abc5</color>
+    <!-- 二维码扫描 -->
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+
+    <color name="color_eakay_blue">#24baff</color>
+    <color name="secondary_color1">#F3F8FC</color>
+    <color name="secondary_color2">#9AB1FF</color>
+    <color name="secondary_color3">#7BB4FF</color>
+    <color name="secondary_color4">#DDE5F0</color>
+    <color name="secondary_color5">#F6FF00</color>
+    <color name="secondary_color6">#00AFEC</color>
+    <color name="font_color_1">#FFFFFF</color>
+    <color name="font_color_2">#24BAFF</color>
+    <color name="font_color_3">#79899C</color>
+    <color name="font_color_4">#97ABC5</color>
+    <color name="font_color_5">#C8CFD6</color>
+    <color name="font_color_6">#CAEEFF</color>
+    <color name="font_color_7">#F5F336</color>
+    <color name="font_color_8">#FF3E64</color>
+    <color name="font_color_9">#6d728c</color>
+    <!--分割线颜色-->
+    <color name="color_div">#edeef0</color>
+    <color name="common_activity_bg">#F5F5F5</color>
 </resources>

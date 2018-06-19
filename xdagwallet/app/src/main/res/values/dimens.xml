@@ -13,4 +13,8 @@
     <dimen name="text_size_big">16sp</dimen>
     <dimen name="text_size_normal">14sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
+
+    <dimen name="item_height_big">60sp</dimen>
+    <dimen name="item_height_normal">48sp</dimen>
+    <dimen name="item_height_small">30sp</dimen>
 </resources>

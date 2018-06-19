@@ -1,9 +1,14 @@
 package com.xdag.wallet.ui.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +17,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xdag.wallet.R;
+import com.xdag.wallet.model.Constants;
+import com.xdag.wallet.ui.widget.XdagPwdConfirmPopWindow;
 
 /**
  * Created by wangxuguo on 2018/6/15.
  */
 
 public class SendCoinActivity extends BaseActivity implements View.OnClickListener {
+    private static final int REQUESTCODE_SCAN = 0x01;
+    private static final int REQUESTCODE_RECEIVE = 0x02;
     ImageView ivTitleLeft;
     TextView tvTitle;
     ImageView ivTitleRight;
@@ -27,9 +36,12 @@ public class SendCoinActivity extends BaseActivity implements View.OnClickListen
     Button btnNext;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_send_coin);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         findViews();
         initViews();
     }
@@ -79,10 +91,36 @@ public class SendCoinActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_left:
+                finish();
                 break;
             case R.id.iv_title_right:
+                Intent receive = new Intent(this,MineAddressQRActivity.class);
+                startActivityForResult(receive,REQUESTCODE_SCAN);
                 break;
             case R.id.btn_next:
+                XdagPwdConfirmPopWindow window = new XdagPwdConfirmPopWindow(SendCoinActivity.this,"dd","aa",0.2f);
+                window.showAtLocation(btnNext, Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+                break;
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUESTCODE_SCAN:
+                if(resultCode == RESULT_OK) {
+                    if (data != null) {
+                        String resultString = data.getStringExtra("result");
+                        Log.e(Constants.TAG, "scan resultString: " + resultString);
+                        etReceiverAddress.setText(resultString);
+                        etReceiverAddress.setEnabled(false);
+                    }
+                }
+                break;
+            case REQUESTCODE_RECEIVE:
+                if(resultCode == RESULT_OK) {
+
+                }
                 break;
         }
     }

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b0000000">
+
+    <RelativeLayout
+        android:id="@+id/select_site_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/pop_main_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/common_activity_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height_big"
+            android:layout_alignBaseline="@+id/tv_pay_detail"
+            android:src="@drawable/iv_close" />
+
+        <TextView
+            android:id="@+id/tv_pay_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height_big"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/pay_detail" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_close"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/devider1"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_operation_information_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/operation_information" />
+
+                <TextView
+                    android:id="@+id/tv_operation_information"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="@string/send_coin" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/devider2"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_receive_address_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/receive_address" />
+
+                <TextView
+                    android:id="@+id/tv_receive_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/devider3"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+
+                android:background="@color/divider_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_send_address_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/send_address" />
+
+                <TextView
+                    android:id="@+id/tv_send_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/devider4"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+
+                android:background="@color/divider_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_amount_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/amount" />
+
+                <TextView
+                    android:id="@+id/tv_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_margin_big"
+                android:layout_marginRight="@dimen/common_margin_big"
+                android:background="@drawable/common_btn_bg"
+                android:text="@string/make_sure" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

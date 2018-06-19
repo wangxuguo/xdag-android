@@ -25,5 +25,20 @@
     <string name="transfer_amount">转账金额</string>
     <string name="note">备注</string>
     <string name="next">下一步</string>
+    <string name="mine_xdag_address">XDAG 地址</string>
+    <string name="copy_address">复制地址</string>
+    <string name="confirm_pwd">请输入密码</string>
+    <string name="enter_pwd">请输入密码</string>
+    <string name="make_sure">确认</string>
+    <string name="wallet_pwd">钱包密码</string>
+    <string name="xdag_sending">XDAG 发送中·····</string>
+
+    <string name="operation_information">操作信息</string>
+    <string name="receive_address">接受地址</string>
+    <string name="send_address">发送地址</string>
+    <string name="amount">金额</string>
+    <string name="pay_detail">支付详情</string>
+    <string name="xdag">XDAG</string>
+    <string name="finish">finish</string>
 
 </resources>

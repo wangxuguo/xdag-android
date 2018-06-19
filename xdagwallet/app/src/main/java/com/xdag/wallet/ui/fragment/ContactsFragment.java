@@ -1,5 +1,6 @@
 package com.xdag.wallet.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.xdag.wallet.R;
 import com.xdag.wallet.model.XdagContactsModel;
+import com.xdag.wallet.ui.activity.AddNewContractActivity;
 import com.xdag.wallet.ui.adapter.ContactsAdapter;
 
 import java.util.ArrayList;
@@ -54,7 +56,8 @@ public class ContactsFragment extends BaseFragment {
         ivTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(),AddNewContractActivity.class);
+                startActivity(intent);
             }
         });
         RecyclerView.Adapter adapter = new ContactsAdapter(getContext(),list);

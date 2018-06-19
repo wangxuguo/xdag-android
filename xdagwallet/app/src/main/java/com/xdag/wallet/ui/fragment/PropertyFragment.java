@@ -5,19 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xdag.wallet.R;
+import com.xdag.wallet.model.Constants;
+import com.xdag.wallet.ui.activity.MineAddressQRActivity;
+import com.xdag.wallet.ui.activity.MipcaActivityCapture;
 import com.xdag.wallet.ui.activity.SendCoinActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by wangxuguo on 2018/6/8.
  */
 
 public class PropertyFragment extends BaseFragment implements View.OnClickListener {
+    private static final int REQUESTCODE_SCAN = 0x01;
+    private static final int REQUESTCODE_RECEIVE = 0x02;
     private TextView title;
     private TextView sendCoin;
     private TextView receiveCoin;
@@ -68,8 +76,32 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.tv_receive_coin:
+                Intent receive = new Intent(getActivity(),MineAddressQRActivity.class);
+                startActivityForResult(receive,REQUESTCODE_SCAN);
                 break;
             case R.id.tv_scan:
+                Intent scan = new Intent(getActivity(),MipcaActivityCapture.class);
+                startActivityForResult(scan,REQUESTCODE_SCAN);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUESTCODE_SCAN:
+                if(resultCode == RESULT_OK) {
+                    if (data != null) {
+                        String resultString = data.getStringExtra("result");
+                        Log.e(Constants.TAG, "scan resultString: " + resultString);
+                    }
+                }
+                break;
+            case REQUESTCODE_RECEIVE:
+                if(resultCode == RESULT_OK) {
+
+                }
                 break;
         }
     }
