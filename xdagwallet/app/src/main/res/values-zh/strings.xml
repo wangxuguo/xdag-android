@@ -40,5 +40,9 @@
     <string name="pay_detail">支付详情</string>
     <string name="xdag">XDAG</string>
     <string name="finish">finish</string>
+    <string name="enter_address">数字资产地址</string>
+    <string name="enter_name">请输入名称</string>
+    <string name="name_is_empty" >empty</string>
+    <string name="address_is_empty">empty</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.xdag.wallet.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xdag.wallet.R;
+import com.xdag.wallet.ui.activity.WalletManageActivity;
 
 /**
  * Created by wangxuguo on 2018/6/8.
@@ -21,8 +23,8 @@ import com.xdag.wallet.R;
 
 public class SettingsFragment extends BaseFragment implements View.OnClickListener {
     TextView tv_title;
-    TextView tv_send_coin;
-    TextView tv_receive_coin;
+    TextView tv_manager_wallet;
+    TextView tv_transaction_record;
     LinearLayout li_message_center;
     TextView tv_message_count;
     LinearLayout li_multi_language;
@@ -37,8 +39,8 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         tv_title = (TextView) rootView.findViewById(R.id.tv_title);
-        tv_send_coin = (TextView) rootView.findViewById(R.id.tv_send_coin);
-        tv_receive_coin = (TextView) rootView.findViewById(R.id.tv_receive_coin);
+        tv_manager_wallet = (TextView) rootView.findViewById(R.id.tv_manager_wallet);
+        tv_transaction_record = (TextView) rootView.findViewById(R.id.tv_transaction_record);
         li_message_center = (LinearLayout) rootView.findViewById(R.id.li_message_center);
         tv_message_count = (TextView) rootView.findViewById(R.id.tv_message_count);
         li_multi_language = (LinearLayout) rootView.findViewById(R.id.li_multi_language);
@@ -53,8 +55,8 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void initView() {
-        tv_send_coin.setOnClickListener(this);
-        tv_receive_coin.setOnClickListener(this);
+        tv_manager_wallet.setOnClickListener(this);
+        tv_transaction_record.setOnClickListener(this);
         li_message_center.setOnClickListener(this);
         tv_message_count.setOnClickListener(this);
         li_multi_language.setOnClickListener(this);
@@ -68,9 +70,11 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_send_coin:
+            case R.id.tv_manager_wallet:
+                Intent intent = new Intent(getContext(),WalletManageActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.tv_receive_coin:
+            case R.id.tv_transaction_record:
                 break;
             case R.id.li_message_center:
                 break;

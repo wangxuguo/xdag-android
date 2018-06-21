@@ -39,4 +39,8 @@
     <string name="amount">Account</string>
     <string name="xdag">XDAG</string>
     <string name="finish">finish</string>
+    <string name="enter_name">enter name</string>
+    <string name="enter_address">enter address</string>
+    <string name="name_is_empty" >name is empty</string>
+    <string name="address_is_empty" >address is empty</string>
 </resources>

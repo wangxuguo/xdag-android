@@ -12,7 +12,7 @@ import java.io.Serializable;
  * Created by wangxuguo on 2018/6/14.
  */
 @Table(database = DataBaseManager.XdagDatabase.class)
-public class XdagContactsModel extends BaseModel implements Serializable {
+public class XdagWalletModel extends BaseModel implements Serializable {
     @Column
     public String address;
     @Column
@@ -21,7 +21,16 @@ public class XdagContactsModel extends BaseModel implements Serializable {
     public String icon;
     @PrimaryKey(autoincrement = true)//ID自增
     public long id;
-
+    @Column
+    public String localPath;
+    @Column
+    public String bankPath;
+    @Column
+    public double amount;
+    @Column
+    public String sourcePath;
+    @Column
+    public boolean isDeleted;
     public String getAddress() {
         return address;
     }
@@ -54,6 +63,45 @@ public class XdagContactsModel extends BaseModel implements Serializable {
         this.id = id;
     }
 
+    public String getLocalPath() {
+        return localPath;
+    }
+
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
+    }
+
+    public String getBankPath() {
+        return bankPath;
+    }
+
+    public void setBankPath(String bankPath) {
+        this.bankPath = bankPath;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getSourcePath() {
+        return sourcePath;
+    }
+
+    public void setSourcePath(String sourcePath) {
+        this.sourcePath = sourcePath;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 
     @Override
     public String toString() {

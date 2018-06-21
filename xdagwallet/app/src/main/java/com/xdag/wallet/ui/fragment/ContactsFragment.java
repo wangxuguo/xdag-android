@@ -2,10 +2,13 @@ package com.xdag.wallet.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,9 +18,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.CursorResult;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
+import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.xdag.wallet.R;
+import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.model.XdagContactsModel;
 import com.xdag.wallet.ui.activity.AddNewContractActivity;
+import com.xdag.wallet.ui.adapter.BaseRecyclerViewAdapter;
 import com.xdag.wallet.ui.adapter.ContactsAdapter;
 
 import java.util.ArrayList;
@@ -31,8 +41,10 @@ public class ContactsFragment extends BaseFragment {
 
     TextView textView;
     ImageView ivTitleRight;
-    RecyclerView recyclerView ;
+    RecyclerView recyclerView;
     List<XdagContactsModel> list = new ArrayList<>();
+    private ContactsAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +61,21 @@ public class ContactsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        SQLite.select()
+                .from(XdagContactsModel.class)
+                .async()
+                .queryListResultCallback(new QueryTransaction.QueryResultListCallback<XdagContactsModel>() {
+                    @Override
+                    public void onListQueryResult(QueryTransaction queryTransaction, @NonNull List<XdagContactsModel> l) {
+                        if (l != null && l.size() > 0) {
+                            list.addAll(l);
+                            adapter.setData(list);
+                            Log.d(Constants.TAG,"list size: "+list.size());
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }).execute();
+
     }
 
     private void initView() {
@@ -56,12 +83,32 @@ public class ContactsFragment extends BaseFragment {
         ivTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),AddNewContractActivity.class);
+                Intent intent = new Intent(getContext(), AddNewContractActivity.class);
                 startActivity(intent);
             }
         });
-        RecyclerView.Adapter adapter = new ContactsAdapter(getContext(),list);
+        adapter = new ContactsAdapter(getContext(), R.layout.item_contracts);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter.setData(list);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<XdagContactsModel>() {
+            @Override
+            public void onItemClick(View view, XdagContactsModel data) {
+
+            }
+        });
+        adapter.setOnReloadClickListener(new BaseRecyclerViewAdapter.OnReloadClickListener() {
+            @Override
+            public void onClick() {
+
+            }
+        });
+        adapter.setItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener<XdagContactsModel>() {
+            @Override
+            public void onItemLongClick(View view, XdagContactsModel data) {
+
+            }
+        });
     }
 
     @Override
