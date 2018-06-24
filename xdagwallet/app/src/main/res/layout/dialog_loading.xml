@@ -22,9 +22,12 @@
             android:scaleType="fitXY" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/common_text_white_normal"
             android:id="@+id/tv_message"
             android:layout_marginTop="13dip"
-            android:textColor="@color/font_color_5"
+            android:textColor="@color/color_grey"
             android:visibility="gone"/>
     </LinearLayout>
 

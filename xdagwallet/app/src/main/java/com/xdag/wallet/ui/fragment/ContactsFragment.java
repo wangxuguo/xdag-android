@@ -87,7 +87,7 @@ public class ContactsFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        adapter = new ContactsAdapter(getContext(), R.layout.item_contracts);
+        adapter = new ContactsAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.setData(list);
         recyclerView.setAdapter(adapter);

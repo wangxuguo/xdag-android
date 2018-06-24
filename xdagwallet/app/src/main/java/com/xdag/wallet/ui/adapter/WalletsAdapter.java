@@ -15,14 +15,23 @@ import com.xdag.wallet.model.XdagWalletModel;
 public class WalletsAdapter extends BaseRecyclerViewAdapter<XdagWalletModel> {
 
 
-    public WalletsAdapter(Context context, int itemLayoutRes) {
-        super(context, itemLayoutRes);
+    public WalletsAdapter(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.item_wallet_manage;
     }
 
     @Override
     protected void onBindViewHolder(BaseViewHolder holder, XdagWalletModel data, int position) {
         Log.d(Constants.TAG,"onBindViewHolder  "+data.toString());
+//        holder.setTextView(R.id.iv_avator, data.getName());
         holder.setTextView(R.id.tv_name, data.getName());
         holder.setTextView(R.id.tv_address, data.getAddress());
+//        holder.setTextView(R.id.iv_right_arrow, data.getAddress());
+//        holder.setTextView(R.id.tv_xdag, data.getAddress());
+        holder.setTextView(R.id.tv_xdag_amount, data.getAmount()+"");
     }
 }

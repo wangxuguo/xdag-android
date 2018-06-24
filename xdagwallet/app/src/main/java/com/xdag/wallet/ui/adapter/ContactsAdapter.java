@@ -18,8 +18,13 @@ import java.util.List;
 public class ContactsAdapter extends BaseRecyclerViewAdapter<XdagContactsModel> {
 
 
-    public ContactsAdapter(Context context, int itemLayoutRes) {
-        super(context, itemLayoutRes);
+    public ContactsAdapter(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.item_contracts;
     }
 
     @Override

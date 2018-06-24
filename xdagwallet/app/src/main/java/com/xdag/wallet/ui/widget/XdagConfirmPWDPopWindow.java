@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -21,7 +22,7 @@ import com.xdag.wallet.R;
 /**
  *
  */
-public class XdagPwdConfirmPopWindow extends PopupWindow implements View.OnClickListener, Animation.AnimationListener {
+public class XdagConfirmPWDPopWindow extends PopupWindow implements View.OnClickListener, Animation.AnimationListener {
     private Context mContext;
     private Animation mIn_PopupwindAnimation;
     private Animation mOut_PopupwindAnimation;
@@ -36,14 +37,13 @@ public class XdagPwdConfirmPopWindow extends PopupWindow implements View.OnClick
         }
     };
     private ImageView ivClose;
-    private TextView tvOperationInformation;
-    private TextView tvReceiveAddress;
-    private TextView tvSendAddress;
-    private TextView tvAmount;
+    private TextView tv_wallet_pwd;
+    private EditText et_enter_pwd;
+    private TextView tv_enter_pwd_des;
     private Button btnConfirm;
 
 
-    public XdagPwdConfirmPopWindow(Context context, String address, String my_address, double account) {
+    public XdagConfirmPWDPopWindow(Context context, String address, String my_address, double account) {
         super(context);
         mContext = context;
         this.address = address;
@@ -64,21 +64,16 @@ public class XdagPwdConfirmPopWindow extends PopupWindow implements View.OnClick
         findView();
         // 添加菜单视图
         this.setContentView(mMain);
-        tvOperationInformation.setText(mContext.getString(R.string.receive_coin));
-        tvReceiveAddress.setText(address);
-        tvSendAddress.setText(my_address);
-        tvAmount.setText(account+""+mContext.getString(R.string.xdag));
         btnConfirm.setOnClickListener(this);
     }
 
     private void findView() {
-        mMain = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.pop_confirm_pay, null);
+        mMain = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.pop_confirm_pwd, null);
 
         ivClose = (ImageView) mMain.findViewById(R.id.iv_close);
-        tvOperationInformation = (TextView) mMain.findViewById(R.id.tv_operation_information);
-        tvReceiveAddress = (TextView) mMain.findViewById(R.id.tv_receive_address);
-        tvSendAddress = (TextView) mMain.findViewById(R.id.tv_send_address);
-        tvAmount = (TextView) mMain.findViewById(R.id.tv_amount);
+        tv_wallet_pwd = (TextView) mMain.findViewById(R.id.tv_wallet_pwd);
+        et_enter_pwd = (EditText) mMain.findViewById(R.id.et_enter_pwd);
+        tv_enter_pwd_des = (TextView) mMain.findViewById(R.id.tv_enter_pwd_des);
         btnConfirm = (Button) mMain.findViewById(R.id.btn_confirm);
     }
 

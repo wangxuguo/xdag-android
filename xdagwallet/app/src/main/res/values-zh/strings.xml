@@ -16,7 +16,7 @@
     <string name="currency_symbol">￥</string>
     <string name="total_assets">总资产</string>
     <string name="connect_to_pool">正在连接矿池</string>
-    <string name="wallet_management">管理钱包</string>
+    <string name="wallet_management">钱包管理</string>
     <string name="transaction_record">交易记录</string>
     <string name="send_coin">发币</string>
     <string name="receive_coin">收币</string>
@@ -44,5 +44,23 @@
     <string name="enter_name">请输入名称</string>
     <string name="name_is_empty" >empty</string>
     <string name="address_is_empty">empty</string>
-
+    <string name="create_wallet" >创建钱包</string>
+    <string name="load_wallet" >导入钱包</string>
+    <string name="save">保存</string>
+    <string name="xdag_pool_setting">矿池设置</string>
+    <string name="current_version">当前版本：%s</string>
+    <string name="use_agreement">使用协议</string>
+    <string name="version_log">版本日志</string>
+    <string name="check_update">检测新版</string>
+    <string name="wallet_name" >钱包名称</string>
+    <string name="pwd" >密码</string>
+    <string name="re_pwd" >重复密码</string>
+    <string name="keyword" >关键词</string>
+    <string name="service_srivacy" >我已经仔细阅读并同意<font color='#3E76EA'>服务及隐私条款</font></string>
+    <string name="dag_link_info">dagLink 是一款移动端轻钱包App，它是由XDAG世界基金会成员开发，旨在为用户提供安全放心、简单好用的数字资产钱包。</string>
+    <string name="wallet_notice">密码用于保护私钥和交易授权dagLink 不存储密码和钱包文件，也无法帮您找回，请务必牢记和备份</string>
+    <string name="pwd_not_same">pwd not same</string>
+    <string name="change_pwd">change_pwd</string>
+    <string name="backup_wallet">backup_wallet</string>
+    <string name="set_default_wallet">set_default_wallet</string>
 </resources>

@@ -12,7 +12,7 @@
     <color name="color_message_bg">#EA5358</color>
     <color name="color_btn_bg">#7C90FD</color>
     <color name="color_btn_bg_pressed">#7C90FD</color>  <!--TODO-->
-
+    <color name="color_text_bg_normal">#3E76EA</color>
     <!--输入框的hint字体颜色-->
     <color name="color_hint_text">#97abc5</color>
     <!-- 二维码扫描 -->
@@ -39,4 +39,7 @@
     <!--分割线颜色-->
     <color name="color_div">#edeef0</color>
     <color name="common_activity_bg">#F5F5F5</color>
+    
+    <color name="text_blue_bg">#3E76EA</color>
+    <color name="text_green_bg">#2CA69B</color>
 </resources>

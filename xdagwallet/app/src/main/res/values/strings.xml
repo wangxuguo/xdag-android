@@ -43,4 +43,47 @@
     <string name="enter_address">enter address</string>
     <string name="name_is_empty" >name is empty</string>
     <string name="address_is_empty" >address is empty</string>
+    <string name="create_wallet" >Create Wallet</string>
+    <string name="load_wallet" >Load Wallet</string>
+    <string name="save">save</string>
+
+    <string name="app_default">系统默认</string>
+    <string name="app_zh_CN">简体中文</string>
+    <string name="app_zh_TW">繁體中文</string>
+    <string name="app_en">English</string>
+    <string name="app_th">ภาษาไทย</string>
+    <string name="app_id">Bahasa Indonesia</string>
+    <string name="app_vi">Tiếng Việt</string>
+    <string name="app_pt">Português</string>
+    <string name="app_es">Español</string>
+    <string name="app_ru">Русский</string>
+    <string name="app_ar">العربية</string>
+    <string name="app_he">‏עברית</string>
+    <string name="app_pl">Polski</string>
+    <string name="app_hi">हिन्दी</string>
+    <string name="app_ja">日本語</string>
+    <string name="app_it">Italiano</string>
+    <string name="app_ko">한국어</string>
+
+
+
+    <string name="use_agreement">Use Agreement</string>
+    <string name="version_log">Version Log</string>
+    <string name="check_update">Check Update</string>
+    <string name="xdag_pool_setting">xdag_pool_setting</string>
+    <string name="current_version">current_version: %s</string>
+    <string name="wallet_name">Wallet Name</string>
+    <string name="pwd">Password</string>
+    <string name="re_pwd">Retpye Password</string>
+    <string name="keyword">Keyword</string>
+    <string name="service_srivacy">I have carefully read and agree to <font color="#3E76EA"> the terms of service and privacy</font></string>
+    <string name="dag_link_info">dagLink is a mobile light wallet app developed by members of the XDAG World Foundation. It is designed to provide users with secure, easy-to-use digital asset wallets.</string>
+    <string name="wallet_notice">The password is used to protect the private key and the transaction authorization dagLink does not store the password and wallet file, nor can it be retrieved by you. Please be sure to remember and back it up.
+</string>
+    <string name="pwd_not_same">pwd not same</string>
+    <string name="change_pwd">change_pwd</string>
+    <string name="delete_wallet">delete wallet</string>
+    <string name="backup_wallet">backup_wallet</string>
+    <string name="set_default_wallet">set_default_wallet</string>
+
 </resources>

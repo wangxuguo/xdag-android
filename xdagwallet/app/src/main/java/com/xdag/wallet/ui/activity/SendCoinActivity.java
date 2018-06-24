@@ -3,10 +3,7 @@ package com.xdag.wallet.ui.activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -18,7 +15,7 @@ import android.widget.TextView;
 
 import com.xdag.wallet.R;
 import com.xdag.wallet.model.Constants;
-import com.xdag.wallet.ui.widget.XdagPwdConfirmPopWindow;
+import com.xdag.wallet.ui.widget.XdagConfirmXferInfoPopWindow;
 
 /**
  * Created by wangxuguo on 2018/6/15.
@@ -98,7 +95,7 @@ public class SendCoinActivity extends BaseActivity implements View.OnClickListen
                 startActivityForResult(receive,REQUESTCODE_SCAN);
                 break;
             case R.id.btn_next:
-                XdagPwdConfirmPopWindow window = new XdagPwdConfirmPopWindow(SendCoinActivity.this,"dd","aa",0.2f);
+                XdagConfirmXferInfoPopWindow window = new XdagConfirmXferInfoPopWindow(SendCoinActivity.this,"dd","aa",0.2f);
                 window.showAtLocation(btnNext, Gravity.BOTTOM | Gravity.CENTER, 0, 0);
                 break;
         }

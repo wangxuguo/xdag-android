@@ -32,11 +32,21 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     protected OnReloadClickListener mOnReloadClickListener;
 
     private FooterViewHolder mFooterViewHolder;
-
-    public BaseRecyclerViewAdapter(Context context, @LayoutRes int itemLayoutRes) {
+    private boolean isShowFootView;
+    public BaseRecyclerViewAdapter(Context context) {
         this.mContext = context;
-        this.mItemLayoutRes = itemLayoutRes;
+        this.mItemLayoutRes = getLayoutRes();
+        isShowFootView = false;
     }
+
+    public BaseRecyclerViewAdapter(Context context,List<T> list) {
+        this.mContext = context;
+        this.mList = list;
+        this.mItemLayoutRes = getLayoutRes();
+        isShowFootView = false;
+    }
+
+    protected abstract int getLayoutRes();
 
     public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
@@ -114,12 +124,28 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     @Override
     public int getItemCount() {
         int itemCount = mList.size();
-        return itemCount == 0 ? 0 : itemCount + 1;
+//        if(isShowFootView) {
+            return itemCount == 0 ? 0 : itemCount + 1;
+//        }else {
+//            return itemCount;
+//        }
+    }
+
+    public boolean isShowFootView() {
+        return isShowFootView;
+    }
+
+    public void setShowFootView(boolean showFootView) {
+        isShowFootView = showFootView;
+//        notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position + 1 == getItemCount() && mList.size() > 0) {
+//            if(isShowFootView){
+//                return TYPE_ITEM;
+//            }
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
@@ -163,7 +189,12 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         mFooterViewHolder.prompt.setText("没有更多了");
         mFooterViewHolder.progressBar.setVisibility(View.GONE);
     }
-
+    public void setNofootbar() {
+        if(mFooterViewHolder!=null&&mFooterViewHolder.prompt!=null) {
+            mFooterViewHolder.prompt.setVisibility(View.GONE);
+            mFooterViewHolder.progressBar.setVisibility(View.GONE);
+        }
+    }
     public void setNetError() {
         mFooterViewHolder.prompt.setText("加载失败，点击重试");
         mFooterViewHolder.prompt.setOnClickListener(new View.OnClickListener() {

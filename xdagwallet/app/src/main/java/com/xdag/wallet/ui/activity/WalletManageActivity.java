@@ -2,7 +2,6 @@ package com.xdag.wallet.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,10 +16,8 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 import com.xdag.wallet.R;
 import com.xdag.wallet.model.Constants;
-import com.xdag.wallet.model.XdagContactsModel;
 import com.xdag.wallet.model.XdagWalletModel;
 import com.xdag.wallet.ui.adapter.BaseRecyclerViewAdapter;
-import com.xdag.wallet.ui.adapter.ContactsAdapter;
 import com.xdag.wallet.ui.adapter.WalletsAdapter;
 
 import java.util.ArrayList;
@@ -36,10 +33,13 @@ public class WalletManageActivity extends BaseActivity {
     RecyclerView recyclerView;
     List<XdagWalletModel> list = new ArrayList<>();
     private WalletsAdapter adapter;
+    private TextView tvLoadWallet;
+    private TextView tvCreateWallet;
+
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_manage);
         findViews();
         initViews();
@@ -64,14 +64,14 @@ public class WalletManageActivity extends BaseActivity {
     }
 
     private void initViews() {
-        textView.setText(getString(R.string.tab_main_contracts));
+        textView.setText(getString(R.string.wallet_management));
         ivTitleLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        adapter = new WalletsAdapter(WalletManageActivity.this, R.layout.item_contracts);
+        adapter = new WalletsAdapter(WalletManageActivity.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(WalletManageActivity.this));
         adapter.setData(list);
         recyclerView.setAdapter(adapter);
@@ -95,10 +95,26 @@ public class WalletManageActivity extends BaseActivity {
 
             }
         });
+        tvCreateWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WalletManageActivity.this, CreateWalletActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvLoadWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WalletManageActivity.this, LoadWalletActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void findViews() {
         textView = (TextView) findViewById(R.id.tv_title);
+        tvCreateWallet = (TextView) findViewById(R.id.tv_create_wallet);
+        tvLoadWallet = (TextView) findViewById(R.id.tv_load_wallet);
         ivTitleLeft = (ImageView) findViewById(R.id.iv_title_left);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

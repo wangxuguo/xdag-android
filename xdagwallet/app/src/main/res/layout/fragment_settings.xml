@@ -174,7 +174,34 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_item_right_arrow" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_bg" />
 
+        <LinearLayout
+            android:id="@+id/li_xdag_pool"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_item_row_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_currency_unit"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:gravity="center_vertical"
+                android:text="@string/xdag_pool_setting" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_item_right_arrow" />
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"

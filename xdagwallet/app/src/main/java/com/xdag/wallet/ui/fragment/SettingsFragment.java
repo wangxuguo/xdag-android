@@ -15,7 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xdag.wallet.R;
+import com.xdag.wallet.ui.activity.AboutUs;
+import com.xdag.wallet.ui.activity.CurrencyUnitSettingActivity;
+import com.xdag.wallet.ui.activity.MultilingualSettingsActivity;
+import com.xdag.wallet.ui.activity.TransactionRecordActivity;
 import com.xdag.wallet.ui.activity.WalletManageActivity;
+import com.xdag.wallet.ui.activity.XdagPoolSettingActivity;
 
 /**
  * Created by wangxuguo on 2018/6/8.
@@ -28,6 +33,7 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
     LinearLayout li_message_center;
     TextView tv_message_count;
     LinearLayout li_multi_language;
+    LinearLayout li_xdag_pool;
     LinearLayout li_currency_unit;
     LinearLayout li_help_center;
     LinearLayout li_about_us;
@@ -45,6 +51,7 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
         tv_message_count = (TextView) rootView.findViewById(R.id.tv_message_count);
         li_multi_language = (LinearLayout) rootView.findViewById(R.id.li_multi_language);
         li_currency_unit = (LinearLayout) rootView.findViewById(R.id.li_currency_unit);
+        li_xdag_pool = (LinearLayout) rootView.findViewById(R.id.li_xdag_pool);
         li_help_center = (LinearLayout) rootView.findViewById(R.id.li_help_center);
         li_about_us = (LinearLayout) rootView.findViewById(R.id.li_about_us);
         li_personal_center = (LinearLayout) rootView.findViewById(R.id.li_personal_center);
@@ -54,12 +61,19 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
         return rootView;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
     private void initView() {
         tv_manager_wallet.setOnClickListener(this);
         tv_transaction_record.setOnClickListener(this);
         li_message_center.setOnClickListener(this);
         tv_message_count.setOnClickListener(this);
         li_multi_language.setOnClickListener(this);
+        li_xdag_pool.setOnClickListener(this);
         li_currency_unit.setOnClickListener(this);
         li_help_center.setOnClickListener(this);
         li_about_us.setOnClickListener(this);
@@ -75,18 +89,25 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.tv_transaction_record:
+                startActivity(new Intent(getContext(), TransactionRecordActivity.class));
                 break;
             case R.id.li_message_center:
                 break;
             case R.id.tv_message_count:
                 break;
+            case R.id.li_xdag_pool:
+                startActivity(new Intent(getContext(), XdagPoolSettingActivity.class));
+                break;
             case R.id.li_multi_language:
+                startActivity(new Intent(getContext(), MultilingualSettingsActivity.class));
                 break;
             case R.id.li_currency_unit:
+                startActivity(new Intent(getContext(), CurrencyUnitSettingActivity.class));
                 break;
             case R.id.li_help_center:
                 break;
             case R.id.li_about_us:
+                startActivity(new Intent(getContext(), AboutUs.class));
                 break;
             case R.id.li_personal_center:
                 break;
