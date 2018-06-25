@@ -20,4 +20,5 @@ public class Constants {
 
     public static final String CURRENCY_NAME = "currency_name";
     public static final String CURRENCY_SYMBOL = "currency_sysmbol";
+    public static String DefaultPoolAddress = "xdagmine.com:13654";
 }

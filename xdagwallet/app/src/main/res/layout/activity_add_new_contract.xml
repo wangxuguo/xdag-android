@@ -48,7 +48,7 @@
     <LinearLayout
         android:id="@+id/li_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="122dp"
         android:orientation="vertical"
 
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -57,8 +57,8 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/common_margin_big"
             android:layout_marginLeft="@dimen/common_margin_big"
+            android:layout_marginRight="@dimen/common_margin_big"
             android:layout_marginTop="@dimen/common_margin"
             android:hint="@string/enter_name" />
 
@@ -66,8 +66,8 @@
             android:id="@+id/et_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/common_margin_big"
             android:layout_marginLeft="@dimen/common_margin_big"
+            android:layout_marginRight="@dimen/common_margin_big"
             android:layout_marginTop="@dimen/common_margin"
             android:hint="@string/enter_address" />
 

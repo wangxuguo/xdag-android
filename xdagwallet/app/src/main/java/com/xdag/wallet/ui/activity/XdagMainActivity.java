@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,14 +18,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.xdag.wallet.AuthDialogFragment;
 import com.xdag.wallet.R;
+import com.xdag.wallet.XdagWrapper;
+import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.ui.fragment.ContactsFragment;
 import com.xdag.wallet.ui.fragment.PropertyFragment;
 import com.xdag.wallet.ui.fragment.SettingsFragment;
 
 import java.util.ArrayList;
 
-public class XdagMainActivity extends AppCompatActivity {
+public class XdagMainActivity extends AppCompatActivity implements AuthDialogFragment.AuthInputListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -100,6 +104,14 @@ public class XdagMainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAuthInputComplete(String authInfo) {
+        Log.i(Constants.TAG,"auth info is " + authInfo);
+        //notify native thread
+        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
+        xdagWrapper.XdagNotifyMsg(authInfo);
     }
 
 //    @Override

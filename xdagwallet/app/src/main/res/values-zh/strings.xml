@@ -63,4 +63,9 @@
     <string name="change_pwd">change_pwd</string>
     <string name="backup_wallet">backup_wallet</string>
     <string name="set_default_wallet">set_default_wallet</string>
+    <string name="choose_file">choose file</string>
+    <string name="backup_file_not_selected">File not selected</string>
+    <string name="choose_wallet_file">choose_wallet_file</string>
+    <string name="copyed">Copied</string>
+    <string name="wallet_connecting_to_pool">钱包连接中···</string>
 </resources>
