@@ -3,9 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary"
+        android:layout_height="45dp">
+        <ImageView
+            android:id="@+id/iv_title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:paddingLeft="@dimen/common_margin"
+            android:paddingRight="@dimen/common_margin"
+            android:src="@drawable/ic_back" />
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:text="@string/scan"
+            android:textColor="@color/color_white"
+            android:textSize="20sp" />
+    </RelativeLayout>
     <SurfaceView
         android:id="@+id/preview_view"
+        android:layout_below="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -26,6 +53,7 @@
         android:layout_marginBottom="100dp"
         android:background="@drawable/shape_oval_border"
         android:paddingBottom="5dp"
+        android:textColor="@color/color_white"
         android:paddingLeft="35dp"
         android:paddingRight="35dp"
         android:paddingTop="5dp"

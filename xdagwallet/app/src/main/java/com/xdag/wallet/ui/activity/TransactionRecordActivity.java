@@ -32,13 +32,11 @@ public class TransactionRecordActivity extends BaseActivity  implements View.OnC
 
     private void initViews() {
         iv_title_left.setOnClickListener(this);
-        tv_title_right.setOnClickListener(this);
     }
 
     private void findViews() {
         iv_title_left = (ImageView) findViewById(R.id.iv_title_left);
         tv_title = (TextView) findViewById(R.id.tv_title);
-        tv_title_right = (TextView) findViewById(R.id.tv_title_right);
         etName = (EditText) findViewById(R.id.et_name);
         etAddress = (EditText) findViewById(R.id.et_address);
     }

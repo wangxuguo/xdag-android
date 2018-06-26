@@ -46,6 +46,7 @@
     <string name="address_is_empty" >address is empty</string>
     <string name="create_wallet" >Create Wallet</string>
     <string name="load_wallet" >Load Wallet</string>
+    <string name="loading_wallet" >Loading Wallet...</string>
     <string name="save">save</string>
 
     <string name="app_default">系统默认</string>
@@ -96,4 +97,10 @@
     <string name="input_password">input password</string>
     <string name="retype_password">retype password</string>
     <string name="set_random_keys">set random keys</string>
+    <string name="creating_wallet">Creating Wallet</string>
+    <string name="loading_wallet_tips">Need to connect to the main network data, normally takes 2-5 minutes</string>
+    <string name="creating_wallet_tips">You need to connect to the main network data. Normally, it takes 2 to 5 minutes. Please wait patiently. After the creation is completed, pay attention to timely backup.</string>
+    <string name="please_grant_permission">please_grant_permission</string>
+    <string name="load_wallet_error">Load Wallet Error</string>
+    <string name="please_check_wallet_file">please check wallet file</string>
 </resources>

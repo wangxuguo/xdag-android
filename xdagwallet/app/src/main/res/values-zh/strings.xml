@@ -75,4 +75,11 @@
     <string name="input_password">输入密码</string>
     <string name="retype_password">再次输入密码</string>
     <string name="set_random_keys">甚至随机数</string>
+    <string name="creating_wallet">钱包创建中···</string>
+    <string name="creating_wallet_tips">需要连接主网络数据，正常需要2-5分钟请耐心等待，创建完成后，请注意及时备份！</string>
+    <string name="please_grant_permission">please_grant_permission</string>
+    <string name="loading_wallet">钱包导入中···</string>
+    <string name="loading_wallet_tips">需要连接主网络数据，正常需要2-5分钟</string>
+    <string name="load_wallet_error">导入钱包出错</string>
+    <string name="please_check_wallet_file">请检查钱包文件wallet.dat及dnet_key.dat文件</string>
 </resources>

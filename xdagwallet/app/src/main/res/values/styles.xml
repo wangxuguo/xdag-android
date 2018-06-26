@@ -31,7 +31,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@color/common_activity_bg</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/common_activity_bg</item>
     </style>
 
     <style name="dialog_progress_style_" parent="android:Animation">

@@ -1,5 +1,7 @@
 package com.xdag.wallet.model;
 
+import android.support.annotation.ColorInt;
+
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -31,6 +33,10 @@ public class XdagWalletModel extends BaseModel implements Serializable {
     public String sourcePath;
     @Column
     public boolean isDeleted;
+    @Column
+    public String walletMd5;
+    @Column
+    public int type;  //钱包类型  0 创建  1 导入  3 备份文件中恢复
     public String getAddress() {
         return address;
     }
@@ -103,13 +109,36 @@ public class XdagWalletModel extends BaseModel implements Serializable {
         isDeleted = deleted;
     }
 
+    public String getWalletMd5() {
+        return walletMd5;
+    }
+
+    public void setWalletMd5(String walletMd5) {
+        this.walletMd5 = walletMd5;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        return "XdagContactsModel{" +
+        return "XdagWalletModel{" +
                 "address='" + address + '\'' +
                 ", name='" + name + '\'' +
                 ", icon='" + icon + '\'' +
                 ", id=" + id +
+                ", localPath='" + localPath + '\'' +
+                ", bankPath='" + bankPath + '\'' +
+                ", amount=" + amount +
+                ", sourcePath='" + sourcePath + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", walletMd5='" + walletMd5 + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

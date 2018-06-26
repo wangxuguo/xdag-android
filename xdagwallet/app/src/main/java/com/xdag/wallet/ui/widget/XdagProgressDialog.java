@@ -22,27 +22,76 @@ import com.xdag.wallet.R;
  *
  */
 public class XdagProgressDialog extends Dialog implements View.OnClickListener {
+    private final Animation imageRotateAnimation;
     // private TextView tv_message;
     private OnCancelListener onCancelListener;
-//    private static AnimationDrawable drawable;
+    //    private static AnimationDrawable drawable;
+    private Context context;
+    private ImageView iv_loading;
+    private TextView tv_message;
+    private TextView tv_progress_info_tips;
+    private String message;
 
-
-    public XdagProgressDialog(Context context) {
+    public XdagProgressDialog(Context context,String message) {
         super(context, R.style.dialog_router);
+        this.context = context;
+        this.message = message;
+        imageRotateAnimation = AnimationUtils.loadAnimation(context,
+                R.anim.xdag_loading_animation);
+        init();
     }
 
-    public XdagProgressDialog(Context context, int theme) {
-        super(context, R.style.dialog_router);
+    private void init() {
+
+        View layout = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
+
+//        layout.findViewById(R.id.ll_dialog).setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        iv_loading = (ImageView) layout.findViewById(R.id.iv_loading);
+//        iv_loading.setImageResource(R.drawable.loading);///
+
+        tv_message = (TextView) layout.findViewById(R.id.tv_message);
+        tv_progress_info_tips = (TextView) layout.findViewById(R.id.tv_progress_info_tips);
+//        if (!TextUtils.isEmpty(title)) {
+//            setTitle(title);
+//        }
+        if (!TextUtils.isEmpty(message)) {
+            tv_message.setText(message);
+        } else {
+            tv_message.setText(context.getString(R.string.xdag_sending));
+        }
+//        Window window = getWindow();
+//        window.setGravity(Gravity.CENTER);
+//			window.setWindowAnimations(R.style.dialog_progress_style_);
+//        dialog.setContentView(layout);
+        addContentView(layout, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+        if (!TextUtils.isEmpty(message)) {
+            tv_message.setText(message);
+        }
+    }
+
+    public void setProgressInfo(String info){
+        if(tv_progress_info_tips!=null){
+            tv_progress_info_tips.setVisibility(View.VISIBLE);
+            if(!TextUtils.isEmpty(info)) {
+                tv_progress_info_tips.setText(info);
+            }
+        }
+    }
     @Override
     public void show() {
         super.show();
+        iv_loading.startAnimation(imageRotateAnimation);
     }
 
     @Override
     public void dismiss() {
         if (isShowing()) {
+            imageRotateAnimation.cancel();
             super.dismiss();
         }
     }
@@ -59,52 +108,4 @@ public class XdagProgressDialog extends Dialog implements View.OnClickListener {
         this.onCancelListener = listener;
     }
 
-    public static class Builder {
-
-        private Context context;
-        private ImageView iv_loading;
-        private TextView tv_message;
-        private String message;
-        private String title;
-        public Builder(Context context) {
-            this.context = context;
-        }
-        public Builder setTitle(String title){
-            this.title = title;
-            return this;
-        }
-        public Builder setMessage(String message){
-            this.message = message;
-            return  this;
-        }
-        public XdagProgressDialog create() {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            // instantiate the dialog with the custom Theme
-            final XdagProgressDialog dialog = new XdagProgressDialog(context,
-                    R.style.Dialog);
-            View layout = inflater.inflate(R.layout.dialog_loading, null);
-            dialog.addContentView(layout, new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-//            layout.findViewById(R.id.ll_dialog).setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-            iv_loading = (ImageView) layout.findViewById(R.id.iv_loading);
-            iv_loading.setImageResource(R.drawable.loading);///
-
-            tv_message = (TextView) layout.findViewById(R.id.tv_message);
-            if(!TextUtils.isEmpty(message)){
-                tv_message.setText(message);
-            }else {
-                tv_message.setText(context.getString(R.string.xdag_sending));
-            }
-//            drawable = (AnimationDrawable) iv_loading.getDrawable();
-            Animation ImageRotateAnimation = AnimationUtils.loadAnimation(context,
-                    R.anim.xdag_loading_animation);
-            iv_loading.startAnimation(ImageRotateAnimation);
-            Window window = dialog.getWindow();
-            window.setGravity(Gravity.CENTER);
-//			window.setWindowAnimations(R.style.dialog_progress_style_);
-            dialog.setContentView(layout);
-            return dialog;
-        }
-    }
 }

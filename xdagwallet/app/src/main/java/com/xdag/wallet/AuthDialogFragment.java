@@ -55,6 +55,7 @@ public class AuthDialogFragment extends DialogFragment {
         builder.setView(view)
                 .setTitle(title)
                 .setIcon(R.drawable.ic_xdag_small)
+                .setCancelable(false)
                 // Add action buttons
                 .setPositiveButton(getText(R.string.make_sure),
                         new DialogInterface.OnClickListener()
@@ -65,7 +66,8 @@ public class AuthDialogFragment extends DialogFragment {
                                 AuthInputListener listener = (AuthInputListener) getActivity();
                                 listener.onAuthInputComplete(tvAuthInfo.getText().toString());
                             }
-                        }).setNegativeButton(getText(R.string.cancel), null);
+                        });
+//                .setNegativeButton(getText(R.string.cancel), null);
         return builder.create();
 
     }

@@ -17,6 +17,9 @@ public class FileUtils {
     public static String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static final String XDAG_PATH = "/sdcard/xdag";
     public static final String WALLET_FILE = "/sdcard/xdag/wallet.dat";
+    public static final String WALLET_NAME = "wallet.dat";
+    public static final String DNET_KEY_FILE = "/sdcard/xdag/dnet_key.dat";
+    public static final String DNET_KEY_NAME = "dnet_key.dat";
     public static final String XDAG_DATA_PATH = "xdag_data";
     public static final String XDAG_BACKUP_PATH = "xdag_backup";
 
@@ -49,9 +52,9 @@ public class FileUtils {
      *
      * @param oldPath String 原文件路径 如：data/video/xxx.mp4
      * @param newPath String 复制后路径 如：data/oss/xxx.mp4
-     * @return boolean
+     * @return int 0 成功 1,-1 失败
      */
-    public void copyFile(String oldPath, String newPath) {
+    public static int copyFile(String oldPath, String newPath) {
         try {
             int bytesum = 0;
             int byteread = 0;
@@ -71,14 +74,15 @@ public class FileUtils {
                     fs.write(buffer, 0, byteread);
                 }
                 inStream.close();
+                return 0;
             }
         } catch (Exception e) {
             System.out.println("复制单个文件操作出错");
             e.printStackTrace();
-
+            return 1;
 
         }
 
-
+        return -1;
     }
 }

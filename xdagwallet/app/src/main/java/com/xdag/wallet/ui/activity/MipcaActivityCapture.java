@@ -16,6 +16,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import java.util.Vector;
 public class MipcaActivityCapture extends BaseActivity implements Callback {
 
     private CaptureActivityHandler handler;
+    private ImageView iv_title_left;
     private ViewfinderView viewfinderView;
     private boolean hasSurface;
     private Vector<BarcodeFormat> decodeFormats;
@@ -77,6 +79,13 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
         // });
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
+        iv_title_left = (ImageView) findViewById(R.id.iv_title_left);
+        iv_title_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         tvOpenFlame = (TextView) findViewById(R.id.tvOpenFlame);
         tvOpenFlame.setOnClickListener(new View.OnClickListener() {

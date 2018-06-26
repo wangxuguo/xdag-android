@@ -2,14 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dialog_loading"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#11000000"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/ll_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical">
@@ -21,19 +19,31 @@
             android:layout_gravity="center"
             android:minHeight="50dp"
             android:minWidth="50dp"
-            android:src="@drawable/loading"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:src="@drawable/loading" />
 
         <TextView
+            android:id="@+id/tv_message"
+            style="@style/common_text_white_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/common_text_white_normal"
-            android:id="@+id/tv_message"
-            android:text="@string/wallet_connecting_to_pool"
             android:layout_gravity="center"
             android:layout_marginTop="13dip"
+            android:text="@string/wallet_connecting_to_pool"
             android:textColor="@color/color_grey"
-            android:visibility="visible"/>
+            android:visibility="visible" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_progress_info_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_dialog"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:layout_marginRight="@dimen/common_margin_big"
+        android:layout_marginLeft="@dimen/common_margin_big"
+        android:text="@string/creating_wallet_tips"
+        android:textColor="#089722" />
 </RelativeLayout>
