@@ -1,6 +1,10 @@
 package com.xdag.wallet.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -10,48 +14,108 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xdag.wallet.AuthDialogFragment;
 import com.xdag.wallet.R;
+import com.xdag.wallet.XdagEvent;
 import com.xdag.wallet.XdagWrapper;
 import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.ui.fragment.ContactsFragment;
 import com.xdag.wallet.ui.fragment.PropertyFragment;
 import com.xdag.wallet.ui.fragment.SettingsFragment;
+import com.xdag.wallet.ui.widget.XdagProgressDialog;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
 import java.util.ArrayList;
 
-public class XdagMainActivity extends AppCompatActivity implements AuthDialogFragment.AuthInputListener {
+public class XdagMainActivity extends AppCompatActivity implements AuthDialogFragment.AuthInputListener{
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    private static final String TAG = Constants.TAG;
+
+    private static final int MSG_CONNECT_TO_POOL = 1;
+    private static final int MSG_DISCONNECT_FROM_POOL = 2;
+    private static final int MSG_XFER_XDAG_COIN = 3;
+    private static final int MSG_SHOW_PROGRESS = 4;
+    private static final int MSG_DISSMIS_PROGRESS = 5;
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+    private View loadingLayout;
+    private TextView tv_message;
+    private ImageView iv_loading;
     private ArrayList<Fragment> list = new ArrayList<>();
     private PropertyFragment propertyFragment;
     private ContactsFragment contactsFragment;
     private SettingsFragment settingsFragment;
+
+    private HandlerThread xdagProcessThread;
+    private Handler xdagHandler;
+    private boolean isConnected;
+//    private XdagProgressDialog xdagProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xdag_main);
+        EventBus.getDefault().register(this);
+        xdagProcessThread = new HandlerThread("XdagProcessThread");
+        xdagProcessThread.start();
+        xdagHandler = new Handler(xdagProcessThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                Log.i(TAG, "handleMessage  " + msg.what);
+                switch (msg.arg1) {
+                    case MSG_CONNECT_TO_POOL:
+                        Log.i(TAG, "receive msg connect to the pool thread id " + Thread.currentThread().getId());
+                        Bundle data = msg.getData();
+                        String poolAddr = data.getString("pool");
+                        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
+                        xdagWrapper.XdagConnectToPool(poolAddr);
+                        xdagHandler.sendEmptyMessage(MSG_SHOW_PROGRESS);
+
+                        break;
+                    case MSG_DISCONNECT_FROM_POOL:
+
+
+                        break;
+                    case MSG_XFER_XDAG_COIN:
+
+
+                        break;
+                    case MSG_DISSMIS_PROGRESS:
+//                        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+//                            xdagProgressDialog.dismiss();
+//                        }
+                    case MSG_SHOW_PROGRESS:
+//                        XdagProgressDialog.Builder builder = new XdagProgressDialog.Builder(XdagMainActivity.this);
+////                        builder.setTitle()
+//                        builder.setMessage(getString(R.string.wallet_connecting_to_pool));
+//                        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+//                            xdagProgressDialog.dismiss();
+//                            xdagProgressDialog = null;
+//                        }
+//                        xdagProgressDialog = builder.create();
+//                        xdagProgressDialog.show();
+                        break;
+                    default: {
+                        Log.e(TAG, "unkown command from ui");
+                    }
+                    break;
+                }
+            }
+        };
 
         propertyFragment = new PropertyFragment();
         contactsFragment = new ContactsFragment();
@@ -59,30 +123,122 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
         list.add(propertyFragment);
         list.add(contactsFragment);
         list.add(settingsFragment);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        loadingLayout = findViewById(R.id.loading_layout);
+        tv_message = (TextView) findViewById(R.id.tv_message);
+        iv_loading = (ImageView) findViewById(R.id.iv_loading);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        tabLayout.addOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
+        initXdagFiles();
+//        connectToPool();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        initXdagFiles();
+        if(!isConnected) {
+            connectToPool();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ProcessXdagEvent(XdagEvent event) {
+        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
+        Log.i(TAG, "event event type is " + event.eventType);
+        Log.i(TAG, "event account is " + event.address);
+        Log.i(TAG, "event balace is " + event.balance);
+        Log.i(TAG, "event state is " + event.state);
+
+        switch (event.eventType) {
+            case XdagEvent.en_event_type_pwd:
+            case XdagEvent.en_event_set_pwd:
+            case XdagEvent.en_event_retype_pwd:
+            case XdagEvent.en_event_set_rdm:
+                Bundle bundle = new Bundle();
+                bundle.putCharSequence("title", GetAuthHintString(event.eventType));
+                AuthDialogFragment authDialogFragment = new AuthDialogFragment();
+                authDialogFragment.setArguments(bundle);
+                authDialogFragment.setAuthHintInfo(GetAuthHintString(event.eventType));
+                authDialogFragment.show(getFragmentManager(), "Auth Dialog");
+
+                break;
+
+            case XdagEvent.en_event_update_state:
+
+                if (event != null && event.balance != null && !event.balance.equals("Not Ready")) {
+//                    mHandler.sendEmptyMessage(MSG_DISSMIS_PROGRESS);
+//                    if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+//                        xdagProgressDialog.dismiss();
+//                        xdagProgressDialog = null;
+//                    }
+                    Log.i(TAG, "loadingLayout GONE");
+                    loadingLayout.setVisibility(View.GONE);
+                    isConnected = true;
+                }else {
+                    isConnected = false;
+                }
+                Log.i(TAG, "update xdag  ui ");
+//                account.setText(event.balance);
+//                xdagAccount.setText(event.balance);
+//                if(is)
+//                tvBalance.setText(event.balance);
+//                tvStatus.setText(event.state);
+
+                break;
+
+        }
+    }
+
+
+    private String GetAuthHintString(final int eventType) {
+        switch (eventType) {
+            case XdagEvent.en_event_set_pwd:
+                return getString(R.string.set_password);
+            case XdagEvent.en_event_type_pwd:
+                return getString(R.string.input_password);
+            case XdagEvent.en_event_retype_pwd:
+                return getString(R.string.retype_password);
+            case XdagEvent.en_event_set_rdm:
+                return getString(R.string.set_random_keys);
+            default:
+                return getString(R.string.input_password);
+        }
+    }
+
+
+    private void connectToPool() {
+        loadingLayout.setVisibility(View.VISIBLE);
+//        String poolAddr = getContext().getSharedPreferences(Constants.SPSetting, Context.MODE_PRIVATE).getString(Constants.XDAG_POOL_ADDRESS,Constants.DefaultPoolAddress);
+        String poolAddr = Constants.DefaultPoolAddress;
+        Message msg = Message.obtain();
+        Bundle data = new Bundle();
+        data.putString("pool", poolAddr);
+        msg.arg1 = MSG_CONNECT_TO_POOL;
+        msg.setData(data);
+        xdagHandler.sendMessage(msg);
+
+//        XdagProgressDialog.Builder builder = new XdagProgressDialog.Builder(this);
+//        builder.setMessage(getString(R.string.wallet_connecting_to_pool));
+////        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+////            xdagProgressDialog.dismiss();
+////            xdagProgressDialog = null;
+////        }
+//        xdagProgressDialog =  builder.create();
+//        xdagProgressDialog.show();
+    }
+
+    private void initXdagFiles() {
+        String xdagFolderPath = "/sdcard/xdag";
+        File file = new File(xdagFolderPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,16 +249,10 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -114,55 +264,6 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
         xdagWrapper.XdagNotifyMsg(authInfo);
     }
 
-//    @Override
-//    public void onTabSelected(TabLayout.Tab tab) {
-//
-//    }
-//
-//    @Override
-//    public void onTabUnselected(TabLayout.Tab tab) {
-//
-//    }
-//
-//    @Override
-//    public void onTabReselected(TabLayout.Tab tab) {
-//
-//    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_xdag_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -176,17 +277,18 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             return list.get(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return list.size();
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

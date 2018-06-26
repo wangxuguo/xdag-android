@@ -3,13 +3,13 @@
     android:id="@+id/dialog_loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#11000000"
     android:gravity="center">
 
     <LinearLayout
         android:id="@+id/ll_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_progress_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical">
@@ -19,6 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:minHeight="50dp"
+            android:minWidth="50dp"
+            android:src="@drawable/loading"
             android:scaleType="fitXY" />
 
         <TextView
@@ -26,9 +29,11 @@
             android:layout_height="wrap_content"
             style="@style/common_text_white_normal"
             android:id="@+id/tv_message"
+            android:text="@string/wallet_connecting_to_pool"
+            android:layout_gravity="center"
             android:layout_marginTop="13dip"
             android:textColor="@color/color_grey"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
     </LinearLayout>
 
 </RelativeLayout>

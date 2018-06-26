@@ -26,9 +26,11 @@
         <item name="android:windowExitAnimation">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-    <style name="dialog_router">
-        <item name="android:windowFullscreen">false</item>
+    <style name="dialog_router"  parent="Dialog">
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/common_activity_bg</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 

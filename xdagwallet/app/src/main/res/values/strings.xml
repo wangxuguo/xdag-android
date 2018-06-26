@@ -30,6 +30,7 @@
     <string name="wallet_pwd">Wallet PWD</string>
     <string name="enter_pwd">Enter you pwd</string>
     <string name="make_sure">OK</string>
+    <string name="cancel">Cancel</string>
     <string name="xdag_sending">XDAG sending·····</string>
     <string name="pay_detail">pay_detail</string>
 
@@ -90,5 +91,9 @@
     <string name="backup_file_not_selected">File not selected</string>
     <string name="choose_wallet_file">choose_wallet_file</string>
     <string name="copyed">Copied</string>
-    <string name="wallet_connecting_to_pool">钱包连接中···</string>
+    <string name="wallet_connecting_to_pool">connecting ...</string>
+    <string name="set_password">set password</string>
+    <string name="input_password">input password</string>
+    <string name="retype_password">retype password</string>
+    <string name="set_random_keys">set random keys</string>
 </resources>

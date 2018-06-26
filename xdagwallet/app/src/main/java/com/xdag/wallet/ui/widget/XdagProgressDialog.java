@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,7 +24,7 @@ import com.xdag.wallet.R;
 public class XdagProgressDialog extends Dialog implements View.OnClickListener {
     // private TextView tv_message;
     private OnCancelListener onCancelListener;
-    private static AnimationDrawable drawable;
+//    private static AnimationDrawable drawable;
 
 
     public XdagProgressDialog(Context context) {
@@ -36,7 +38,6 @@ public class XdagProgressDialog extends Dialog implements View.OnClickListener {
     @Override
     public void show() {
         super.show();
-        drawable.start();
     }
 
     @Override
@@ -44,7 +45,6 @@ public class XdagProgressDialog extends Dialog implements View.OnClickListener {
         if (isShowing()) {
             super.dismiss();
         }
-        drawable.stop();
     }
 
     @Override
@@ -85,10 +85,10 @@ public class XdagProgressDialog extends Dialog implements View.OnClickListener {
                     R.style.Dialog);
             View layout = inflater.inflate(R.layout.dialog_loading, null);
             dialog.addContentView(layout, new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            layout.findViewById(R.id.ll_dialog).setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+//            layout.findViewById(R.id.ll_dialog).setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
             iv_loading = (ImageView) layout.findViewById(R.id.iv_loading);
-            iv_loading.setImageResource(R.drawable.ic_xdag_small);
+            iv_loading.setImageResource(R.drawable.loading);///
 
             tv_message = (TextView) layout.findViewById(R.id.tv_message);
             if(!TextUtils.isEmpty(message)){
@@ -96,8 +96,10 @@ public class XdagProgressDialog extends Dialog implements View.OnClickListener {
             }else {
                 tv_message.setText(context.getString(R.string.xdag_sending));
             }
-            drawable = (AnimationDrawable) iv_loading.getDrawable();
-
+//            drawable = (AnimationDrawable) iv_loading.getDrawable();
+            Animation ImageRotateAnimation = AnimationUtils.loadAnimation(context,
+                    R.anim.xdag_loading_animation);
+            iv_loading.startAnimation(ImageRotateAnimation);
             Window window = dialog.getWindow();
             window.setGravity(Gravity.CENTER);
 //			window.setWindowAnimations(R.style.dialog_progress_style_);

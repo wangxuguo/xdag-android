@@ -18,6 +18,8 @@
         app:tabGravity="fill"
         app:tabBackground="@color/color_tab_bg"
         app:tabIndicatorHeight="0dp"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/color_grey"
         app:layout_anchorGravity="bottom"
         >
 
@@ -25,7 +27,6 @@
             android:id="@+id/tabItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_tab_color_layer"
             android:icon="@drawable/icon_tab_property"
             android:text="@string/tab_main_property" />
 
@@ -33,7 +34,6 @@
             android:id="@+id/tabItem2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_tab_color_layer"
             android:icon="@drawable/icon_tab_contacts"
             android:text="@string/tab_main_contracts" />
 
@@ -42,7 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/tab_bg_drawable"
-            android:textColor="@color/text_tab_color_layer"
             android:icon="@drawable/icon_tab_settings"
             android:text="@string/tab_main_settings" />
 
@@ -55,5 +54,10 @@
         android:layout_marginBottom="@dimen/tab_height"
         app:layout_anchor="@+id/tabs"
         app:layout_anchorGravity="top" />
-
+    <include android:id="@+id/loading_layout"
+        layout="@layout/dialog_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        />
 </android.support.design.widget.CoordinatorLayout>
