@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.xdag.wallet.R;
+import com.xdag.wallet.utils.PermissionUtils;
 import com.xdag.wallet.zxing.camera.CameraManager;
 import com.xdag.wallet.zxing.decoding.CaptureActivityHandler;
 import com.xdag.wallet.zxing.decoding.InactivityTimer;
@@ -58,9 +59,9 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
         CameraManager.init(getApplication());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture);
-//        if(!PermissionUtils.checkCamera()){
-//            checkPermissions(Manifest.permission.CAMERA);
-//        }
+        if(!PermissionUtils.checkCamera()){
+            checkPermissions(Manifest.permission.CAMERA);
+        }
 
         // ViewUtil.addTopView(getApplicationContext(), this,
         // R.string.scan_card);
