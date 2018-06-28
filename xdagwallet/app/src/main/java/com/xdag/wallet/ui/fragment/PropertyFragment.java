@@ -20,10 +20,12 @@ import com.xdag.wallet.R;
 import com.xdag.wallet.XdagEvent;
 import com.xdag.wallet.XdagWrapper;
 import com.xdag.wallet.model.Constants;
+import com.xdag.wallet.model.XdagState;
 import com.xdag.wallet.ui.activity.MineAddressQRActivity;
 import com.xdag.wallet.ui.activity.MipcaActivityCapture;
 import com.xdag.wallet.ui.activity.SendCoinActivity;
 import com.xdag.wallet.ui.widget.XdagProgressDialog;
+import com.xdag.wallet.utils.XdagUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -118,35 +120,36 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 break;
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void ProcessXdagEvent(XdagEvent event) {
-//        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
-//        Log.i(TAG, "event event type is " + event.eventType);
-//        Log.i(TAG, "event account is " + event.address);
-//        Log.i(TAG, "event balace is " + event.balance);
-//        Log.i(TAG, "event state is " + event.state);
-
-        switch (event.eventType) {
-            case XdagEvent.en_event_type_pwd:
-            case XdagEvent.en_event_set_pwd:
-            case XdagEvent.en_event_retype_pwd:
-            case XdagEvent.en_event_set_rdm:
-                break;
-            case XdagEvent.en_event_update_state:
-
-                if (event != null && event.balance != null && !event.balance.equals("Not Ready")) {
-                }
-//                Log.i(TAG, "update xdag  ui ");
-                account.setText(event.balance);
-                xdagAccount.setText(event.balance);
-//                if(is)
-//                tvBalance.setText(event.balance);
-//                tvStatus.setText(event.state);
-
-                break;
-
+    public void onEvent(XdagState event) {
+        if(event.isConnect){
+            account.setText(event.balance);
+            xdagAccount.setText(event.balance);
+        }else if (event.eventType == XdagEvent.en_event_type_pwd || event.eventType == XdagEvent.en_event_type_pwd
+                || event.eventType == XdagEvent.en_event_retype_pwd || event.eventType == XdagEvent.en_event_set_rdm) {
         }
+
+
     }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void ProcessXdagEvent(XdagEvent event) {
+//        switch (event.eventType) {
+//            case XdagEvent.en_event_type_pwd:
+//            case XdagEvent.en_event_set_pwd:
+//            case XdagEvent.en_event_retype_pwd:
+//            case XdagEvent.en_event_set_rdm:
+//                break;
+//            case XdagEvent.en_event_update_state:
+//                if (event != null && event.balance != null && !event.balance.equals("Not Ready")) {
+//
+//                    account.setText(event.balance);
+//                    xdagAccount.setText(event.balance);
+//                }
+//                break;
+//
+//        }
+//    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

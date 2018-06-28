@@ -20,6 +20,7 @@ import com.xdag.wallet.R;
 import com.xdag.wallet.XdagEvent;
 import com.xdag.wallet.XdagWrapper;
 import com.xdag.wallet.model.Constants;
+import com.xdag.wallet.model.XdagState;
 import com.xdag.wallet.ui.widget.XdagConfirmXferInfoPopWindow;
 import com.xdag.wallet.ui.widget.XdagProgressDialog;
 import com.xdag.wallet.utils.StringUtils;
@@ -34,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * Created by wangxuguo on 2018/6/15.
  */
 
-public class SendCoinActivity extends BaseActivity implements View.OnClickListener, AuthDialogFragment.AuthInputListener {
+public class SendCoinActivity extends XdagBaseActivity implements View.OnClickListener, AuthDialogFragment.AuthInputListener {
     private static final int REQUESTCODE_SCAN = 0x01;
     private static final int REQUESTCODE_RECEIVE = 0x02;
     private static final String TAG = Constants.TAG;
@@ -56,9 +57,9 @@ public class SendCoinActivity extends BaseActivity implements View.OnClickListen
             }
             xdagProgressDialog = new XdagProgressDialog(SendCoinActivity.this, getString(R.string.xdag_sending));
             xdagProgressDialog.show();
-
-            XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-            xdagWrapper.XdagXferToAddress(address, String.valueOf(account));
+            mService.XdagTransferTo(address,String.valueOf(account));
+//            XdagWrapper xdagWrapper = XdagWrapper.getInstance();
+//            xdagWrapper.XdagXferToAddress(address, String.valueOf(account));
         }
     };
 
@@ -83,50 +84,70 @@ public class SendCoinActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void ProcessXdagEvent(XdagEvent event) {
-//        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId()+ "type " + event.eventType+"account "
-//                + event.address+"balace " + event.balance+" state " + event.state);
-        if (!MyActivityManager.getInstance().getCurrentActivity().getLocalClassName().equals(this.getLocalClassName())) {
-            Log.i(TAG, "CurrentActivity:" + MyActivityManager.getInstance().getCurrentActivity().getLocalClassName() + "!equals " + this.getLocalClassName());
+    public void onEvent(XdagState event) {
+        if(event!=null){
             return;
         }
-        switch (event.eventType) {
-            case XdagEvent.en_event_set_pwd:
-//                ToastUtil.showShort(this, getString(R.string.please_check_wallet_file));
-//                break;
-            case XdagEvent.en_event_type_pwd:
-            case XdagEvent.en_event_retype_pwd:
-            case XdagEvent.en_event_set_rdm:
-                Bundle bundle = new Bundle();
-                bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this, event.eventType));
-                AuthDialogFragment authDialogFragment = new AuthDialogFragment();
-                authDialogFragment.setArguments(bundle);
-                authDialogFragment.setAuthHintInfo(XdagUtils.GetAuthHintString(this, event.eventType));
-                authDialogFragment.show(getFragmentManager(), "Auth Dialog");
 
-                break;
+       if (event.eventType == XdagEvent.en_event_type_pwd || event.eventType == XdagEvent.en_event_type_pwd
+                || event.eventType == XdagEvent.en_event_retype_pwd || event.eventType == XdagEvent.en_event_set_rdm) {
+            Bundle bundle = new Bundle();
+            bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this, event.eventType));
+            AuthDialogFragment authDialogFragment = new AuthDialogFragment();
+            authDialogFragment.setArguments(bundle);
+            authDialogFragment.setCancelable(false);
+            authDialogFragment.setAuthHintInfo(XdagUtils.GetAuthHintString(this, event.eventType));
+            authDialogFragment.show(getFragmentManager(), "Auth Dialog");
+        }else {
+           Log.e(TAG,"onEvent  XdagState" +event.toString());
+       }
 
-            case XdagEvent.en_event_update_state:
-                if (event != null && event.balance != null && !event.balance.equals("Not ready")) {
-//                    if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-//                        xdagProgressDialog.dismiss();
-//                    }
-                } else {
-                }
-                break;
-            case XdagEvent.en_event_nothing_transfer:
-            case XdagEvent.en_event_balance_too_small:
-            case XdagEvent.en_event_invalid_recv_address:
-            case XdagEvent.en_event_xdag_transfered:
-                ToastUtil.showShort(SendCoinActivity.this,getString(R.string.xdag_xfer_error));
-                if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-                    xdagProgressDialog.dismiss();
-                }
-                break;
-        }
+
     }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void ProcessXdagEvent(XdagEvent event) {
+////        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId()+ "type " + event.eventType+"account "
+////                + event.address+"balace " + event.balance+" state " + event.state);
+//        if (!MyActivityManager.getInstance().getCurrentActivity().getLocalClassName().equals(this.getLocalClassName())) {
+//            Log.i(TAG, "CurrentActivity:" + MyActivityManager.getInstance().getCurrentActivity().getLocalClassName() + "!equals " + this.getLocalClassName());
+//            return;
+//        }
+//        switch (event.eventType) {
+//            case XdagEvent.en_event_set_pwd:
+////                ToastUtil.showShort(this, getString(R.string.please_check_wallet_file));
+////                break;
+//            case XdagEvent.en_event_type_pwd:
+//            case XdagEvent.en_event_retype_pwd:
+//            case XdagEvent.en_event_set_rdm:
+//                Bundle bundle = new Bundle();
+//                bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this, event.eventType));
+//                AuthDialogFragment authDialogFragment = new AuthDialogFragment();
+//                authDialogFragment.setArguments(bundle);
+//                authDialogFragment.setAuthHintInfo(XdagUtils.GetAuthHintString(this, event.eventType));
+//                authDialogFragment.show(getFragmentManager(), "Auth Dialog");
+//
+//                break;
+//
+//            case XdagEvent.en_event_update_state:
+//                if (event != null && event.balance != null && !event.balance.equals("Not ready")) {
+////                    if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+////                        xdagProgressDialog.dismiss();
+////                    }
+//                } else {
+//                }
+//                break;
+//            case XdagEvent.en_event_nothing_transfer:
+//            case XdagEvent.en_event_balance_too_small:
+//            case XdagEvent.en_event_invalid_recv_address:
+//            case XdagEvent.en_event_xdag_transfered:
+//                ToastUtil.showShort(SendCoinActivity.this,getString(R.string.xdag_xfer_error));
+//                if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+//                    xdagProgressDialog.dismiss();
+//                }
+//                break;
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
@@ -164,14 +185,25 @@ public class SendCoinActivity extends BaseActivity implements View.OnClickListen
     private void onContractsClick() {
     }
 
+//    @Override
+//    public void onAuthInputComplete(String authInfo) {
+//        Log.i(Constants.TAG, "auth info is " + authInfo);
+//        //notify native thread
+//        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
+//        xdagWrapper.XdagNotifyMsg(authInfo);
+//    }
     @Override
     public void onAuthInputComplete(String authInfo) {
-        Log.i(Constants.TAG, "auth info is " + authInfo);
+        Log.i(Constants.TAG,"auth info is " + authInfo);
         //notify native thread
-        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-        xdagWrapper.XdagNotifyMsg(authInfo);
+        if (mService != null) {
+            mService.xdagNotifyMsg(authInfo);
+        }
+//        Intent intent = new Intent(this,XdagService.class);
+//        intent.putExtra(Constants.XDAG_EVENT_TYPE,XdagService.MSG_XdagNotifyMsg);
+//        intent.putExtra(Constants.XDAG_NOTIFY_MSG,authInfo);
+//        startService(intent);
     }
-
     private void findViews() {
 
         ivTitleLeft = (ImageView) findViewById(R.id.iv_title_left);

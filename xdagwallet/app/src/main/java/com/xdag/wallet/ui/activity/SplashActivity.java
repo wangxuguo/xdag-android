@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 import com.xdag.wallet.R;
+import com.xdag.wallet.XdagService;
 import com.xdag.wallet.model.XdagWalletModel;
 import com.xdag.wallet.utils.FileEncryptUtils;
 import com.xdag.wallet.utils.FileUtils;
@@ -41,6 +42,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         initPermission();
+
         boolean isCurrentLegal = checkCurrentWalletIsLegal();
         boolean isBackuped = hasBackupWalltet();
         if (!isCurrentLegal&&!isCurrentLegal) {
@@ -142,8 +144,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void gotoMain(boolean isStartXdagProcess) {
-//        Intent intent = new Intent(this, XdagMainActivity.class);
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, XdagMainActivity.class);
+//        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("isStartXdagProcess",isStartXdagProcess);
         startActivity(intent);
     }

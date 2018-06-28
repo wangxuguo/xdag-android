@@ -107,7 +107,13 @@
             android:name=".ui.activity.MultilingualSettingsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <service android:name=".XdagService"/>
+        <service android:name="com.xdag.wallet.XdagService">
+            <intent-filter>
+                <action android:name="com.xdag.wallet.XdagService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </service>
     </application>
 
 </manifest>

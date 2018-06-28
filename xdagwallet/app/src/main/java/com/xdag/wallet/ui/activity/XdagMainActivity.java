@@ -78,6 +78,7 @@ public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xdag_main);
+
 //        isConnected = getIntent().getBooleanExtra("isStartXdagProcess",false);
         EventBus.getDefault().register(this);
         propertyFragment = new PropertyFragment();
@@ -98,13 +99,22 @@ public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFrag
         initXdagFiles();
 //        connectToPool();
     }
+    public void onServiceDisConnectedToBinder() {
+        super.onServiceDisConnectedToBinder();
+    }
 
+    public void onServiceConnectedToBinder() {
+        super.onServiceConnectedToBinder();
+        if(mService != null && !mService.IsConnected()) {
+            connectToPool();
+        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
 //        initXdagFiles();
-        if(mService == null || !mService.IsConnected()) {
+        if(mService != null && !mService.IsConnected()) {
             connectToPool();
         }
     }
@@ -114,29 +124,28 @@ public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFrag
             if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
                 xdagProgressDialog.dismiss();
             }
-            if (event.eventType == XdagEvent.en_event_type_pwd || event.eventType == XdagEvent.en_event_type_pwd
-                    || event.eventType == XdagEvent.en_event_retype_pwd || event.eventType == XdagEvent.en_event_set_rdm) {
-                Bundle bundle = new Bundle();
-                bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this, event.eventType));
-                AuthDialogFragment authDialogFragment = new AuthDialogFragment();
-                authDialogFragment.setArguments(bundle);
-                authDialogFragment.setAuthHintInfo(XdagUtils.GetAuthHintString(this, event.eventType));
-                authDialogFragment.show(getFragmentManager(), "Auth Dialog");
-            }
+
+        }else if (event.eventType == XdagEvent.en_event_type_pwd || event.eventType == XdagEvent.en_event_type_pwd
+                || event.eventType == XdagEvent.en_event_retype_pwd || event.eventType == XdagEvent.en_event_set_rdm) {
+            Bundle bundle = new Bundle();
+            bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this, event.eventType));
+            AuthDialogFragment authDialogFragment = new AuthDialogFragment();
+            authDialogFragment.setArguments(bundle);
+            authDialogFragment.setCancelable(false);
+            authDialogFragment.setAuthHintInfo(XdagUtils.GetAuthHintString(this, event.eventType));
+            authDialogFragment.show(getFragmentManager(), "Auth Dialog");
         }
+
 
     }
 
     private void connectToPool() {
 //        String poolAddr = getContext().getSharedPreferences(Constants.SPSetting, Context.MODE_PRIVATE).getString(Constants.XDAG_POOL_ADDRESS,Constants.DefaultPoolAddress);
         String poolAddr = Constants.DefaultPoolAddress;
-
-        Message remoteMsg = Message.obtain(null, XdagService.MSG_CONNECT_TO_POOL, 0, 0,poolAddr);
-        try {
-            messenger.send(remoteMsg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        if (mService != null) {
+            mService.startConnectToPool(poolAddr);
         }
+
         if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
             xdagProgressDialog.dismiss();
         }
@@ -180,8 +189,13 @@ public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFrag
     public void onAuthInputComplete(String authInfo) {
         Log.i(Constants.TAG,"auth info is " + authInfo);
         //notify native thread
-        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-        xdagWrapper.XdagNotifyMsg(authInfo);
+        if (mService != null) {
+            mService.xdagNotifyMsg(authInfo);
+        }
+//        Intent intent = new Intent(this,XdagService.class);
+//        intent.putExtra(Constants.XDAG_EVENT_TYPE,XdagService.MSG_XdagNotifyMsg);
+//        intent.putExtra(Constants.XDAG_NOTIFY_MSG,authInfo);
+//        startService(intent);
     }
 
 
@@ -209,13 +223,11 @@ public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFrag
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
-        Message remoteMsg = Message.obtain(null, XdagService.MSG_DISCONNECT_FROM_POOL, 0, 0);
-        try {
-            messenger.send(remoteMsg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        if(mService!=null){
+            mService.disConnectToPool();
+        }else {
+            stopService(new Intent(XdagService.class.getName()));
         }
-
         super.onDestroy();
     }
 }
