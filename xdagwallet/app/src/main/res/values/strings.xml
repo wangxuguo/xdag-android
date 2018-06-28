@@ -106,4 +106,7 @@
     <string name="xfer_accout_cannot_zero">xfer accout cannot be zero</string>
     <string name="please_check_xfer_accout">please check xfe accout legal</string>
     <string name="xdag_xfer_error">xdag_xfer_error</string>
+
+    <!-- Notification -->
+    <string name="xdag_is_running">xdag is running</string>
 </resources>

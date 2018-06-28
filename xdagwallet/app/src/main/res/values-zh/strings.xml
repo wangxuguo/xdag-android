@@ -85,4 +85,8 @@
     <string name="xfer_accout_cannot_zero">转账金额不能为0</string>
     <string name="please_check_xfer_accout">请检查转账金额</string>
     <string name="xdag_xfer_error">xdag转账失败</string>
+
+
+    <!-- Notification -->
+    <string name="xdag_is_running">xdag 正在运行</string>
 </resources>

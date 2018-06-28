@@ -1,11 +1,17 @@
 package com.xdag.wallet.ui.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.IBinder;
 import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -29,8 +35,10 @@ import com.xdag.wallet.AuthDialogFragment;
 import com.xdag.wallet.MyActivityManager;
 import com.xdag.wallet.R;
 import com.xdag.wallet.XdagEvent;
+import com.xdag.wallet.XdagService;
 import com.xdag.wallet.XdagWrapper;
 import com.xdag.wallet.model.Constants;
+import com.xdag.wallet.model.XdagState;
 import com.xdag.wallet.ui.fragment.ContactsFragment;
 import com.xdag.wallet.ui.fragment.PropertyFragment;
 import com.xdag.wallet.ui.fragment.SettingsFragment;
@@ -45,7 +53,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.util.ArrayList;
 
-public class XdagMainActivity extends AppCompatActivity implements AuthDialogFragment.AuthInputListener{
+public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFragment.AuthInputListener{
 
     private static final String TAG = Constants.TAG;
 
@@ -64,63 +72,14 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
     private ContactsFragment contactsFragment;
     private SettingsFragment settingsFragment;
 
-    private HandlerThread xdagProcessThread;
-    private Handler xdagHandler;
-    private boolean isConnected;
     private XdagProgressDialog xdagProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xdag_main);
-        isConnected = getIntent().getBooleanExtra("isStartXdagProcess",false);
+//        isConnected = getIntent().getBooleanExtra("isStartXdagProcess",false);
         EventBus.getDefault().register(this);
-        xdagProcessThread = new HandlerThread("XdagProcessThread");
-        xdagProcessThread.start();
-        xdagHandler = new Handler(xdagProcessThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                Log.i(TAG, "handleMessage  " + msg.what);
-                switch (msg.arg1) {
-                    case MSG_CONNECT_TO_POOL:
-                        Log.i(TAG, "receive msg connect to the pool thread id " + Thread.currentThread().getId());
-                        Bundle data = msg.getData();
-                        String poolAddr = data.getString("pool");
-                        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-                        xdagWrapper.XdagConnectToPool(poolAddr);
-
-                        break;
-                    case MSG_DISCONNECT_FROM_POOL:
-
-
-                        break;
-                    case MSG_XFER_XDAG_COIN:
-
-
-                        break;
-                    case MSG_DISSMIS_PROGRESS:
-//                        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-//                            xdagProgressDialog.dismiss();
-//                        }
-                    case MSG_SHOW_PROGRESS:
-//                        XdagProgressDialog.Builder builder = new XdagProgressDialog.Builder(XdagMainActivity.this);
-////                        builder.setTitle()
-//                        builder.setMessage(getString(R.string.wallet_connecting_to_pool));
-//                        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-//                            xdagProgressDialog.dismiss();
-//                            xdagProgressDialog = null;
-//                        }
-//                        xdagProgressDialog = builder.create();
-//                        xdagProgressDialog.show();
-                        break;
-                    default: {
-                        Log.e(TAG, "unkown command from ui");
-                    }
-                    break;
-                }
-            }
-        };
-
         propertyFragment = new PropertyFragment();
         contactsFragment = new ContactsFragment();
         settingsFragment = new SettingsFragment();
@@ -145,84 +104,39 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
     protected void onResume() {
         super.onResume();
 //        initXdagFiles();
-        if(!isConnected) {
+        if(mService == null || !mService.IsConnected()) {
             connectToPool();
         }
     }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void ProcessXdagEvent(XdagEvent event) {
-//        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
-//        Log.i(TAG, "event event type is " + event.eventType);
-//        Log.i(TAG, "event account is " + event.address);
-//        Log.i(TAG, "event balace is " + event.balance);
-//        Log.i(TAG, "event state is " + event.state);
-        if(!MyActivityManager.getInstance().getCurrentActivity().getLocalClassName().equals(this.getLocalClassName())){
-            Log.i(TAG, "CurrentActivity:"+MyActivityManager.getInstance().getCurrentActivity().getLocalClassName()+"!equals " + this.getLocalClassName());
-            return;
-        }
-        switch (event.eventType) {
-            case XdagEvent.en_event_set_pwd:
-                ToastUtil.showShort(this,getString(R.string.please_check_wallet_file));
-                break;
-            case XdagEvent.en_event_type_pwd:
-            case XdagEvent.en_event_retype_pwd:
-            case XdagEvent.en_event_set_rdm:
+    public void onEvent(XdagState event) {
+        if(event.isConnect){
+            if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+                xdagProgressDialog.dismiss();
+            }
+            if (event.eventType == XdagEvent.en_event_type_pwd || event.eventType == XdagEvent.en_event_type_pwd
+                    || event.eventType == XdagEvent.en_event_retype_pwd || event.eventType == XdagEvent.en_event_set_rdm) {
                 Bundle bundle = new Bundle();
-                bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this,event.eventType));
+                bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this, event.eventType));
                 AuthDialogFragment authDialogFragment = new AuthDialogFragment();
                 authDialogFragment.setArguments(bundle);
-                authDialogFragment.setAuthHintInfo(XdagUtils.GetAuthHintString(this,event.eventType));
+                authDialogFragment.setAuthHintInfo(XdagUtils.GetAuthHintString(this, event.eventType));
                 authDialogFragment.show(getFragmentManager(), "Auth Dialog");
-
-                break;
-
-            case XdagEvent.en_event_update_state:
-
-                if (event != null && event.balance != null && !event.balance.equals("Not ready")) {
-//                    mHandler.sendEmptyMessage(MSG_DISSMIS_PROGRESS);
-//                    if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-//                        xdagProgressDialog.dismiss();
-//                        xdagProgressDialog = null;
-//                    }
-                    if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-                        xdagProgressDialog.dismiss();
-                    }
-                    Log.i(TAG, "loadingLayout GONE");
-//                    loadingLayout.setVisibility(View.GONE);
-                    isConnected = true;
-                }else {
-                    isConnected = false;
-                }
-//                Log.i(TAG, "update xdag  ui ");
-//                account.setText(event.balance);
-//                xdagAccount.setText(event.balance);
-//                if(is)
-//                tvBalance.setText(event.balance);
-//                tvStatus.setText(event.state);
-
-                break;
-
+            }
         }
+
     }
 
-
-
-
-
     private void connectToPool() {
-//        loadingLayout.setVisibility(View.VISIBLE);
 //        String poolAddr = getContext().getSharedPreferences(Constants.SPSetting, Context.MODE_PRIVATE).getString(Constants.XDAG_POOL_ADDRESS,Constants.DefaultPoolAddress);
         String poolAddr = Constants.DefaultPoolAddress;
-        Message msg = Message.obtain();
-        Bundle data = new Bundle();
-        data.putString("pool", poolAddr);
-        msg.arg1 = MSG_CONNECT_TO_POOL;
-        msg.setData(data);
-        xdagHandler.sendMessage(msg);
 
-//        XdagProgressDialog.Builder builder = new XdagProgressDialog.Builder(this);
-//        builder.setMessage(getString(R.string.wallet_connecting_to_pool));
+        Message remoteMsg = Message.obtain(null, XdagService.MSG_CONNECT_TO_POOL, 0, 0,poolAddr);
+        try {
+            messenger.send(remoteMsg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
             xdagProgressDialog.dismiss();
         }
@@ -294,10 +208,14 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
 
     @Override
     protected void onDestroy() {
-
         EventBus.getDefault().unregister(this);
-        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-        xdagWrapper.XdagDisConnectFromPool();
+        Message remoteMsg = Message.obtain(null, XdagService.MSG_DISCONNECT_FROM_POOL, 0, 0);
+        try {
+            messenger.send(remoteMsg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
         super.onDestroy();
     }
 }
