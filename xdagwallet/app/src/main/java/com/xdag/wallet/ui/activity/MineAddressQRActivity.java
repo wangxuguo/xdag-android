@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class MineAddressQRActivity extends BaseActivity implements View.OnClickL
     ImageView iv_qr;
     TextView tv_xdag_address;
     Button btn_copy_address;
+    private String xdag_address;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,11 +49,11 @@ public class MineAddressQRActivity extends BaseActivity implements View.OnClickL
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ProcessXdagEvent(XdagEvent event) {
-        Log.i(TAG,"process msg in Thread " + Thread.currentThread().getId());
-        Log.i(TAG,"event event type is " + event.eventType);
-        Log.i(TAG,"event account is " + event.address);
-        Log.i(TAG,"event balace is " + event.balance);
-        Log.i(TAG,"event state is " + event.state);
+//        Log.i(TAG,"process msg in Thread " + Thread.currentThread().getId());
+//        Log.i(TAG,"event event type is " + event.eventType);
+//        Log.i(TAG,"event account is " + event.address);
+//        Log.i(TAG,"event balace is " + event.balance);
+//        Log.i(TAG,"event state is " + event.state);
 
         switch (event.eventType){
             case XdagEvent.en_event_type_pwd:
@@ -61,8 +63,14 @@ public class MineAddressQRActivity extends BaseActivity implements View.OnClickL
             break;
             case XdagEvent.en_event_update_state:
             {
-                Log.i(TAG,"update xdag  ui ");
+//                Log.i(TAG,"update xdag  ui ");
                 tv_xdag_address.setText(event.address);
+                if(TextUtils.isEmpty(xdag_address)){
+                    xdag_address = event.address;
+                    getSharedPreferences(Constants.SPSetting,MODE_PRIVATE).edit().putString(Constants.XDAG_ADDRESS,xdag_address).commit();
+                    initQRCode();
+                }else {
+                }
 //                tvBalance.setText(event.balance);
 //                tvStatus.setText(event.state);
             }
@@ -73,9 +81,17 @@ public class MineAddressQRActivity extends BaseActivity implements View.OnClickL
     private void initViews() {
         iv_title_left.setOnClickListener(this);
         btn_copy_address.setOnClickListener(this);
-        Bitmap bitmap = ZXingUtils.createQRImage("adka;dfjakd", DensityUtils.dp2px(this, 200), DensityUtils.dp2px(this, 200));
-
-        iv_qr.setImageBitmap(bitmap);
+        xdag_address = getSharedPreferences(Constants.SPSetting,MODE_PRIVATE).getString(Constants.XDAG_ADDRESS,"");
+        initQRCode();
+    }
+    private void initQRCode(){
+        if(TextUtils.isEmpty(xdag_address)) {
+            Bitmap bitmap = ZXingUtils.createQRImage(Constants.DefaultXDAGAddress, DensityUtils.dp2px(this, 200), DensityUtils.dp2px(this, 200));
+            iv_qr.setImageBitmap(bitmap);
+        }else {
+            Bitmap bitmap = ZXingUtils.createQRImage(xdag_address, DensityUtils.dp2px(this, 200), DensityUtils.dp2px(this, 200));
+            iv_qr.setImageBitmap(bitmap);
+        }
     }
 
     private void findViews() {

@@ -17,6 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xdag.wallet.R;
+import com.xdag.wallet.XdagWrapper;
+
+import java.text.DecimalFormat;
 
 /**
  *
@@ -41,14 +44,16 @@ public class XdagConfirmXferInfoPopWindow extends PopupWindow implements View.On
     private TextView tvSendAddress;
     private TextView tvAmount;
     private Button btnConfirm;
+    private OkListener okClickListener;
 
 
-    public XdagConfirmXferInfoPopWindow(Context context, String address, String my_address, double account) {
+    public XdagConfirmXferInfoPopWindow(Context context, String address, String my_address, double account, OkListener listener) {
         super(context);
         mContext = context;
         this.address = address;
         this.my_address = my_address;
         this.account = account;
+        this.okClickListener = listener;
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setOutsideTouchable(false);
@@ -64,10 +69,12 @@ public class XdagConfirmXferInfoPopWindow extends PopupWindow implements View.On
         findView();
         // 添加菜单视图
         this.setContentView(mMain);
-        tvOperationInformation.setText(mContext.getString(R.string.receive_coin));
+        tvOperationInformation.setText(mContext.getString(R.string.send_coin));
         tvReceiveAddress.setText(address);
         tvSendAddress.setText(my_address);
-        tvAmount.setText(account+""+mContext.getString(R.string.xdag));
+        //DecimalFormat df = new DecimalFormat("0.##"); // ##表示2位小数
+        DecimalFormat df = new DecimalFormat("0.#########");
+        tvAmount.setText(df.format(account)+"   "+mContext.getString(R.string.xdag));
         btnConfirm.setOnClickListener(this);
     }
 
@@ -126,7 +133,10 @@ public class XdagConfirmXferInfoPopWindow extends PopupWindow implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_confirm:
-
+                if(okClickListener!=null){
+                    okClickListener.onClick(address,account);
+                }
+                dismiss();
                 break;
         }
     }
@@ -135,5 +145,8 @@ public class XdagConfirmXferInfoPopWindow extends PopupWindow implements View.On
         mMain.startAnimation(mOut_PopupwindAnimation);
     }
 
+    public interface OkListener{
+       void onClick(String address,double account);
+    }
 
 }

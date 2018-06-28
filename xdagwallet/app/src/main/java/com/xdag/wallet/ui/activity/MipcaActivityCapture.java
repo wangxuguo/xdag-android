@@ -37,7 +37,7 @@ import java.util.Vector;
  * 扫描二维码页面
  */
 public class MipcaActivityCapture extends BaseActivity implements Callback {
-
+    private static final String TAG = "qrCode";
     private CaptureActivityHandler handler;
     private ImageView iv_title_left;
     private ViewfinderView viewfinderView;
@@ -64,19 +64,6 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
         if(!PermissionUtils.checkCamera()){
             checkPermissions(Manifest.permission.CAMERA);
         }
-
-        // ViewUtil.addTopView(getApplicationContext(), this,
-        // R.string.scan_card);
-
-        // Button mButtonBack = (Button) findViewById(R.id.button_back);
-        // mButtonBack.setOnClickListener(new OnClickListener() {
-        //
-        // @Override
-        // public void onClick(View v) {
-        // MipcaActivityCapture.this.finish();
-        //
-        // }
-        // });
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
         iv_title_left = (ImageView) findViewById(R.id.iv_title_left);
@@ -117,7 +104,7 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
             initCamera(surfaceHolder);
         } else {
             surfaceHolder.addCallback(this);
-            surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//            surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         }
         decodeFormats = null;
         characterSet = null;
@@ -158,6 +145,7 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
      * @param barcode
      */
     public void handleDecode(Result result, Bitmap barcode) {
+        Log.d(TAG, "handleDecode扫码结束,结果为:");
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
         String resultString = result.getText();
@@ -165,13 +153,13 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
             Toast.makeText(MipcaActivityCapture.this, "Scan failed!",
                     Toast.LENGTH_SHORT).show();
         } else {
-            Log.d("qrCode", "扫码结束,结果为:" + resultString);
+            Log.d(TAG, "扫码结束,结果为:" + resultString);
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
             bundle.putString("result", resultString);
             // bundle.putParcelable("bitmap", barcode);
             resultIntent.putExtras(bundle);
-            this.setResult(105, resultIntent);
+            this.setResult(RESULT_OK, resultIntent);
         }
         MipcaActivityCapture.this.finish();
     }

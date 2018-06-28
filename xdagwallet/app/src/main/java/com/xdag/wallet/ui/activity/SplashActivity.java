@@ -142,7 +142,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void gotoMain(boolean isStartXdagProcess) {
-        Intent intent = new Intent(this, XdagMainActivity.class);
+//        Intent intent = new Intent(this, XdagMainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("isStartXdagProcess",isStartXdagProcess);
         startActivity(intent);
     }

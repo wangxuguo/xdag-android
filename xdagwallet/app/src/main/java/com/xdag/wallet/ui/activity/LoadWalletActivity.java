@@ -193,11 +193,11 @@ public class LoadWalletActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ProcessXdagEvent(XdagEvent event) {
         XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
-        Log.i(TAG, "event event type is " + event.eventType);
-        Log.i(TAG, "event account is " + event.address);
-        Log.i(TAG, "event balace is " + event.balance);
-        Log.i(TAG, "event state is " + event.state);
+//        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
+//        Log.i(TAG, "event event type is " + event.eventType);
+//        Log.i(TAG, "event account is " + event.address);
+//        Log.i(TAG, "event balace is " + event.balance);
+//        Log.i(TAG, "event state is " + event.state);
 
         switch (event.eventType) {
             case XdagEvent.en_event_type_pwd:
@@ -243,7 +243,7 @@ public class LoadWalletActivity extends BaseActivity {
                     }
                 }else {
                 }
-                Log.i(TAG, "update xdag  ui ");
+//                Log.i(TAG, "update xdag  ui ");
                 break;
 
         }

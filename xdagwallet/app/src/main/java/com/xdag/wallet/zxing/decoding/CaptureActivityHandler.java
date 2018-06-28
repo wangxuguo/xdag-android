@@ -39,7 +39,7 @@ import java.util.Vector;
  */
 public final class CaptureActivityHandler extends Handler {
 
-	private static final String TAG = CaptureActivityHandler.class.getSimpleName();
+	private static final String TAG =  "qrCode" ;//CaptureActivityHandler.class.getSimpleName();
 
 	private final MipcaActivityCapture activity;
 	private final DecodeThread decodeThread;

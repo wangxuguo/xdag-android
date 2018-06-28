@@ -16,26 +16,34 @@
         android:layout_alignParentBottom="true"
         android:background="@color/common_activity_bg"
         android:orientation="vertical">
-
+        <LinearLayout
+            android:id="@+id/li_title_detail"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/item_height_big"
+            android:layout_width="30dp"
+            android:layout_marginLeft="@dimen/common_margin"
+            android:layout_height="30dp"
             android:layout_alignBaseline="@+id/tv_pay_detail"
-            android:src="@drawable/iv_close" />
+            android:src="@drawable/icon_close_grey" />
 
         <TextView
             android:id="@+id/tv_pay_detail"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/item_height_big"
+            android:layout_height="@dimen/item_height_normal"
             android:layout_centerHorizontal="true"
             android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginRight="60dp"
             android:text="@string/pay_detail" />
-
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_close"
+            android:layout_below="@+id/li_title_detail"
             android:orientation="vertical">
 
             <View
@@ -46,7 +54,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:layout_marginTop="@dimen/common_margin"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
                 android:orientation="horizontal">
 
                 <TextView
@@ -59,7 +71,8 @@
                     android:id="@+id/tv_operation_information"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_marginLeft="@dimen/common_margin"
+                    android:layout_weight="1"
                     android:text="@string/send_coin" />
             </LinearLayout>
 
@@ -67,10 +80,16 @@
                 android:id="@+id/devider2"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
                 android:background="@color/divider_bg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -84,67 +103,97 @@
                     android:id="@+id/tv_receive_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4" />
+                    android:layout_marginLeft="@dimen/common_margin"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <View
                 android:id="@+id/devider3"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
                 android:background="@color/divider_bg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_send_address_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
                     android:text="@string/send_address" />
 
                 <TextView
                     android:id="@+id/tv_send_address"
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/common_margin"
+                    android:singleLine="true"
+                    android:ellipsize="middle"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <View
                 android:id="@+id/devider4"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
                 android:background="@color/divider_bg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin_big"
+                android:layout_marginTop="@dimen/common_margin_big"
+                android:layout_marginRight="@dimen/common_margin"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_amount_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
+                    android:textStyle="bold"
+                    android:textSize="15sp"
                     android:text="@string/amount" />
 
                 <TextView
                     android:id="@+id/tv_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4" />
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:textColor="@color/color_black"
+                    android:textSize="15sp"
+                    />
             </LinearLayout>
-
+            <View
+                android:id="@+id/devider5"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
+                android:layout_height="1px"
+                android:background="@color/divider_bg" />
             <Button
                 android:id="@+id/btn_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/common_margin_big"
-                android:layout_marginRight="@dimen/common_margin_big"
+                android:layout_marginLeft="@dimen/common_margin"
+                android:layout_marginRight="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:layout_marginTop="@dimen/common_margin"
                 android:background="@drawable/common_btn_bg"
                 android:text="@string/make_sure" />
         </LinearLayout>

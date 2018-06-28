@@ -82,4 +82,7 @@
     <string name="loading_wallet_tips">需要连接主网络数据，正常需要2-5分钟</string>
     <string name="load_wallet_error">导入钱包出错</string>
     <string name="please_check_wallet_file">请检查钱包文件wallet.dat及dnet_key.dat文件</string>
+    <string name="xfer_accout_cannot_zero">转账金额不能为0</string>
+    <string name="please_check_xfer_accout">请检查转账金额</string>
+    <string name="xdag_xfer_error">xdag转账失败</string>
 </resources>

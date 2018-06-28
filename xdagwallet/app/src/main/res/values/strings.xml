@@ -37,7 +37,7 @@
     <string name="operation_information">Opreation Information</string>
     <string name="receive_address">Receive Address</string>
     <string name="send_address">Send Address</string>
-    <string name="amount">Account</string>
+    <string name="amount">Amount</string>
     <string name="xdag">XDAG</string>
     <string name="finish">finish</string>
     <string name="enter_name">enter name</string>
@@ -103,4 +103,7 @@
     <string name="please_grant_permission">please_grant_permission</string>
     <string name="load_wallet_error">Load Wallet Error</string>
     <string name="please_check_wallet_file">please check wallet file</string>
+    <string name="xfer_accout_cannot_zero">xfer accout cannot be zero</string>
+    <string name="please_check_xfer_accout">please check xfe accout legal</string>
+    <string name="xdag_xfer_error">xdag_xfer_error</string>
 </resources>

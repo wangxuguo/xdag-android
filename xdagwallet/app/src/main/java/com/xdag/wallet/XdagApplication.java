@@ -81,7 +81,8 @@ public class XdagApplication extends MultiDexApplication {
     }
 
     private Locale getSetLocale() {
-        String sta = getSharedPreferences(Constants.SPSetting,MODE_PRIVATE).getString(Constants.LANGUAGE,"en");
+        Locale locale = Locale.getDefault();
+        String sta = getSharedPreferences(Constants.SPSetting,MODE_PRIVATE).getString(Constants.LANGUAGE,locale.getLanguage());
         Locale myLocale = new Locale(sta);
         return myLocale;
     }

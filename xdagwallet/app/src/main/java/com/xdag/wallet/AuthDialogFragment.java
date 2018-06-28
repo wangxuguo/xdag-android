@@ -80,7 +80,9 @@ public class AuthDialogFragment extends DialogFragment {
         } else {
             throw new RuntimeException(context.toString() + " must implement listener");
         }
-        title = getArguments().getCharSequence("title");
+        if(getArguments()!=null) {
+            title = getArguments().getCharSequence("title");
+        }
     }
 
     @Override

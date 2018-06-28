@@ -110,7 +110,7 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.tv_receive_coin:
                 Intent receive = new Intent(getActivity(), MineAddressQRActivity.class);
-                startActivityForResult(receive, REQUESTCODE_SCAN);
+                startActivityForResult(receive, REQUESTCODE_RECEIVE);
                 break;
             case R.id.tv_scan:
                 Intent scan = new Intent(getActivity(), MipcaActivityCapture.class);
@@ -120,11 +120,11 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ProcessXdagEvent(XdagEvent event) {
-        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
-        Log.i(TAG, "event event type is " + event.eventType);
-        Log.i(TAG, "event account is " + event.address);
-        Log.i(TAG, "event balace is " + event.balance);
-        Log.i(TAG, "event state is " + event.state);
+//        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
+//        Log.i(TAG, "event event type is " + event.eventType);
+//        Log.i(TAG, "event account is " + event.address);
+//        Log.i(TAG, "event balace is " + event.balance);
+//        Log.i(TAG, "event state is " + event.state);
 
         switch (event.eventType) {
             case XdagEvent.en_event_type_pwd:
@@ -136,7 +136,7 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
 
                 if (event != null && event.balance != null && !event.balance.equals("Not Ready")) {
                 }
-                Log.i(TAG, "update xdag  ui ");
+//                Log.i(TAG, "update xdag  ui ");
                 account.setText(event.balance);
                 xdagAccount.setText(event.balance);
 //                if(is)
@@ -156,6 +156,9 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                     if (data != null) {
                         String resultString = data.getStringExtra("result");
                         Log.e(Constants.TAG, "scan resultString: " + resultString);
+                        Intent intent = new Intent(getActivity(), SendCoinActivity.class);
+                        intent.putExtra(Constants.CONTRACT_ADDRESS,resultString);
+                        startActivity(intent);
                     }
                 }
                 break;

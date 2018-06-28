@@ -1,5 +1,6 @@
 package com.xdag.wallet.ui.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -87,7 +88,6 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
                         String poolAddr = data.getString("pool");
                         XdagWrapper xdagWrapper = XdagWrapper.getInstance();
                         xdagWrapper.XdagConnectToPool(poolAddr);
-                        xdagHandler.sendEmptyMessage(MSG_SHOW_PROGRESS);
 
                         break;
                     case MSG_DISCONNECT_FROM_POOL:
@@ -152,11 +152,11 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ProcessXdagEvent(XdagEvent event) {
-        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
-        Log.i(TAG, "event event type is " + event.eventType);
-        Log.i(TAG, "event account is " + event.address);
-        Log.i(TAG, "event balace is " + event.balance);
-        Log.i(TAG, "event state is " + event.state);
+//        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
+//        Log.i(TAG, "event event type is " + event.eventType);
+//        Log.i(TAG, "event account is " + event.address);
+//        Log.i(TAG, "event balace is " + event.balance);
+//        Log.i(TAG, "event state is " + event.state);
         if(!MyActivityManager.getInstance().getCurrentActivity().getLocalClassName().equals(this.getLocalClassName())){
             Log.i(TAG, "CurrentActivity:"+MyActivityManager.getInstance().getCurrentActivity().getLocalClassName()+"!equals " + this.getLocalClassName());
             return;
@@ -194,7 +194,7 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
                 }else {
                     isConnected = false;
                 }
-                Log.i(TAG, "update xdag  ui ");
+//                Log.i(TAG, "update xdag  ui ");
 //                account.setText(event.balance);
 //                xdagAccount.setText(event.balance);
 //                if(is)
@@ -252,6 +252,14 @@ public class XdagMainActivity extends AppCompatActivity implements AuthDialogFra
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for(int i =0;i < list.size() ; i ++){
+            list.get(i).onActivityResult(requestCode,resultCode,data);
+        }
     }
 
     @Override

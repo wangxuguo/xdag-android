@@ -20,5 +20,7 @@ public class Constants {
 
     public static final String CURRENCY_NAME = "currency_name";
     public static final String CURRENCY_SYMBOL = "currency_sysmbol";
+    public static final String XDAG_ADDRESS = "xdag_address";
+    public static final String DefaultXDAGAddress = "https://xdag.io";
     public static String DefaultPoolAddress = "xdagmine.com:13654";
 }
