@@ -1,8 +1,8 @@
-package com.xdag.wallet;
+package com.xdag.wallet.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -17,6 +17,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xdag.wallet.AuthDialogFragment;
+import com.xdag.wallet.R;
+import com.xdag.wallet.XdagEvent;
+import com.xdag.wallet.XdagWrapper;
+import com.xdag.wallet.ui.activity.XdagMainActivity;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,7 +31,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,AuthDialogFragment.AuthInputListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,AuthDialogFragment.AuthInputListener {
 
     private EditText txtPool;
     private TextView tvBalance;
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//        startActivity(new Intent(this,XdagMainActivity.class));
         initView();
         initData();
         initPermission();

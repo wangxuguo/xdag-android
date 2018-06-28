@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Xdag钱包</string>
+    <string name="title_activity_xdag_main">xdag钱包</string>
+    <string name="tab_main_property">资产</string>
+    <string name="tab_main_contracts">联系人</string>
+    <string name="tab_main_settings">我的</string>
+    <string name="action_settings">设置</string>
+    <string name="section_format">你好，我来自: %1$d</string>
+    <string name="multi_language">多语言</string>
+    <string name="message_center">消息中心</string>
+    <string name="currency_unit">货币单位</string>
+    <string name="help_center">帮助中心</string>
+    <string name="about_us">关于我们</string>
+    <string name="personal_center">个人中心</string>
+    <string name="currency_symbol">￥</string>
+    <string name="total_assets">总资产</string>
+    <string name="connect_to_pool">正在连接矿池</string>
+    <string name="wallet_management">钱包管理</string>
+    <string name="transaction_record">交易记录</string>
+    <string name="send_coin">发币</string>
+    <string name="receive_coin">收币</string>
+    <string name="scan">扫一扫</string>
+    <string name="receiver_address">接收方地址</string>
+    <string name="transfer_amount">转账金额</string>
+    <string name="note">备注</string>
+    <string name="next">下一步</string>
+    <string name="mine_xdag_address">XDAG 地址</string>
+    <string name="copy_address">复制地址</string>
+    <string name="confirm_pwd">请输入密码</string>
+    <string name="enter_pwd">请输入密码</string>
+    <string name="make_sure">确认</string>
+    <string name="wallet_pwd">钱包密码</string>
+    <string name="xdag_sending">XDAG 发送中·····</string>
+
+    <string name="operation_information">操作信息</string>
+    <string name="receive_address">接受地址</string>
+    <string name="send_address">发送地址</string>
+    <string name="amount">金额</string>
+    <string name="pay_detail">支付详情</string>
+    <string name="xdag">XDAG</string>
+    <string name="finish">完成</string>
+    <string name="enter_address">数字资产地址</string>
+    <string name="enter_name">请输入名称</string>
+    <string name="name_is_empty" >empty</string>
+    <string name="address_is_empty">empty</string>
+    <string name="create_wallet" >创建钱包</string>
+    <string name="load_wallet" >导入钱包</string>
+    <string name="save">保存</string>
+    <string name="xdag_pool_setting">矿池设置</string>
+    <string name="current_version">当前版本：%s</string>
+    <string name="use_agreement">使用协议</string>
+    <string name="version_log">版本日志</string>
+    <string name="check_update">检测新版</string>
+    <string name="wallet_name" >钱包名称</string>
+    <string name="pwd" >密码</string>
+    <string name="re_pwd" >重复密码</string>
+    <string name="keyword" >关键词</string>
+    <string name="service_srivacy" >我已经仔细阅读并同意<font color='#3E76EA'>服务及隐私条款</font></string>
+    <string name="dag_link_info">dagLink 是一款移动端轻钱包App，它是由XDAG世界基金会成员开发，旨在为用户提供安全放心、简单好用的数字资产钱包。</string>
+    <string name="wallet_notice">密码用于保护私钥和交易授权dagLink 不存储密码和钱包文件，也无法帮您找回，请务必牢记和备份，密码无法修改，请谨慎操作，妥善保存</string>
+    <string name="pwd_not_same">两次输入的密码不同</string>
+    <string name="change_pwd">修改密码</string>
+    <string name="backup_wallet">备份钱包</string>
+    <string name="set_default_wallet">设置默认钱包</string>
+    <string name="choose_file">选择文件</string>
+    <string name="backup_file_not_selected">未选择文件</string>
+    <string name="choose_wallet_file">选择文件</string>
+    <string name="copyed">已复制</string>
+    <string name="wallet_connecting_to_pool">钱包连接中···</string>
+    <string name="cancel">取消</string>
+    <string name="delete_wallet">删除钱包</string>
+    <string name="backup_file">备份钱包</string>
+    <string name="set_password">设置密码</string>
+    <string name="input_password">输入密码</string>
+    <string name="retype_password">再次输入密码</string>
+    <string name="set_random_keys">甚至随机数</string>
+    <string name="creating_wallet">钱包创建中···</string>
+    <string name="creating_wallet_tips">需要连接主网络数据，正常需要2-5分钟请耐心等待，创建完成后，请注意及时备份！</string>
+    <string name="please_grant_permission">please_grant_permission</string>
+    <string name="loading_wallet">钱包导入中···</string>
+    <string name="loading_wallet_tips">需要连接主网络数据，正常需要2-5分钟</string>
+    <string name="load_wallet_error">导入钱包出错</string>
+    <string name="please_check_wallet_file">请检查钱包文件wallet.dat及dnet_key.dat文件</string>
+    <string name="xfer_accout_cannot_zero">转账金额不能为0</string>
+    <string name="please_check_xfer_accout">请检查转账金额</string>
+    <string name="xdag_xfer_error">xdag转账失败</string>
+
+
+    <!-- Notification -->
+    <string name="xdag_is_running">xdag 正在运行</string>
+</resources>
