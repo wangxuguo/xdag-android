@@ -89,4 +89,5 @@
 
     <!-- Notification -->
     <string name="xdag_is_running">xdag 正在运行</string>
+    <string name="transfer_success">转账成功</string>
 </resources>

@@ -109,4 +109,5 @@
 
     <!-- Notification -->
     <string name="xdag_is_running">xdag is running</string>
+    <string name="transfer_success">transfer success</string>
 </resources>

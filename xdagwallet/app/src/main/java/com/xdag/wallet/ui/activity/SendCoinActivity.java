@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.xdag.wallet.AuthDialogFragment;
 import com.xdag.wallet.MyActivityManager;
 import com.xdag.wallet.R;
+import com.xdag.wallet.XdagBValanceChanged;
 import com.xdag.wallet.XdagEvent;
 import com.xdag.wallet.XdagWrapper;
 import com.xdag.wallet.model.Constants;
@@ -47,17 +48,25 @@ public class SendCoinActivity extends XdagBaseActivity implements View.OnClickLi
     //    EditText etTransferNote;
     Button btnNext;
     private XdagProgressDialog xdagProgressDialog;
+    private double changedAccount;
     private XdagConfirmXferInfoPopWindow.OkListener listener = new XdagConfirmXferInfoPopWindow.OkListener() {
         @Override
-        public void onClick(String address, double account) {
-
-
+        public void onClick(final String address, final double account) {
+            changedAccount = account;
             if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
                 xdagProgressDialog.dismiss();
             }
             xdagProgressDialog = new XdagProgressDialog(SendCoinActivity.this, getString(R.string.xdag_sending));
             xdagProgressDialog.show();
-            mService.XdagTransferTo(address,String.valueOf(account));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if(mService!=null){
+                        mService.XdagTransferTo(address,String.valueOf(account));
+                    }
+                }
+            }).start();
+//            mService.XdagTransferTo(address,String.valueOf(account));
 //            XdagWrapper xdagWrapper = XdagWrapper.getInstance();
 //            xdagWrapper.XdagXferToAddress(address, String.valueOf(account));
         }
@@ -85,8 +94,19 @@ public class SendCoinActivity extends XdagBaseActivity implements View.OnClickLi
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(XdagBValanceChanged xdagBValanceChanged){
+        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+            xdagProgressDialog.dismiss();
+//            if(xdagBValanceChanged.getBalance() - xdagBValanceChanged.getOldBalance() == changedAccount){
+                ToastUtil.showShort(this,getString(R.string.transfer_success));
+                finish();
+//            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(XdagState event) {
-        if(event!=null){
+        if(event==null){
             return;
         }
 

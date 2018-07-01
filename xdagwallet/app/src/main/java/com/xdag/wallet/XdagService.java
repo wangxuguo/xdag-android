@@ -57,6 +57,9 @@ public class XdagService extends Service {
     private boolean isConnected;
     private HandlerThread xdagProcessThread;
 
+    private double balance;
+    private boolean isBalanceInit;
+
     public void startConnectToPool(String poolAddr) {
         Message msg = xdagHandler.obtainMessage(MSG_CONNECT_TO_POOL, poolAddr);
         xdagHandler.sendMessage(msg);
@@ -213,6 +216,16 @@ public class XdagService extends Service {
                 if (event != null && event.balance != null && !event.balance.equals("Not ready")) {
                     Log.i(TAG, " Connected");
                     isConnected = true;
+                    if(!isBalanceInit){
+                        balance = Double.parseDouble(event.balance);
+                        isBalanceInit = true;
+                    }else {
+                        Double d = Double.parseDouble(event.balance);
+                        if(balance !=d){
+                            balance = d;
+                            EventBus.getDefault().post(new XdagBValanceChanged(d,balance));
+                        }
+                    }
                 } else {
                     isConnected = false;
                 }
@@ -221,10 +234,25 @@ public class XdagService extends Service {
 
                 } else {
                     lastUIState = xdagState2;
+                    Log.i(TAG, " XdagState  Changed");
                     EventBus.getDefault().post(xdagState2);
                 }
                 break;
 
+                //xfer  error
+            case XdagEvent.en_event_nothing_transfer:
+            case XdagEvent.en_event_balance_too_small:
+            case XdagEvent.en_event_invalid_recv_address:
+            case XdagEvent.en_event_xdag_transfered:
+                Log.i(TAG, " xfer error  eventType:  "+event.eventType);
+
+                break;
+            default:
+                Log.i(TAG, " unKnown event  eventType:  "+event.eventType+ " account " + event.address + " balace "
+                        + event.balance + " state " + event.state+" errorMsg: "+event.errorMsg+" addressLoadState "+event.addressLoadState
+                        + " balanceLoadState: "+event.balanceLoadState+" procedureType: "+event.procedureType
+                        + " programState "+event.programState+" logLevel "+event.logLevel);
+                break;
         }
     }
 
