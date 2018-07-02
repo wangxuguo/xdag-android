@@ -10,9 +10,13 @@ import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.xdag.wallet.db.DataBaseManager;
 import com.xdag.wallet.model.Constants;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.Locale;
 
 /**
@@ -29,7 +33,11 @@ public class XdagApplication extends MultiDexApplication {
         DataBaseManager.initDataBase(this);
 
         initMutilLilingual();
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
 
+        Fabric.with(this, crashlyticsKit, new Crashlytics(), new CrashlyticsNdk());
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
