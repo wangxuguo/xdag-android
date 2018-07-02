@@ -11,6 +11,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -137,6 +138,11 @@ public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFrag
         }
 
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
     }
 
     private void connectToPool() {

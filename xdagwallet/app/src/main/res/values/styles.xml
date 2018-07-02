@@ -30,10 +30,14 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@color/common_activity_bg</item>
-        <item name="android:windowBackground">@color/common_activity_bg</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
-
+<!--    <item name="android:windowBackground">@color/common_activity_bg</item>-->
     <style name="dialog_progress_style_" parent="android:Animation">
         <item name="@android:windowEnterAnimation">@anim/dialog_progress_in</item>
         <item name="@android:windowExitAnimation">@anim/dialog_progress_out</item>

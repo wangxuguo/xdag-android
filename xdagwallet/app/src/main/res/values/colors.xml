@@ -43,4 +43,5 @@
     <color name="text_blue_bg">#3E76EA</color>
     <color name="text_green_bg">#2CA69B</color>
     <color name="create_load_wallet_bg">#3E52B3</color>
+    <color name="dialog_progress_text_color">#089722</color>
 </resources>
