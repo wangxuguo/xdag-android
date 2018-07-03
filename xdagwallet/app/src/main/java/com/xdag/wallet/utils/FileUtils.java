@@ -23,6 +23,8 @@ public class FileUtils {
     public static final String XDAG_DATA_PATH = "xdag_data";
     public static final String XDAG_BACKUP_PATH = "xdag_backup";
 
+    //默认为wallet  其他为wallet1,wallet2...
+    public static final String WALLET_BANK_PATH_Pre = "wallet";
     /**
      *
      * @param destDirName

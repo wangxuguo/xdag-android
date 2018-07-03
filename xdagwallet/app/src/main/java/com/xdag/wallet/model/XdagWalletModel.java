@@ -5,6 +5,7 @@ import android.support.annotation.ColorInt;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.xdag.wallet.db.DataBaseManager;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Table(database = DataBaseManager.XdagDatabase.class)
 public class XdagWalletModel extends BaseModel implements Serializable {
     @Column
+    @Unique
     public String address;
     @Column
     public String name;
@@ -34,9 +36,10 @@ public class XdagWalletModel extends BaseModel implements Serializable {
     @Column
     public boolean isDeleted;
     @Column
+    @Unique
     public String walletMd5;
     @Column
-    public int type;  //钱包类型  0 创建  1 导入  3 备份文件中恢复
+    public int type;  //钱包类型  0 创建  1 导入  3 备份文件中恢复  2.钱包位置存放，app可能卸载后再次安装的
     public String getAddress() {
         return address;
     }

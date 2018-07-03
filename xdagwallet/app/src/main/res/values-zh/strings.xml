@@ -90,4 +90,6 @@
     <!-- Notification -->
     <string name="xdag_is_running">xdag 正在运行</string>
     <string name="transfer_success">转账成功</string>
+    <string name="default_wallet_name">default_wallet</string>
+    <string name="pay_attention_can_not_revert">Pay Attention,This Can Not Revert!</string>
 </resources>

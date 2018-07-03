@@ -9,15 +9,19 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.list.FlowQueryList;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 import com.xdag.wallet.R;
 import com.xdag.wallet.XdagService;
+import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.model.XdagWalletModel;
 import com.xdag.wallet.utils.FileEncryptUtils;
 import com.xdag.wallet.utils.FileUtils;
@@ -44,6 +48,29 @@ public class SplashActivity extends BaseActivity {
         initPermission();
 
         boolean isCurrentLegal = checkCurrentWalletIsLegal();
+        FlowQueryList<XdagWalletModel> list = SQLite.select()
+                .from(XdagWalletModel.class)
+                .flowQueryList();
+        list.getCount();
+        Log.e(Constants.TAG,"XdagWalletModel.size()"+list.size()+" getCount "+list.getCount());
+        if(list.size()>0){
+            //
+            Log.e(Constants.TAG,"XdagWalletModel.size()"+list.size());
+        }else {
+            XdagWalletModel model = new XdagWalletModel();
+            model.setWalletMd5(FileEncryptUtils.fileToMD5(FileUtils.WALLET_FILE));
+            model.setType(2);
+            model.setBankPath("");
+            model.setLocalPath("");
+            model.setName(getString(R.string.default_wallet_name));
+            model.setIcon("");
+            model.setDeleted(false);
+            model.setAmount(0);
+            model.setSourcePath("");
+            model.setAddress("");
+            FlowManager.getModelAdapter(XdagWalletModel.class).save(model);
+        }
+
         boolean isBackuped = hasBackupWalltet();
         if (!isCurrentLegal&&!isCurrentLegal) {
             TextView tv_create_wallet = (TextView) findViewById(R.id.tv_create_wallet);
@@ -100,6 +127,7 @@ public class SplashActivity extends BaseActivity {
     private boolean hasBackupWalltet(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ToastUtil.showShort(this,getString(R.string.please_grant_permission));
+            initPermission();
             return false;
         }
         String backFilePath = FileUtils.rootPath+"/"+FileUtils.XDAG_BACKUP_PATH;

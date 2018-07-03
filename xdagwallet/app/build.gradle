@@ -11,9 +11,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 Properties props = new Properties()
 props.load(new FileInputStream(file("signing.properties")))
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
 
 apply plugin: 'com.neenbedankt.android-apt'
 def dbflow_version = "4.1.2"
@@ -69,6 +66,7 @@ android {
             path "CMakeLists.txt"
         }
     }
+
 }
 
 dependencies {

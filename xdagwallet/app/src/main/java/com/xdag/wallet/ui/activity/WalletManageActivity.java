@@ -58,6 +58,7 @@ public class WalletManageActivity extends BaseActivity {
                             adapter.setData(list);
                             Log.d(Constants.TAG, "list size: " + list.size());
                             adapter.notifyDataSetChanged();
+                            adapter.setNofootbar();
                         }
                     }
                 }).execute();
@@ -75,6 +76,9 @@ public class WalletManageActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(WalletManageActivity.this));
         adapter.setData(list);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        adapter.setNofootbar();
+        adapter.setShowFootView(false);
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<XdagWalletModel>() {
             @Override
             public void onItemClick(View view, XdagWalletModel data) {
@@ -83,6 +87,7 @@ public class WalletManageActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
         adapter.setOnReloadClickListener(new BaseRecyclerViewAdapter.OnReloadClickListener() {
             @Override
             public void onClick() {

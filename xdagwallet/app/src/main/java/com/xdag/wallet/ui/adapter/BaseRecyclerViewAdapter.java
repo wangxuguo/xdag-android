@@ -64,7 +64,13 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_FOOTER) {
             View view = getView(parent, R.layout.rv_item_footer);
-            return mFooterViewHolder = new FooterViewHolder(view);
+            if(isShowFootView){
+                mFooterViewHolder = new FooterViewHolder(view);
+            }else {
+                mFooterViewHolder = new FooterViewHolder(view);
+                setNofootbar();
+            }
+            return mFooterViewHolder;
         } else {
             View view = getView(parent, mItemLayoutRes);
             final BaseViewHolder baseViewHolder = new BaseViewHolder(view);

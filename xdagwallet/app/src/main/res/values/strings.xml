@@ -110,4 +110,6 @@
     <!-- Notification -->
     <string name="xdag_is_running">xdag is running</string>
     <string name="transfer_success">transfer success</string>
+    <string name="default_wallet_name">default_wallet</string>
+    <string name="pay_attention_can_not_revert">Pay Attention,This Can Not Revert!</string>
 </resources>
