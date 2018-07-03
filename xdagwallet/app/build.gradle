@@ -9,7 +9,8 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-
+Properties props = new Properties()
+props.load(new FileInputStream(file("signing.properties")))
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -34,6 +35,20 @@ android {
         ndk {
             //abiFilters "armeabi-v7a","x86"
             abiFilters "armeabi-v7a"
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file(props['KEYSTORE_FILE'])      //签名文件
+            keyAlias props['KEY_ALIAS']
+            storePassword props['KEYSTORE_PASSWORD']
+            keyPassword props['KEY_PASSWORD']  //签名密码
+        }
+        debug {
+            storeFile file(props['DEBUG_KEYSTORE'])      //签名文件
+            keyAlias props['DEBUG_ALIAS']
+            storePassword props['DEBUG_KEYSTORE_PWD']
+            keyPassword props['DEBUG_KEY_PWD']  //签名密码
         }
     }
     buildTypes {
