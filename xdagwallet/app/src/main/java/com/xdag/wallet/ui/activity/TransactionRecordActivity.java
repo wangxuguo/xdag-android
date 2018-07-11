@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
@@ -114,15 +115,15 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TransactionsRecordBRVAdapter(list);
         recyclerView.setAdapter(adapter);
-//        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<XdagTransactionModel>() {
-//            @Override
-//            public void onItemClick(View view, XdagTransactionModel data) {
-//                Intent intent = new Intent(TransactionRecordActivity.this, TransactionRecordDetailActivity.class);
-//                intent.putExtra(Constants.XDAG_ADDRESS, address);
-//                intent.putExtra(Constants.XDAG_TRANSACTION_MODEL, data);
-//                startActivity(intent);
-//            }
-//        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(TransactionRecordActivity.this, TransactionRecordDetailActivity.class);
+                intent.putExtra(Constants.XDAG_ADDRESS, address);
+                intent.putExtra(Constants.XDAG_TRANSACTION_MODEL, list.get(position));
+                startActivity(intent);
+            }
+        });
 //        adapter.setLoadMore();
 //        adapter.setOnLoadMoreClickListener(loadMoreListener);
         footerView = getFooterView(0, new View.OnClickListener() {

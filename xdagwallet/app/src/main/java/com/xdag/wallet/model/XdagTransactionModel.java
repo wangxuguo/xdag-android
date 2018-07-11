@@ -25,7 +25,7 @@ public class XdagTransactionModel  extends BaseModel implements Serializable{
     @Column
     private double fee;
     @Column
-//    @Unique
+    @Unique
     private String hash;
     @Column
     @Unique

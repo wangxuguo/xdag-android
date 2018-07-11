@@ -73,7 +73,7 @@ public class TransactionManager {
                     case STARTGETTRANSACTIONINFO:
                         max = msg.arg1;
                         Log.e(TAG, "STARTGETTRANSACTIONINFO  max  " + max);
-                        curModelListIndex = addr_page;
+                        curModelListIndex = max;
 //                        for (int i = addr_page; i < max; i++) {
                             Log.e(TAG, "submit  GetTransactionInfoRunnable  " + curModelListIndex);
                             threadpool.submit(new GetTransactionInfoRunnable(address, curModelListIndex));
@@ -94,8 +94,8 @@ public class TransactionManager {
                         if(onNewRecordAddListener!=null){
                             onNewRecordAddListener.OnNewRecordAddListener();
                         }
-                        curModelListIndex ++;
-                        if(curModelListIndex < max){
+                        curModelListIndex --;
+                        if (curModelListIndex >= addr_page && curModelListIndex >= 0) {
                             Log.e(TAG, "submit  GetTransactionInfoRunnable  " + curModelListIndex);
                             threadpool.submit(new GetTransactionInfoRunnable(address, curModelListIndex));
                         }
@@ -182,7 +182,7 @@ public class TransactionManager {
                     String str = tr.select("th").text();
                     if("Hash".equalsIgnoreCase(str)){
                         String hash = tr.select("td").text();
-                        Log.e(TAG, "Hash   td: " + hash );
+//                        Log.e(TAG, "Hash   td: " + hash );
                         block.setHash(hash);
                     }
                 }
@@ -204,12 +204,20 @@ public class TransactionManager {
                                 return;
                             }
                         } else {
-
+                            if (dAmount == mBlockAmount&&!addr.equals(address)) {
+                                addressOther = addr;
+                                Log.e(TAG, "OUTPUT  Block  Address   address: " + addressOther);
+                                block.setAddress(addressOther);
+                                Message msg = handler.obtainMessage(GETTRANSACTIONADDRESS);
+                                msg.obj = block;
+                                handler.sendMessage(msg);
+                                return;
+                            }
                         }
-                        if (dAmount == mBlockAmount) {
+                        if (dAmount == mBlockAmount && !addr.equals(address)) {
                             addressDefault = addr;
                         }
-                        Log.e(TAG, "cells   method: " + method + "  block  " + block + "   dAmount  " + dAmount);
+//                        Log.e(TAG, "cells   method: " + method + "  block  " + block + "   dAmount  " + dAmount);
                     }
 //                                for (Element cell : cells) {
 //                                    Log.e(TAG, "cells   td: " + cell.text());
@@ -258,33 +266,33 @@ public class TransactionManager {
                     String str = tr.select("th").text();
                     switch (str) {
                         case "Time":
-                            Log.e(TAG, "Time  td: " + tr.select("td").text());
+//                            Log.e(TAG, "Time  td: " + tr.select("td").text());
                             break;
                         case "Timestamp":
-                            Log.e(TAG, "Timestamp  td: " + tr.select("td").text());
+//                            Log.e(TAG, "Timestamp  td: " + tr.select("td").text());
                             break;
                         case "Flags":
-                            Log.e(TAG, "Flags  td: " + tr.select("td").text());
+//                            Log.e(TAG, "Flags  td: " + tr.select("td").text());
                             break;
                         case "State":
-                            Log.e(TAG, "State   td: " + tr.select("td").text());
+//                            Log.e(TAG, "State   td: " + tr.select("td").text());
                             break;
                         case "File pos":
-                            Log.e(TAG, "File pos  td: " + tr.select("td").text());
+//                            Log.e(TAG, "File pos  td: " + tr.select("td").text());
                             break;
                         case "Hash":
-                            Log.e(TAG, "Hash   td: " + tr.select("td").text());
+//                            Log.e(TAG, "Hash   td: " + tr.select("td").text());
                             break;
                         case "Difficulty":
-                            Log.e(TAG, "Difficulty   td: " + tr.select("td").text());
+//                            Log.e(TAG, "Difficulty   td: " + tr.select("td").text());
                             break;
                         case "Balance":
-                            Log.e(TAG, "Balance  td: " + tr.select("td").text());
+//                            Log.e(TAG, "Balance  td: " + tr.select("td").text());
                             String balence = tr.select("td").text();
                             if (balence.contains("(")) {
                                 String ba = (String) balence.substring(0, balence.indexOf("("));
                                 Double b = Double.parseDouble(ba);
-                                Log.e(TAG, "Balance Double:" + b);
+//                                Log.e(TAG, "Balance Double:" + b);
                             }
                             break;
                     }
@@ -301,7 +309,7 @@ public class TransactionManager {
                         String amout = cells.get(2).text();
                         double dAmount = Double.parseDouble(amout);
                         String UTCtime = cells.get(3).text();
-                        Log.e(TAG, "cells   method: " + method + "  block  " + block + "   dAmount  " + dAmount + " UTCtime " + UTCtime);
+//                        Log.e(TAG, "cells   method: " + method + "  block  " + block + "   dAmount  " + dAmount + " UTCtime " + UTCtime);
                         XdagTransactionModel xdagTransactionModel = new XdagTransactionModel(dAmount, method, block, UTCtime);
                         xdagTransactionModel.setPage(addr_page);
                         xdagTransactionModel.setMine(address);
@@ -321,7 +329,7 @@ public class TransactionManager {
                     }
                 }
                 Log.e(TAG, "Max page_links: " + max);
-                if (max > 0 && max >= addr_page) {
+                if (max > 0 && addr_page == 0) {
                     Message msg0 = handler.obtainMessage(STARTGETTRANSACTIONINFO);
                     msg0.arg1 = max;
                     handler.sendMessage(msg0);
