@@ -69,10 +69,8 @@ public class MultilingualSettingsActivity extends BaseActivity implements View.O
             selectedIndex = 0;
         }
         adapter.setSeleceted(selectedIndex);
-        adapter.setShowFootView(false);
 
         adapter.notifyDataSetChanged();
-        adapter.setNofootbar();
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<String>() {
             @Override
             public void onItemClick(View view, String data) {

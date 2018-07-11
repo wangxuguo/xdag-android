@@ -1,13 +1,11 @@
 package com.xdag.wallet.ui.adapter;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,20 +28,25 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     protected OnItemClickListener<T> mOnItemClickListener;
     protected OnItemLongClickListener<T> itemLongClickListener;
     protected OnReloadClickListener mOnReloadClickListener;
-
-    private FooterViewHolder mFooterViewHolder;
+    protected OnLoadMoreClickListener onLoadMoreClickListener;
     private boolean isShowFootView;
+    private FooterViewHolder mFooterViewHolder;
+
     public BaseRecyclerViewAdapter(Context context) {
         this.mContext = context;
         this.mItemLayoutRes = getLayoutRes();
-        isShowFootView = false;
     }
 
     public BaseRecyclerViewAdapter(Context context,List<T> list) {
         this.mContext = context;
         this.mList = list;
         this.mItemLayoutRes = getLayoutRes();
-        isShowFootView = false;
+    }
+
+    public BaseRecyclerViewAdapter(Context context, List<T> list, boolean showFootView) {
+        this.mContext = context;
+        this.mList = list;
+        this.mItemLayoutRes = getLayoutRes();
     }
 
     protected abstract int getLayoutRes();
@@ -52,25 +55,23 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         mOnItemClickListener = onItemClickListener;
     }
 
+    public void setOnLoadMoreClickListener(OnLoadMoreClickListener onLoadMoreClickListener) {
+        this.onLoadMoreClickListener = onLoadMoreClickListener;
+    }
+
     public void setItemLongClickListener(OnItemLongClickListener<T> itemLongClickListener) {
         this.itemLongClickListener = itemLongClickListener;
     }
-
-    public void setOnReloadClickListener(OnReloadClickListener onReloadClickListener) {
-        this.mOnReloadClickListener = onReloadClickListener;
-    }
+//
+//    public void setOnReloadClickListener(OnReloadClickListener onReloadClickListener) {
+//        this.mOnReloadClickListener = onReloadClickListener;
+//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_FOOTER) {
             View view = getView(parent, R.layout.rv_item_footer);
-            if(isShowFootView){
-                mFooterViewHolder = new FooterViewHolder(view);
-            }else {
-                mFooterViewHolder = new FooterViewHolder(view);
-                setNofootbar();
-            }
-            return mFooterViewHolder;
+            return mFooterViewHolder = new FooterViewHolder(view);
         } else {
             View view = getView(parent, mItemLayoutRes);
             final BaseViewHolder baseViewHolder = new BaseViewHolder(view);
@@ -184,7 +185,22 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
             prompt = (TextView) itemView.findViewById(R.id.tv_prompt);
         }
     }
-
+    public void setLoadMore() {
+        if(mFooterViewHolder == null){
+            return;
+        }
+        mFooterViewHolder.prompt.setText(mContext.getString(R.string.loading_more));
+        mFooterViewHolder.prompt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onLoadMoreClickListener != null) {
+                    onLoadMoreClickListener.onClick();
+                }
+            }
+        });
+        mFooterViewHolder.prompt.setVisibility(View.VISIBLE);
+        mFooterViewHolder.progressBar.setVisibility(View.GONE);
+    }
     public void setLoading() {
         mFooterViewHolder.prompt.setText("正在加载更多");
         mFooterViewHolder.prompt.setVisibility(View.VISIBLE);
@@ -243,6 +259,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         /**
          * 重试点击事件
          */
+        void onClick();
+    }
+    public interface OnLoadMoreClickListener {
+
         void onClick();
     }
 }

@@ -71,6 +71,10 @@ public class XdagBaseActivity extends BaseActivity {
         }
     };
 
+    public XdagService getService() {
+        return mService;
+    }
+
     public void onServiceDisConnectedToBinder() {
         Log.d(TAG,"onServiceDisConnectedToBinder");
     }

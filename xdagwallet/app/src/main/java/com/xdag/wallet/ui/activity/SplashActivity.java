@@ -3,6 +3,7 @@ package com.xdag.wallet.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -40,14 +41,16 @@ public class SplashActivity extends BaseActivity {
     private static final int PERMISSION_REQUESTCODE = 1;
     private static final int REQUEST_CREATEWALLET = 10;
     private static final int REQUEST_LOADWALLET = 11;
+    private boolean isSaveInDB;
+    private boolean isCurrentLegal;
+    private boolean isBackuped;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        initPermission();
 
-        boolean isCurrentLegal = checkCurrentWalletIsLegal();
+        isCurrentLegal = checkCurrentWalletIsLegal();
         FlowQueryList<XdagWalletModel> list = SQLite.select()
                 .from(XdagWalletModel.class)
                 .flowQueryList();
@@ -56,6 +59,7 @@ public class SplashActivity extends BaseActivity {
         if(list.size()>0){
             //
             Log.e(Constants.TAG,"XdagWalletModel.size()"+list.size());
+            isSaveInDB = true;
         }else {
             XdagWalletModel model = new XdagWalletModel();
             model.setWalletMd5(FileEncryptUtils.fileToMD5(FileUtils.WALLET_FILE));
@@ -68,11 +72,26 @@ public class SplashActivity extends BaseActivity {
             model.setAmount(0);
             model.setSourcePath("");
             model.setAddress("");
+            isSaveInDB = false;
             FlowManager.getModelAdapter(XdagWalletModel.class).save(model);
         }
 
-        boolean isBackuped = hasBackupWalltet();
-        if (!isCurrentLegal&&!isCurrentLegal) {
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(initPermission()){
+            gotoNext();
+        }
+    }
+
+    private void gotoNext(){
+        isBackuped = hasBackupWalltet();
+        if (!isCurrentLegal&&!isBackuped) {
             TextView tv_create_wallet = (TextView) findViewById(R.id.tv_create_wallet);
             TextView tv_load_wallet = (TextView) findViewById(R.id.tv_load_wallet);
             ImageView iv_splash = (ImageView) findViewById(R.id.iv_splash);
@@ -99,13 +118,28 @@ public class SplashActivity extends BaseActivity {
                 @Override
                 public void run() {
                     gotoMain(false);
-                    finish();
                 }
             }, 3000);
         }
-
     }
 
+    //申请权限被允许的回调
+    public void onPermissionGranted(String permission) {
+//        if (initPermission()) {
+            gotoNext();
+//        }
+    }
+    //申请权限被拒绝的回调
+    public void onPermissionDenied(String permission) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            requestPermissions(new String[]{permission},PERMISSION_REQUESTCODE);
+//        }
+    }
+
+    //申请权限的失败的回调
+    public void onPermissionFailure() {
+//        initPermission();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,11 +159,11 @@ public class SplashActivity extends BaseActivity {
         }
     }
     private boolean hasBackupWalltet(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ToastUtil.showShort(this,getString(R.string.please_grant_permission));
-            initPermission();
-            return false;
-        }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            ToastUtil.showShort(this,getString(R.string.please_grant_permission));
+//            initPermission();
+//            return false;
+//        }
         String backFilePath = FileUtils.rootPath+"/"+FileUtils.XDAG_BACKUP_PATH;
         File file = new File(backFilePath);
         if(file.exists()&&file.isDirectory()){
@@ -172,9 +206,14 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void gotoMain(boolean isStartXdagProcess) {
+//        if(!initPermission()||isFinishing()){
+//            return;
+//        }
         Intent intent = new Intent(this, XdagMainActivity.class);
 //        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("isStartXdagProcess",isStartXdagProcess);
+        intent.putExtra("isSaveInDB",isSaveInDB);
+        finish();
         startActivity(intent);
     }
 
@@ -204,7 +243,7 @@ public class SplashActivity extends BaseActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             permissionLists.add(Manifest.permission.CAMERA);
         }
-
+//        checkPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.INTERNET,Manifest.permission.CAMERA});
         if (!permissionLists.isEmpty()) {//说明肯定有拒绝的权限
             ActivityCompat.requestPermissions(this, permissionLists.toArray(new String[permissionLists.size()]), PERMISSION_REQUESTCODE);
             return false;
@@ -212,6 +251,7 @@ public class SplashActivity extends BaseActivity {
             return true;
 //            Toast.makeText(this, "all permission is allowed", Toast.LENGTH_SHORT).show();
         }
+//        return true;
     }
 
 }

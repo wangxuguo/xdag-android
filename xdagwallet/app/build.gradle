@@ -91,6 +91,10 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics-ndk:2.0.4@aar') {
         transitive = true;
     }
+    compile files('libs/jsoup-1.11.3.jar')
+    compile files('libs/jsoup-1.11.3-javadoc.jar')
+    compile project(':rvhelperlibrary')
+//    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }
 
 crashlytics {

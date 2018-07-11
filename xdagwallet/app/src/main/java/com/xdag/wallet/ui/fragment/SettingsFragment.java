@@ -15,11 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xdag.wallet.R;
+import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.ui.activity.AboutUs;
 import com.xdag.wallet.ui.activity.CurrencyUnitSettingActivity;
 import com.xdag.wallet.ui.activity.MultilingualSettingsActivity;
 import com.xdag.wallet.ui.activity.TransactionRecordActivity;
 import com.xdag.wallet.ui.activity.WalletManageActivity;
+import com.xdag.wallet.ui.activity.XdagMainActivity;
 import com.xdag.wallet.ui.activity.XdagPoolSettingActivity;
 
 /**
@@ -89,7 +91,12 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.tv_transaction_record:
-                startActivity(new Intent(getContext(), TransactionRecordActivity.class));
+                Intent transactionRecordIntent = new Intent(getContext(), TransactionRecordActivity.class);
+
+                String address  = ((XdagMainActivity)getActivity()).getService().getAddress();
+//                transactionRecordIntent.putExtra(Constants.XDAG_ADDRESS,address);
+                transactionRecordIntent.putExtra(Constants.XDAG_ADDRESS,"8jqlXbvTiEzb4YZE3zc0hd4DKY7fyrXA");
+                startActivity(transactionRecordIntent);
                 break;
             case R.id.li_message_center:
                 break;

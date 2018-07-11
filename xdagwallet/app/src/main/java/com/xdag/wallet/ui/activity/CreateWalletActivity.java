@@ -167,6 +167,7 @@ public class CreateWalletActivity extends BaseActivity {
                     }
                     if(event.address!=null&&!TextUtils.isEmpty(event.address)){
                         ModelAdapter<XdagWalletModel> adapter = FlowManager.getModelAdapter(XdagWalletModel.class);
+
                         XdagWalletModel wallet = new XdagWalletModel();
                         wallet.setAddress(event.address);
                         wallet.setAmount(0);
@@ -176,7 +177,11 @@ public class CreateWalletActivity extends BaseActivity {
                         wallet.setLocalPath("");
                         wallet.setBankPath("");
                         wallet.setType(0);
-                        adapter.insert(wallet);
+                        try {
+                            adapter.insert(wallet);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         Intent intent = new Intent();
                         setResult(RESULT_OK,intent);
                         finish();

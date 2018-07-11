@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/color_white"
+    android:layout_height="60dp">
+
+    <ImageView
+        android:id="@+id/iv_transaction_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/common_margin_small"
+        android:src="@drawable/ic_contracts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/common_margin"
+        android:layout_marginTop="15dp"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:text="0x1C9bDC9bD01C9bD01C9bD01C9bD01C9bD01C9bD01C9bD0.77DB3"
+        app:layout_constraintBottom_toTopOf="@+id/tv_utc_time"
+        app:layout_constraintLeft_toRightOf="@+id/iv_transaction_icon"
+        app:layout_constraintRight_toLeftOf="@+id/tv_xdag_amount"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <TextView
+        android:id="@+id/tv_utc_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:text="06/04/2018 15:24:45 +0800"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/iv_transaction_icon"
+        app:layout_constraintRight_toLeftOf="@+id/tv_xdag_amount"
+        app:layout_constraintTop_toBottomOf="@+id/tv_address"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <TextView
+        android:id="@+id/tv_xdag_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="@dimen/common_margin_small"
+        android:layout_marginTop="3dp"
+        android:text="+897.56 XDAG"
+        android:textColor="@color/color_transaction_input"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:background="@color/divider_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_transaction_icon"
+        />
+</android.support.constraint.ConstraintLayout>

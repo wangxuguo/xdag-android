@@ -117,3 +117,14 @@
 -keep class com.crashlytics.** { *; }
 -dontwarn com.crashlytics.**
 
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
+
+
+-keep class com.chad.library.adapter.** {
+*;
+}
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+     <init>(...);
+}

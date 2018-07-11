@@ -60,7 +60,7 @@ public class CurrencyUnitSettingActivity extends BaseActivity implements View.On
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-        adapter.setShowFootView(false);
+//        adapter.setShowFootView(false);
         String name =  getSharedPreferences(Constants.SPSetting, MODE_PRIVATE).getString(Constants.CURRENCY_NAME,null);
         String symbol =  getSharedPreferences(Constants.SPSetting, MODE_PRIVATE).getString(Constants.CURRENCY_SYMBOL,null);
         int selectedIndex = 0;
@@ -71,7 +71,6 @@ public class CurrencyUnitSettingActivity extends BaseActivity implements View.On
         }
         adapter.setSeleceted(selectedIndex);
         adapter.notifyDataSetChanged();
-        adapter.setNofootbar();
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<CurrencyModel>() {
             @Override
             public void onItemClick(View view, CurrencyModel data) {

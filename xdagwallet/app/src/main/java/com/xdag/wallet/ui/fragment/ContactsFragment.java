@@ -97,12 +97,6 @@ public class ContactsFragment extends BaseFragment {
 
             }
         });
-        adapter.setOnReloadClickListener(new BaseRecyclerViewAdapter.OnReloadClickListener() {
-            @Override
-            public void onClick() {
-
-            }
-        });
         adapter.setItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener<XdagContactsModel>() {
             @Override
             public void onItemLongClick(View view, XdagContactsModel data) {

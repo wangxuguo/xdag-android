@@ -67,7 +67,7 @@ public class XdagPoolSettingActivity extends BaseActivity implements View.OnClic
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-        adapter.setShowFootView(false);
+//        adapter.setShowFootView(false);
        String str =  getSharedPreferences(Constants.SPSetting, MODE_PRIVATE).getString(Constants.XDAG_POOL_ADDRESS,null);
         int selectedIndex = 0;
        if(!TextUtils.isEmpty(str)){
@@ -77,7 +77,6 @@ public class XdagPoolSettingActivity extends BaseActivity implements View.OnClic
        }
         adapter.setSeleceted(selectedIndex);
         adapter.notifyDataSetChanged();
-        adapter.setNofootbar();
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<String>() {
             @Override
             public void onItemClick(View view, String data) {

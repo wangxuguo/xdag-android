@@ -26,6 +26,7 @@ public class Constants {
     public static final String XDAG_ADDRESS = "xdag_address";
     public static final String DefaultXDAGAddress = "https://xdag.io";
     public static final String XDAG_EVENT_TYPE = "xdag_event_type";
+    public static final String XDAG_TRANSACTION_MODEL = "xdag_transaction_model";
 
     public static String DefaultPoolAddress = "xdagmine.com:13654";
 }

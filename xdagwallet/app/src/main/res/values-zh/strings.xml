@@ -92,4 +92,16 @@
     <string name="transfer_success">转账成功</string>
     <string name="default_wallet_name">default_wallet</string>
     <string name="pay_attention_can_not_revert">Pay Attention,This Can Not Revert!</string>
+    <string name="state">状态</string>
+    <string name="sender">发送方</string>
+    <string name="receiver">接收方</string>
+    <string name="fee">矿工费用</string>
+    <string name="hash">Hash</string>
+    <string name="transaction_time">交易时间：</string>
+    <string name="success">成功</string>
+
+    <string name="loading_transaction_record">正在导入交易记录...</string>
+    <string name="get_transaction_record">正在从网络获取交易记录...</string>
+    <string name="loading_more">加载更多...</string>
+    <string name="load_no_more">没有更多了</string>
 </resources>

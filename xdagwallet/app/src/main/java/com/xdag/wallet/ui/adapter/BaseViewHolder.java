@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -45,10 +46,24 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         }
         return (T) view;
     }
-
+    public BaseViewHolder setTextViewColor(int viewId,int resId){
+        TextView view = getView(viewId);
+        view.setTextColor(resId);
+        return this;
+    }
     public BaseViewHolder setTextView(int viewId, String text) {
         TextView view = getView(viewId);
         view.setText(text);
+        return this;
+    }
+    public BaseViewHolder setVisibility(int viewId, int visibility) {
+        View view = getView(viewId);
+        view.setVisibility(visibility);
+        return this;
+    }
+    public BaseViewHolder setImageResource(int viewId, int resId) {
+        ImageView view = getView(viewId);
+        view.setImageResource(resId);
         return this;
     }
 }

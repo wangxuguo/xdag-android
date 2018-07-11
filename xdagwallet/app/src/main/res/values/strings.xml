@@ -112,4 +112,17 @@
     <string name="transfer_success">transfer success</string>
     <string name="default_wallet_name">default_wallet</string>
     <string name="pay_attention_can_not_revert">Pay Attention,This Can Not Revert!</string>
+
+    <string name="state">status</string>
+    <string name="sender">Sender</string>
+    <string name="receiver">Receiver</string>
+    <string name="fee">Fee</string>
+    <string name="hash">Hash</string>
+    <string name="transaction_time">Transcation Time</string>
+    <string name="success">Success</string>
+
+    <string name="loading_transaction_record">loading transaction record...</string>
+    <string name="get_transaction_record">get transaction record...</string>
+    <string name="loading_more">Loading more...</string>
+    <string name="load_no_more">Load no more</string>
 </resources>

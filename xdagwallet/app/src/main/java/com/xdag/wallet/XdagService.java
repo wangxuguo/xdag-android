@@ -56,7 +56,7 @@ public class XdagService extends Service {
     private XdagHandler xdagHandler;
     private boolean isConnected;
     private HandlerThread xdagProcessThread;
-
+    private String address;
     private double balance;
     private boolean isBalanceInit;
 
@@ -75,6 +75,10 @@ public class XdagService extends Service {
         xdagWrapper.XdagNotifyMsg(authInfo);
 //        Message msg = xdagHandler.obtainMessage(MSG_XdagNotifyMsg, authInfo);
 //        xdagHandler.sendMessage(msg);
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public class XdagTransferModel implements Serializable{
@@ -121,6 +125,9 @@ public class XdagService extends Service {
             XdagWrapper xdagWrapper = XdagWrapper.getInstance();
             switch (msg.what) {
                 case MSG_CONNECT_TO_POOL:
+                    if(isConnected){
+                        return;
+                    }
                     Log.i(TAG, "receive msg connect to the pool thread id " + Thread.currentThread().getId());
                     String poolAddr = (String) msg.obj;
                     xdagWrapper.XdagConnectToPool(poolAddr);
@@ -130,7 +137,9 @@ public class XdagService extends Service {
                     break;
                 case MSG_XFER_XDAG_COIN:
                     XdagTransferModel xdagTransferModel = (XdagTransferModel) msg.obj;
-                    xdagWrapper.XdagXferToAddress(xdagTransferModel.getAddress(),xdagTransferModel.getAccount());
+                    if(xdagTransferModel!=null) {
+                        xdagWrapper.XdagXferToAddress(xdagTransferModel.getAddress(), xdagTransferModel.getAccount());
+                    }
                     break;
                 case MSG_XdagNotifyMsg:
                     String authInfo = (String) msg.obj;
@@ -216,6 +225,7 @@ public class XdagService extends Service {
                 if (event != null && event.balance != null && !event.balance.equals("Not ready")) {
                     Log.i(TAG, " Connected");
                     isConnected = true;
+                    address = event.address;
                     if(!isBalanceInit){
                         balance = Double.parseDouble(event.balance);
                         isBalanceInit = true;

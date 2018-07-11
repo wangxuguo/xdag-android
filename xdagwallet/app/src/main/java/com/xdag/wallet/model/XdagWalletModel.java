@@ -1,20 +1,18 @@
 package com.xdag.wallet.model;
 
-import android.support.annotation.ColorInt;
-
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.xdag.wallet.db.DataBaseManager;
+import com.xdag.wallet.db.XdagDatabase;
 
 import java.io.Serializable;
 
 /**
  * Created by wangxuguo on 2018/6/14.
  */
-@Table(database = DataBaseManager.XdagDatabase.class)
+@Table(database = XdagDatabase.class)
 public class XdagWalletModel extends BaseModel implements Serializable {
     @Column
     @Unique
