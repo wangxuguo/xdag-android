@@ -17,7 +17,6 @@ import com.xdag.wallet.R;
 public class ChangedWalletPwdActivity extends BaseActivity  implements View.OnClickListener {
     private ImageView iv_title_left;
     TextView tv_title;
-    TextView tv_title_right;
     EditText etName;
     EditText etAddress;
 
@@ -32,13 +31,11 @@ public class ChangedWalletPwdActivity extends BaseActivity  implements View.OnCl
 
     private void initViews() {
         iv_title_left.setOnClickListener(this);
-        tv_title_right.setOnClickListener(this);
     }
 
     private void findViews() {
         iv_title_left = (ImageView) findViewById(R.id.iv_title_left);
         tv_title = (TextView) findViewById(R.id.tv_title);
-        tv_title_right = (TextView) findViewById(R.id.tv_title_right);
         etName = (EditText) findViewById(R.id.et_name);
         etAddress = (EditText) findViewById(R.id.et_address);
     }

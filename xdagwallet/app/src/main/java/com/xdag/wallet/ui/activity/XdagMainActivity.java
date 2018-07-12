@@ -140,11 +140,6 @@ public class XdagMainActivity extends XdagBaseActivity implements AuthDialogFrag
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-    }
-
     private void connectToPool() {
 //        String poolAddr = getContext().getSharedPreferences(Constants.SPSetting, Context.MODE_PRIVATE).getString(Constants.XDAG_POOL_ADDRESS,Constants.DefaultPoolAddress);
         String poolAddr = Constants.DefaultPoolAddress;

@@ -81,6 +81,7 @@
     <string name="loading_wallet">钱包导入中···</string>
     <string name="loading_wallet_tips">需要连接主网络数据，正常需要2-5分钟</string>
     <string name="load_wallet_error">导入钱包出错</string>
+    <string name="load_wallet_error_re_select">导入钱包出错，请重新选择wallet.dat和dnet_key.dat文件</string>
     <string name="please_check_wallet_file">请检查钱包文件wallet.dat及dnet_key.dat文件</string>
     <string name="xfer_accout_cannot_zero">转账金额不能为0</string>
     <string name="please_check_xfer_accout">请检查转账金额</string>
@@ -90,7 +91,7 @@
     <!-- Notification -->
     <string name="xdag_is_running">xdag 正在运行</string>
     <string name="transfer_success">转账成功</string>
-    <string name="default_wallet_name">default_wallet</string>
+    <string name="default_wallet_name">默认钱包</string>
     <string name="pay_attention_can_not_revert">Pay Attention,This Can Not Revert!</string>
     <string name="state">状态</string>
     <string name="sender">发送方</string>
@@ -104,4 +105,7 @@
     <string name="get_transaction_record">正在从网络获取交易记录...</string>
     <string name="loading_more">加载更多...</string>
     <string name="load_no_more">没有更多了</string>
+
+    <string name="choose_backup_file_path_error">选择备份钱包文件夹失败，请重新选择!</string>
+    <string name="backup_success">备份成功！</string>
 </resources>

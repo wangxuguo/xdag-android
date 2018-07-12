@@ -14,15 +14,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.xdag.wallet.R;
+import com.xdag.wallet.XdagService;
 import com.xdag.wallet.model.Constants;
+import com.xdag.wallet.model.XdagWalletModel;
 import com.xdag.wallet.ui.activity.AboutUs;
 import com.xdag.wallet.ui.activity.CurrencyUnitSettingActivity;
 import com.xdag.wallet.ui.activity.MultilingualSettingsActivity;
 import com.xdag.wallet.ui.activity.TransactionRecordActivity;
+import com.xdag.wallet.ui.activity.WalletDetailActivity;
 import com.xdag.wallet.ui.activity.WalletManageActivity;
 import com.xdag.wallet.ui.activity.XdagMainActivity;
 import com.xdag.wallet.ui.activity.XdagPoolSettingActivity;
+
+import java.util.List;
 
 /**
  * Created by wangxuguo on 2018/6/8.
@@ -87,15 +93,37 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_manager_wallet:
-                Intent intent = new Intent(getContext(),WalletManageActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(getContext(),WalletDetailActivity.class);
+                List<XdagWalletModel> list = SQLite.select()
+                        .from(XdagWalletModel.class)
+                        .queryList();
+                XdagService service = ((XdagMainActivity)getActivity()).getService();
+                String address;
+                double amount;
+                if(service!=null){
+                    address  = service.getAddress();
+                    amount = service.getBalance();
+                }else {
+                    address = "";
+                    amount = 0f;
+                }
+                if (list != null && list.size() > 0) {
+                    XdagWalletModel model = list.get(0);
+                    intent.putExtra(Constants.WALLET_DETAIL,model);
+                    startActivity(intent);
+                }else {
+                    XdagWalletModel model = new XdagWalletModel();
+                    model.setAddress(address);
+                    model.setAmount(amount);
+                    model.setName(getString(R.string.default_wallet_name));
+                    intent.putExtra(Constants.WALLET_DETAIL,model);
+                    startActivity(intent);
+                }
                 break;
             case R.id.tv_transaction_record:
                 Intent transactionRecordIntent = new Intent(getContext(), TransactionRecordActivity.class);
-
-                String address  = ((XdagMainActivity)getActivity()).getService().getAddress();
-//                transactionRecordIntent.putExtra(Constants.XDAG_ADDRESS,address);
-                transactionRecordIntent.putExtra(Constants.XDAG_ADDRESS,"8jqlXbvTiEzb4YZE3zc0hd4DKY7fyrXA");
+                String address2  = ((XdagMainActivity)getActivity()).getService().getAddress();
+                transactionRecordIntent.putExtra(Constants.XDAG_ADDRESS,address2);
                 startActivity(transactionRecordIntent);
                 break;
             case R.id.li_message_center:

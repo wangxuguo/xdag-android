@@ -145,13 +145,13 @@ public class SplashActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case REQUEST_CREATEWALLET:
-                if(requestCode == RESULT_OK) {
+                if(resultCode == RESULT_OK) {
                     gotoMain(true);
                     finish();
                 }
                 break;
             case REQUEST_LOADWALLET:
-                if(requestCode == RESULT_OK) {
+                if(resultCode == RESULT_OK) {
                     gotoMain(true);
                     finish();
                 }

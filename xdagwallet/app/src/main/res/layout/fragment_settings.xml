@@ -109,6 +109,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="36"
+                android:visibility="gone"
                 android:textColor="@color/color_white" />
 
             <ImageView

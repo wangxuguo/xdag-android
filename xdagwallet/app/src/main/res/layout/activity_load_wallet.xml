@@ -110,6 +110,7 @@
         android:layout_marginLeft="@dimen/common_margin_big"
         android:layout_marginRight="@dimen/common_margin_big"
         android:layout_marginTop="50dp"
+        android:textColor="@color/text_warning_red"
         android:background="@drawable/wallet_bg_notice"
         android:text="@string/dag_link_info"
         app:layout_constraintLeft_toLeftOf="parent"

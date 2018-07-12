@@ -1,6 +1,7 @@
 package com.xdag.wallet.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +27,7 @@ import com.xdag.wallet.XdagEvent;
 import com.xdag.wallet.XdagWrapper;
 import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.model.XdagContactsModel;
+import com.xdag.wallet.model.XdagState;
 import com.xdag.wallet.model.XdagWalletModel;
 import com.xdag.wallet.ui.widget.XdagProgressDialog;
 import com.xdag.wallet.utils.ToastUtil;
@@ -41,14 +43,13 @@ import java.io.File;
  * Created by wangxuguo on 2018/6/21.
  */
 
-public class CreateWalletActivity extends BaseActivity {
+public class CreateWalletActivity extends XdagBaseActivity {
     private static final String TAG = Constants.TAG;
     private static final int MSG_CONNECT_TO_POOL = 1;
     private static final int MSG_DISCONNECT_FROM_POOL = 2;
     private static final int MSG_XFER_XDAG_COIN = 3;
     private static final int MSG_SHOW_PROGRESS = 4;
     private static final int MSG_DISSMIS_PROGRESS = 5;
-
     ImageView iv_title_left;
     TextView tv_title;
     EditText et_create_wallet_name;
@@ -58,8 +59,6 @@ public class CreateWalletActivity extends BaseActivity {
     CheckBox ckb_service_srivacy;
     TextView tv_wallet_notice;
     Button btn_create_wallet;
-    private HandlerThread xdagProcessThread;
-    private Handler xdagHandler;
     private XdagProgressDialog xdagProgressDialog;
     private String pwd;
     private String repwd;
@@ -73,71 +72,24 @@ public class CreateWalletActivity extends BaseActivity {
         setContentView(R.layout.activity_create_wallet);
         EventBus.getDefault().register(this);
 
-        xdagProcessThread = new HandlerThread("XdagProcessThread");
-        xdagProcessThread.start();
-        xdagHandler = new Handler(xdagProcessThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                Log.i(TAG, "handleMessage  " + msg.what);
-                switch (msg.arg1) {
-                    case MSG_CONNECT_TO_POOL:
-                        Log.i(TAG, "receive msg connect to the pool thread id " + Thread.currentThread().getId());
-                        Bundle data = msg.getData();
-                        String poolAddr = data.getString("pool");
-                        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-                        xdagWrapper.XdagConnectToPool(poolAddr);
-                        xdagHandler.sendEmptyMessage(MSG_SHOW_PROGRESS);
-
-                        break;
-                    case MSG_DISCONNECT_FROM_POOL:
-
-
-                        break;
-                    case MSG_XFER_XDAG_COIN:
-
-
-                        break;
-                    case MSG_DISSMIS_PROGRESS:
-//                        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-//                            xdagProgressDialog.dismiss();
-//                        }
-                    case MSG_SHOW_PROGRESS:
-//                        XdagProgressDialog.Builder builder = new XdagProgressDialog.Builder(XdagMainActivity.this);
-////                        builder.setTitle()
-//                        builder.setMessage(getString(R.string.wallet_connecting_to_pool));
-//                        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-//                            xdagProgressDialog.dismiss();
-//                            xdagProgressDialog = null;
-//                        }
-//                        xdagProgressDialog = builder.create();
-//                        xdagProgressDialog.show();
-                        break;
-                    default: {
-                        Log.e(TAG, "unkown command from ui");
-                    }
-                    break;
-                }
-            }
-        };
         findViews();
         initViews();
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void ProcessXdagEvent(XdagEvent event) {
-        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
-//        Log.i(TAG, "process msg in Thread " + Thread.currentThread().getId());
-//        Log.i(TAG, "event event type is " + event.eventType);
-//        Log.i(TAG, "event account is " + event.address);
-//        Log.i(TAG, "event balace is " + event.balance);
-//        Log.i(TAG, "event state is " + event.state);
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ProcessXdagEvent(XdagState event) {
+        Log.i(TAG, "CreateWallet onEvent " + Thread.currentThread().getId() +" event.isConnect:  "+event.isConnect+ " type " + event.eventType + " account "
+                + event.address + " balace " + event.balance + " state " + event.state);
+
+        XdagWrapper xdagWrapper = XdagWrapper.getInstance();
         switch (event.eventType) {
             case XdagEvent.en_event_type_pwd:
-
                 xdagWrapper.XdagNotifyMsg(pwd);
                 break;
             case XdagEvent.en_event_set_pwd:
+                Log.i(TAG, "CreateWallet onEvent en_event_set_pwd");
                 xdagWrapper.XdagNotifyMsg(pwd);
+                Log.i(TAG, "CreateWallet onEvent XdagNotifyMsg");
                 break;
             case XdagEvent.en_event_retype_pwd:
                 xdagWrapper.XdagNotifyMsg(repwd);
@@ -145,29 +97,11 @@ public class CreateWalletActivity extends BaseActivity {
             case XdagEvent.en_event_set_rdm:
                 xdagWrapper.XdagNotifyMsg(keyword);
                 createTime = System.currentTimeMillis();
-//                Bundle bundle = new Bundle();
-//                bundle.putCharSequence("title", XdagUtils.GetAuthHintString(this,event.eventType));
-//                AuthDialogFragment authDialogFragment = new AuthDialogFragment();
-//                authDialogFragment.setArguments(bundle);
-//                authDialogFragment.setAuthHintInfo( XdagUtils.GetAuthHintString(this,event.eventType));
-//                authDialogFragment.show(getFragmentManager(), "Auth Dialog");
-
-                break;
-
             case XdagEvent.en_event_update_state:
-
                 if (event != null && event.balance != null && !event.balance.equals("Not ready")) {
-//                    mHandler.sendEmptyMessage(MSG_DISSMIS_PROGRESS);
-//                    if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-//                        xdagProgressDialog.dismiss();
-//                        xdagProgressDialog = null;
-//                    }
-                    if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-                        xdagProgressDialog.dismiss();
-                    }
-                    if(event.address!=null&&!TextUtils.isEmpty(event.address)){
-                        ModelAdapter<XdagWalletModel> adapter = FlowManager.getModelAdapter(XdagWalletModel.class);
 
+                    if (event.address != null && !TextUtils.isEmpty(event.address)) {
+                        ModelAdapter<XdagWalletModel> adapter = FlowManager.getModelAdapter(XdagWalletModel.class);
                         XdagWalletModel wallet = new XdagWalletModel();
                         wallet.setAddress(event.address);
                         wallet.setAmount(0);
@@ -179,21 +113,22 @@ public class CreateWalletActivity extends BaseActivity {
                         wallet.setType(0);
                         try {
                             adapter.insert(wallet);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        if (event.isConnect) {
+                            if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
+                                xdagProgressDialog.dismiss();
+                            }
+
+                        }
                         Intent intent = new Intent();
-                        setResult(RESULT_OK,intent);
+                        setResult(RESULT_OK, intent);
                         finish();
 
                     }
-                    Log.i(TAG, "loadingLayout GONE");
-//                    loadingLayout.setVisibility(View.GONE);
-                }else {
                 }
-//                Log.i(TAG, "update xdag  ui ");
                 break;
-
         }
     }
 
@@ -207,47 +142,43 @@ public class CreateWalletActivity extends BaseActivity {
         btn_create_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pwd  = et_create_wallet_pwd.getText().toString();
-                repwd  = et_create_wallet_repwd.getText().toString();
-                keyword  = et_create_wallet_keyword.getText().toString();
-                if(TextUtils.isEmpty(pwd)||TextUtils.isEmpty(repwd)||TextUtils.isEmpty(keyword)){
-                    ToastUtil.showShort(CreateWalletActivity.this,getString(R.string.name_is_empty));
+                pwd = et_create_wallet_pwd.getText().toString();
+                repwd = et_create_wallet_repwd.getText().toString();
+                keyword = et_create_wallet_keyword.getText().toString();
+                if (TextUtils.isEmpty(pwd) || TextUtils.isEmpty(repwd) || TextUtils.isEmpty(keyword)) {
+                    ToastUtil.showShort(CreateWalletActivity.this, getString(R.string.name_is_empty));
                     return;
                 }
-                if(!pwd.equals(repwd)){
-                    ToastUtil.showShort(CreateWalletActivity.this,getString(R.string.pwd_not_same));
+                if (!pwd.equals(repwd)) {
+                    ToastUtil.showShort(CreateWalletActivity.this, getString(R.string.pwd_not_same));
                     return;
                 }
                 Log.i(TAG, "start create wallet: pwd " + pwd + " repwd: " + repwd + " keyword: " + keyword);
                 initXdagFiles();
-                connectToPool();
+                boolean isStartCreate = connectToPool();
+                if(isStartCreate){
+                    Log.i(TAG, "isStartCreate"+isStartCreate);
+                }else {
+                    Log.i(TAG, "isStartCreate  error"+isStartCreate);
+                }
                 if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
                     xdagProgressDialog.dismiss();
                 }
-                xdagProgressDialog =  new XdagProgressDialog(CreateWalletActivity.this,getString(R.string.creating_wallet));
+                xdagProgressDialog = new XdagProgressDialog(CreateWalletActivity.this, getString(R.string.creating_wallet));
                 xdagProgressDialog.setProgressInfo(getString(R.string.creating_wallet_tips));
                 xdagProgressDialog.show();
             }
         });
     }
-    private void connectToPool() {
-//        loadingLayout.setVisibility(View.VISIBLE);
-//        String poolAddr = getContext().getSharedPreferences(Constants.SPSetting, Context.MODE_PRIVATE).getString(Constants.XDAG_POOL_ADDRESS,Constants.DefaultPoolAddress);
-        String poolAddr = Constants.DefaultPoolAddress;
-        Message msg = Message.obtain();
-        Bundle data = new Bundle();
-        data.putString("pool", poolAddr);
-        msg.arg1 = MSG_CONNECT_TO_POOL;
-        msg.setData(data);
-        xdagHandler.sendMessage(msg);
 
-//        XdagProgressDialog.Builder builder = new XdagProgressDialog.Builder(this);
-//        builder.setMessage(getString(R.string.wallet_connecting_to_pool));
-        if (xdagProgressDialog != null && xdagProgressDialog.isShowing()) {
-            xdagProgressDialog.dismiss();
+    private boolean connectToPool() {
+        String poolAddr = getSharedPreferences(Constants.SPSetting, Context.MODE_PRIVATE).getString(Constants.XDAG_POOL_ADDRESS, Constants.DefaultPoolAddress);
+//        String poolAddr = Constants.DefaultPoolAddress;
+        if (mService != null) {
+             mService.startToCreateWallet(poolAddr);
+            return true;
         }
-        xdagProgressDialog =  new XdagProgressDialog(this,getString(R.string.wallet_connecting_to_pool));
-        xdagProgressDialog.show();
+        return false;
     }
 
     private void initXdagFiles() {
@@ -257,6 +188,7 @@ public class CreateWalletActivity extends BaseActivity {
             file.mkdirs();
         }
     }
+
     private void findViews() {
         iv_title_left = (ImageView) findViewById(R.id.iv_title_left);
         tv_title = (TextView) findViewById(R.id.tv_title);

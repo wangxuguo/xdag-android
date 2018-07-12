@@ -122,7 +122,7 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(XdagState event) {
+    public void ProcessXdagEvent(XdagState event) {
         if(event.isConnect){
             account.setText(event.balance);
             xdagAccount.setText(event.balance);

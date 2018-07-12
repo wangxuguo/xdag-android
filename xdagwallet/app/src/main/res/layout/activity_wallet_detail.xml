@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="45dp"
+                android:layout_marginTop="@dimen/common_margin"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -52,13 +53,15 @@
                 android:id="@+id/tv_xdag_amount"
                 android:layout_width="match_parent"
                 style="@style/common_text_white_normal"
+                android:textSize="@dimen/sp_16"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/tv_xdag_address"
                 android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/sp_16"
                 style="@style/common_text_white_normal"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -72,6 +75,7 @@
         android:layout_height="@dimen/normal_item_row_height"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingLeft="25dp"
         android:paddingRight="25dp">
 
@@ -92,6 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/li_change_wallet_name"
         android:background="@color/divider_bg" />
@@ -102,6 +107,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         android:paddingLeft="25dp"
@@ -138,6 +144,7 @@
         android:layout_width="match_parent"
         android:background="#5B605F"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginBottom="40dp"
         android:layout_height="40dp" />
     <TextView
@@ -160,6 +167,7 @@
         android:layout_width="match_parent"
         android:background="#3E76EA"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginBottom="20dp"
         android:layout_height="40dp" />
 

@@ -25,6 +25,7 @@ import com.xdag.wallet.model.XdagState;
 import com.xdag.wallet.ui.activity.ResultActivity;
 import com.xdag.wallet.ui.activity.XdagMainActivity;
 import com.xdag.wallet.ui.widget.XdagProgressDialog;
+import com.xdag.wallet.utils.FileUtils;
 import com.xdag.wallet.utils.ToastUtil;
 import com.xdag.wallet.utils.XdagUtils;
 
@@ -32,6 +33,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -60,7 +62,18 @@ public class XdagService extends Service {
     private double balance;
     private boolean isBalanceInit;
 
-    public void startConnectToPool(String poolAddr) {
+    public boolean startConnectToPool(String poolAddr) {
+        File walletFile = new File(FileUtils.WALLET_FILE);
+        File dnetFile = new File(FileUtils.DNET_KEY_FILE);
+        if(walletFile.exists()&&dnetFile.exists()&&walletFile.getTotalSpace()>0&&dnetFile.getTotalSpace()>0) {
+            Message msg = xdagHandler.obtainMessage(MSG_CONNECT_TO_POOL, poolAddr);
+            xdagHandler.sendMessage(msg);
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public void startToCreateWallet(String poolAddr){
         Message msg = xdagHandler.obtainMessage(MSG_CONNECT_TO_POOL, poolAddr);
         xdagHandler.sendMessage(msg);
     }
@@ -79,6 +92,10 @@ public class XdagService extends Service {
 
     public String getAddress() {
         return address;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 
     public class XdagTransferModel implements Serializable{
@@ -130,6 +147,7 @@ public class XdagService extends Service {
                     }
                     Log.i(TAG, "receive msg connect to the pool thread id " + Thread.currentThread().getId());
                     String poolAddr = (String) msg.obj;
+                    Log.i(TAG, "XdagConnectToPool  poolAddr  " + poolAddr);
                     xdagWrapper.XdagConnectToPool(poolAddr);
                     break;
                 case MSG_DISCONNECT_FROM_POOL:
