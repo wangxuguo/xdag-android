@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/iv_avator"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/common_margin"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_contracts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/common_margin"
+        android:text="我在上面"
+        app:layout_constraintBottom_toTopOf="@+id/tv_address"
+        app:layout_constraintLeft_toRightOf="@+id/iv_avator"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="10dp"
+        android:text="我在下面"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/iv_avator"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+    <ImageView
+        android:id="@+id/iv_right_arrow"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/common_margin_big"
+        android:src="@mipmap/icon_item_right_arrow"
+        android:layout_height="40dp" />
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_avator"
+        />
+    <TextView
+        android:id="@+id/tv_xdag"
+        android:text="@string/xdag"
+        android:textSize="14sp"
+        android:textColor="@color/color_grey"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider1"
+        android:gravity="right"
+        android:layout_marginRight="@dimen/common_margin_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_xdag_amount"
+        android:text="@string/xdag"
+        android:textSize="14sp"
+        android:textColor="@color/color_black"
+        app:layout_constraintRight_toLeftOf="@+id/tv_xdag"
+        app:layout_constraintTop_toBottomOf="@+id/divider1"
+        android:gravity="right"
+        android:textStyle="bold"
+        android:layout_marginRight="@dimen/common_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</android.support.constraint.ConstraintLayout>

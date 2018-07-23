@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +16,8 @@ public class AuthDialogFragment extends DialogFragment {
 
     private EditText tvAuthInfo = null;
     private AuthInputListener mListener;
+    private CharSequence title;
+
 
     public interface AuthInputListener
     {
@@ -33,6 +37,12 @@ public class AuthDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -43,8 +53,11 @@ public class AuthDialogFragment extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
+                .setTitle(title)
+                .setIcon(R.drawable.ic_xdag_small)
+                .setCancelable(false)
                 // Add action buttons
-                .setPositiveButton("OK",
+                .setPositiveButton(getText(R.string.make_sure),
                         new DialogInterface.OnClickListener()
                         {
                             @Override
@@ -53,7 +66,8 @@ public class AuthDialogFragment extends DialogFragment {
                                 AuthInputListener listener = (AuthInputListener) getActivity();
                                 listener.onAuthInputComplete(tvAuthInfo.getText().toString());
                             }
-                        }).setNegativeButton("Cancel", null);
+                        });
+//                .setNegativeButton(getText(R.string.cancel), null);
         return builder.create();
 
     }
@@ -65,6 +79,9 @@ public class AuthDialogFragment extends DialogFragment {
             mListener = (AuthInputListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement listener");
+        }
+        if(getArguments()!=null) {
+            title = getArguments().getCharSequence("title");
         }
     }
 

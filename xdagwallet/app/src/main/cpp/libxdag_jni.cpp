@@ -218,7 +218,10 @@ void invokeJavaCallBack(st_xdag_event *event) {
     jstring jappLogMsg = currentEnv->NewStringUTF(event->app_log_msg);
 
     LOGI("fill xdag event info complete");
-
+//
+//    if(jeventType == 0x3001){
+//        LOGI("jeventType  0  3 001");
+//    }
     jobject jeventInfo = currentEnv->NewObject(gclazzXdagEvent,gNewXdagEventMethod,
                                                jprocedure_type,
                                                jeventType,

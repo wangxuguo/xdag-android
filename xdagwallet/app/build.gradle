@@ -1,5 +1,19 @@
-apply plugin: 'com.android.application'
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
 
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+Properties props = new Properties()
+props.load(new FileInputStream(file("signing.properties")))
+
+apply plugin: 'com.neenbedankt.android-apt'
+def dbflow_version = "4.1.2"
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
@@ -8,7 +22,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -20,9 +34,30 @@ android {
             abiFilters "armeabi-v7a"
         }
     }
+    signingConfigs {
+        release {
+            storeFile file(props['KEYSTORE_FILE'])      //签名文件
+            keyAlias props['KEY_ALIAS']
+            storePassword props['KEYSTORE_PASSWORD']
+            keyPassword props['KEY_PASSWORD']  //签名密码
+        }
+        debug {
+            storeFile file(props['DEBUG_KEYSTORE'])      //签名文件
+            keyAlias props['DEBUG_ALIAS']
+            storePassword props['DEBUG_KEYSTORE_PWD']
+            keyPassword props['DEBUG_KEY_PWD']  //签名密码
+        }
+    }
     buildTypes {
+        debug {
+            ext.alwaysUpdateBuildId = false
+            minifyEnabled false
+            ext.enableCrashlytics = true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
+            ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,6 +66,7 @@ android {
             path "CMakeLists.txt"
         }
     }
+
 }
 
 dependencies {
@@ -40,4 +76,40 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:design:25.4.0'
+    compile 'com.android.support.constraint:constraint-layout:1.1.0'
+    compile files('libs/zxing.jar')
+    compile 'com.leon:lfilepickerlibrary:1.8.0'
+    apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    // sql-cipher database encyrption (optional)
+    compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
+        transitive = true;
+    }
+    compile('com.crashlytics.sdk.android:crashlytics-ndk:2.0.4@aar') {
+        transitive = true;
+    }
+    compile files('libs/jsoup-1.11.3.jar')
+    compile files('libs/jsoup-1.11.3-javadoc.jar')
+    compile project(':rvhelperlibrary')
+
+    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+
+    compile 'com.alibaba:fastjson:1.2.8'
+
+}
+
+crashlytics {
+    enableNdk true
+    androidNdkOut 'build/intermediates/cmake/release/obj'
+    androidNdkLibsOut 'build/intermediates/bundles/default/jni'
 }

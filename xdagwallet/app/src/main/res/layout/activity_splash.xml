@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xdag.wallet.ui.activity.SplashActivity">
+
+    <ImageView
+        android:id="@+id/iv_splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/loading"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_create_wallet" />
+
+
+
+    <TextView
+        android:id="@+id/tv_load_wallet"
+        android:layout_width="144dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/common_btn_blue_bg"
+        android:text="@string/load_wallet"
+        android:gravity="center"
+        android:textColor="@color/color_white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.45"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_create_wallet"
+        android:layout_width="144dp"
+        android:layout_height="40dp"
+        android:background="@drawable/common_btn_blue_bg"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/create_wallet"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@color/color_white"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_load_wallet"
+        android:layout_marginBottom="30dp"
+        tools:ignore="MissingConstraints" />
+</android.support.constraint.ConstraintLayout>
