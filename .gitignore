@@ -4,3 +4,5 @@ xdagwallet/\.idea/
 *.apk
 
 *.jks
+xdagwallet/app/fabric.properties
+xdagwallet/app/signing.properties
