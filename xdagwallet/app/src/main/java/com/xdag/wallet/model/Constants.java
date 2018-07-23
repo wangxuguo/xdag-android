@@ -28,5 +28,12 @@ public class Constants {
     public static final String XDAG_EVENT_TYPE = "xdag_event_type";
     public static final String XDAG_TRANSACTION_MODEL = "xdag_transaction_model";
 
+    public static final String CLINET_ACCEPT = "application/vnd.ywl.v1+json";
+
     public static String DefaultPoolAddress = "xdagmine.com:13654";
+
+
+    public static String XDAG_NET = "xdag_sp_net";
+    public static String XDAG_EXPLORER_BASEURL = "xdag_sp_net";
+    public static String DefaultExplorerAddress = "https://explorer.xdag.io";
 }

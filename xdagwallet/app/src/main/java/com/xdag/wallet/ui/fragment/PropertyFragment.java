@@ -18,12 +18,14 @@ import android.widget.TextView;
 import com.xdag.wallet.AuthDialogFragment;
 import com.xdag.wallet.R;
 import com.xdag.wallet.XdagEvent;
+import com.xdag.wallet.XdagService;
 import com.xdag.wallet.XdagWrapper;
 import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.model.XdagState;
 import com.xdag.wallet.ui.activity.MineAddressQRActivity;
 import com.xdag.wallet.ui.activity.MipcaActivityCapture;
 import com.xdag.wallet.ui.activity.SendCoinActivity;
+import com.xdag.wallet.ui.activity.XdagMainActivity;
 import com.xdag.wallet.ui.widget.XdagProgressDialog;
 import com.xdag.wallet.utils.XdagUtils;
 
@@ -90,7 +92,16 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
         initViews();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        XdagService service = ((XdagMainActivity) getActivity()).getService();
+        if (service != null) {
+            double amount = service.getBalance();
+            account.setText(amount + "");
+            xdagAccount.setText(amount + "");
+        }
+    }
 
     private void initViews() {
         title.setText(getString(R.string.tab_main_property));

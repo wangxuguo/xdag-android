@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">XdagWallet</string>
     <string name="title_activity_xdag_main">XdagMainActivity</string>
-    <string name="tab_main_property">Property</string>
+    <string name="tab_main_property">Assets</string>
     <string name="tab_main_contracts">Contracts</string>
     <string name="tab_main_settings">Mine</string>
     <string name="action_settings">Settings</string>

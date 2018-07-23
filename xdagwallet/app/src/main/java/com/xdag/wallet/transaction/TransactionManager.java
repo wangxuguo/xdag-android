@@ -9,6 +9,7 @@ import android.util.Log;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 import com.xdag.wallet.model.XdagTransactionModel;
+import com.xdag.wallet.net.XdagNetManager;
 import com.xdag.wallet.utils.DateTimeUtils;
 
 import org.jsoup.Jsoup;
@@ -39,7 +40,7 @@ public class TransactionManager {
     private final HandlerThread handerThread;
     private final Handler handler;
     private final ModelAdapter<XdagTransactionModel> modelAdapter;
-    private String baseUrl = "https://explorer.xdag.io";
+    private String baseUrl = XdagNetManager.getBaseUrl();
     private static final String TAG = "Transactions";
     private String address;
     private OnNewRecordAddListener onNewRecordAddListener;

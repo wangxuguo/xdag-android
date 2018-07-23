@@ -1,36 +1,33 @@
 package com.xdag.wallet.ui.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xdag.wallet.R;
 import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.model.XdagContactsModel;
-
+import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 /**
  * Created by wangxuguo on 2018/6/14.
  */
 
-public class ContactsAdapter extends BaseRecyclerViewAdapter<XdagContactsModel> {
+public class ContactsAdapter extends BaseQuickAdapter<XdagContactsModel,BaseViewHolder> {
 
 
-    public ContactsAdapter(Context context) {
-        super(context);
+    public ContactsAdapter(int layoutResId, @Nullable List<XdagContactsModel> data) {
+        super(layoutResId, data);
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.item_contracts;
-    }
-
-    @Override
-    protected void onBindViewHolder(BaseViewHolder holder, XdagContactsModel data, int position) {
+    protected void convert(BaseViewHolder helper, XdagContactsModel data) {
         Log.d(Constants.TAG,"onBindViewHolder  "+data.toString());
-        holder.setTextView(R.id.tv_name, data.getName());
-        holder.setTextView(R.id.tv_address, data.getAddress());
+        helper.setText(R.id.tv_name, data.getName());
+        helper.setText(R.id.tv_address, data.getAddress());
     }
+
 }

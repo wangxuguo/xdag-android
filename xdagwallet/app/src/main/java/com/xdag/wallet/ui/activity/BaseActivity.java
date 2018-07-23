@@ -4,18 +4,26 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 
+import com.xdag.wallet.model.Constants;
 import com.xdag.wallet.ui.widget.MyAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by wangxuguo on 2018/6/8.
@@ -27,6 +35,22 @@ public class BaseActivity extends AppCompatActivity {
     private boolean isPaused;
     private boolean mIsJump2Settings;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        changeAppLanguage();
+    }
+
+    private void changeAppLanguage() {
+        Locale locale = Locale.getDefault();
+        String sta = getSharedPreferences(Constants.SPSetting,MODE_PRIVATE).getString(Constants.LANGUAGE,locale.getLanguage());
+        Locale myLocale = new Locale(sta);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+    }
 
     @Override
     protected void onResume() {

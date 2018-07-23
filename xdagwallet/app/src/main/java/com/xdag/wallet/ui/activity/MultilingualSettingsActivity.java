@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xdag.wallet.R;
 import com.xdag.wallet.XdagApplication;
 import com.xdag.wallet.model.Constants;
@@ -51,9 +52,9 @@ public class MultilingualSettingsActivity extends BaseActivity implements View.O
         list = new ArrayList<>();
         list.add(getString(R.string.app_default));
         list.add(getString(R.string.app_zh_CN));
-        list.add(getString(R.string.app_zh_TW));
+//        list.add(getString(R.string.app_zh_TW));
         list.add(getString(R.string.app_en));
-        adapter = new MultilingualAdapter(this, list);
+        adapter = new MultilingualAdapter(R.layout.item_multi_language, list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
@@ -61,23 +62,21 @@ public class MultilingualSettingsActivity extends BaseActivity implements View.O
         int selectedIndex  = 0;
         if (str != null && str.equals(Locale.SIMPLIFIED_CHINESE.getLanguage())) {
             selectedIndex = 1;
-        } else if (str != null && str.equals(Locale.TRADITIONAL_CHINESE.getLanguage())) {
-            selectedIndex = 2;
+//        } else if (str != null && str.equals(Locale.TRADITIONAL_CHINESE.getLanguage())) {
+//            selectedIndex = 2;
         } else if (str != null && str.equals(Locale.ENGLISH.getLanguage())) {
-            selectedIndex = 3;
+            selectedIndex = 2;
         } else {
             selectedIndex = 0;
         }
         adapter.setSeleceted(selectedIndex);
-
         adapter.notifyDataSetChanged();
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<String>() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, String data) {
-                adapter.setSeleceted(list.indexOf(data));
+            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+                adapter.setSeleceted(position);
             }
         });
-
     }
 
     private void findViews() {
@@ -99,10 +98,10 @@ public class MultilingualSettingsActivity extends BaseActivity implements View.O
                     case 1:
                         str = Locale.SIMPLIFIED_CHINESE.getLanguage();
                         break;
+//                    case 2:
+//                        str = Locale.TRADITIONAL_CHINESE.getLanguage();
+//                        break;
                     case 2:
-                        str = Locale.TRADITIONAL_CHINESE.getLanguage();
-                        break;
-                    case 3:
                         str = Locale.ENGLISH.getLanguage();
                         break;
                     case 0:
@@ -113,12 +112,9 @@ public class MultilingualSettingsActivity extends BaseActivity implements View.O
                 getSharedPreferences(Constants.SPSetting,MODE_PRIVATE).edit().putString(Constants.LANGUAGE,str).apply();
                 XdagApplication application = (XdagApplication) getApplication();
                 application.initMutilLilingual();
-                Intent intent = new Intent(this, XdagMainActivity.class);
+                Intent intent = new Intent(this, SplashActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                // 杀掉进程
-//              android.os.Process.killProcess(android.os.Process.myPid());
-//              System.exit(0);
                 finish();
                 break;
         }

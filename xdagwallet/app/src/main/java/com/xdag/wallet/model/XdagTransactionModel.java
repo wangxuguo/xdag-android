@@ -37,7 +37,7 @@ public class XdagTransactionModel  extends BaseModel implements Serializable{
     @PrimaryKey(autoincrement = true)//ID自增
     public long id;
     @Column
-    private int page;  //与page 公用
+    private int page;  //与page 公用   -2 接口获取
     public XdagTransactionModel() {
     }
 
@@ -144,6 +144,41 @@ public class XdagTransactionModel  extends BaseModel implements Serializable{
         this.time = time;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        XdagTransactionModel model = (XdagTransactionModel) o;
+
+        if (Double.compare(model.amount, amount) != 0) return false;
+        if (Double.compare(model.fee, fee) != 0) return false;
+        if (time != model.time) return false;
+        if (address != null ? !address.equals(model.address) : model.address != null) return false;
+        if (mine != null ? !mine.equals(model.mine) : model.mine != null) return false;
+        if (method != null ? !method.equals(model.method) : model.method != null) return false;
+        if (hash != null ? !hash.equals(model.hash) : model.hash != null) return false;
+        if (block != null ? !block.equals(model.block) : model.block != null) return false;
+        return UTCTime.equals(model.UTCTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(amount);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (mine != null ? mine.hashCode() : 0);
+        result = 31 * result + (method != null ? method.hashCode() : 0);
+        temp = Double.doubleToLongBits(fee);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (hash != null ? hash.hashCode() : 0);
+        result = 31 * result + (block != null ? block.hashCode() : 0);
+        result = 31 * result + UTCTime.hashCode();
+        result = 31 * result + (int) (time ^ (time >>> 32));
+        return result;
+    }
 
     @Override
     public String toString() {

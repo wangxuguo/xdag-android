@@ -1,7 +1,5 @@
 package com.xdag.wallet.ui.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -10,24 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xdag.wallet.R;
-import com.xdag.wallet.XdagApplication;
 import com.xdag.wallet.model.Constants;
-import com.xdag.wallet.ui.adapter.BaseRecyclerViewAdapter;
 import com.xdag.wallet.ui.adapter.MultilingualAdapter;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.nio.Buffer;
 import java.util.ArrayList;
+
+import static com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener;
 
 /**
  * Created by wangxuguo on 2018/6/21.
@@ -63,7 +58,7 @@ public class XdagPoolSettingActivity extends BaseActivity implements View.OnClic
         } catch (IOException e) {
             e.printStackTrace();
         }
-        adapter = new MultilingualAdapter(this, list);
+        adapter = new MultilingualAdapter(R.layout.item_multi_language, list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
@@ -77,10 +72,10 @@ public class XdagPoolSettingActivity extends BaseActivity implements View.OnClic
        }
         adapter.setSeleceted(selectedIndex);
         adapter.notifyDataSetChanged();
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<String>() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(View view, String data) {
-                adapter.setSeleceted(list.indexOf(data));
+            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
+                adapter.setSeleceted(position);
             }
         });
     }
