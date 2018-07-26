@@ -30,12 +30,11 @@
                 <ImageView
                     android:id="@+id/iv_title_left"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="16dp"
                     android:layout_gravity="center_vertical|left"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/common_margin"
-                    android:paddingRight="@dimen/common_margin"
+                    android:padding="@dimen/common_margin"
                     android:src="@drawable/ic_back" />
 
                 <TextView

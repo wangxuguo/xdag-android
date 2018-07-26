@@ -240,9 +240,9 @@ public class SplashActivity extends BaseActivity {
             permissionLists.add(Manifest.permission.INTERNET);
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            permissionLists.add(Manifest.permission.CAMERA);
-        }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//            permissionLists.add(Manifest.permission.CAMERA);
+//        }
 //        checkPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.INTERNET,Manifest.permission.CAMERA});
         if (!permissionLists.isEmpty()) {//说明肯定有拒绝的权限
             ActivityCompat.requestPermissions(this, permissionLists.toArray(new String[permissionLists.size()]), PERMISSION_REQUESTCODE);

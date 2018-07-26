@@ -54,7 +54,7 @@ public class XdagPoolSettingActivity extends BaseActivity implements View.OnClic
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             do {
                 list.add(bufferedReader.readLine());
-            } while (bufferedReader.read() != -1);
+            } while (bufferedReader.ready()); //!= -1
         } catch (IOException e) {
             e.printStackTrace();
         }
