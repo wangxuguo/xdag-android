@@ -3,16 +3,16 @@
     <string name="title_activity_xdag_main">XdagMainActivity</string>
     <string name="tab_main_property">Assets</string>
     <string name="tab_main_contracts">Contracts</string>
-    <string name="tab_main_settings">Mine</string>
+    <string name="tab_main_settings">Profile</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="multi_language">Multi-language</string>
-    <string name="message_center">Message Center</string>
+    <string name="multi_language">Language</string>
+    <string name="message_center">Notification Center</string>
     <string name="currency_unit">Currency Unit</string>
     <string name="help_center">Help Center</string>
     <string name="about_us">About</string>
-    <string name="personal_center">Personal Center</string>
-    <string name="connect_to_pool">Connect to the pool...</string>
+    <string name="personal_center">My Account</string>
+    <string name="connect_to_pool">Connecting to The Main Network</string>
     <string name="total_assets">Total Assets</string>
     <string name="currency_symbol">$</string>
     <string name="wallet_management">Wallet Management</string>
@@ -20,15 +20,15 @@
     <string name="scan">Scan</string>
     <string name="receive_coin">Receive</string>
     <string name="send_coin">Send</string>
-    <string name="receiver_address">Receiver Address</string>
+    <string name="receiver_address">Receiver\'s Address</string>
     <string name="transfer_amount">Transfer Amount</string>
     <string name="note">Note</string>
     <string name="next">Next</string>
-    <string name="mine_xdag_address">XDAG Address</string>
-    <string name="copy_address">copy address</string>
-    <string name="confirm_pwd">Confirm Pwd</string>
-    <string name="wallet_pwd">Wallet PWD</string>
-    <string name="enter_pwd">Enter you pwd</string>
+    <string name="mine_xdag_address">Receiving Address</string>
+    <string name="copy_address">Copy Wallet Address</string>
+    <string name="confirm_pwd">Confirm Password</string>
+    <string name="wallet_pwd">Wallet Password</string>
+    <string name="enter_pwd">Enter Wallet Password</string>
     <string name="make_sure">OK</string>
     <string name="cancel">Cancel</string>
     <string name="xdag_sending">XDAG sending·····</string>
@@ -39,94 +39,99 @@
     <string name="send_address">Send Address</string>
     <string name="amount">Amount</string>
     <string name="xdag">XDAG</string>
-    <string name="finish">finish</string>
-    <string name="enter_name">enter name</string>
+    <string name="finish">Finish</string>
+    <string name="enter_name">Enter Name</string>
     <string name="enter_address">enter address</string>
-    <string name="name_is_empty" >name is empty</string>
-    <string name="address_is_empty" >address is empty</string>
+    <string name="name_is_empty" >Please Enter Name</string>
+    <string name="address_is_empty" >Please Enter Address</string>
     <string name="create_wallet" >Create Wallet</string>
     <string name="load_wallet" >Load Wallet</string>
     <string name="loading_wallet" >Loading Wallet...</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
 
-    <string name="app_default">系统默认</string>
-    <string name="app_zh_CN">简体中文</string>
-    <string name="app_zh_TW">繁體中文</string>
-    <string name="app_en">English</string>
-    <string name="app_th">ภาษาไทย</string>
-    <string name="app_id">Bahasa Indonesia</string>
-    <string name="app_vi">Tiếng Việt</string>
-    <string name="app_pt">Português</string>
-    <string name="app_es">Español</string>
-    <string name="app_ru">Русский</string>
-    <string name="app_ar">العربية</string>
-    <string name="app_he">‏עברית</string>
-    <string name="app_pl">Polski</string>
-    <string name="app_hi">हिन्दी</string>
-    <string name="app_ja">日本語</string>
-    <string name="app_it">Italiano</string>
-    <string name="app_ko">한국어</string>
+    <string name="app_default" translatable="false">系统默认</string>
+    <string name="app_zh_CN" translatable="false">简体中文</string>
+    <string name="app_zh_TW" translatable="false">繁體中文</string>
+    <string name="app_en" translatable="false">English</string>
+    <string name="app_th" translatable="false">ภาษาไทย</string>
+    <string name="app_id" translatable="false">Bahasa Indonesia</string>
+    <string name="app_vi" translatable="false">Tiếng Việt</string>
+    <string name="app_pt" translatable="false">Português</string>
+    <string name="app_es" translatable="false">Español</string>
+    <string name="app_ru" translatable="false">Русский</string>
+    <string name="app_ar" translatable="false">العربية</string>
+    <string name="app_he" translatable="false">‏עברית</string>
+    <string name="app_pl" translatable="false">Polski</string>
+    <string name="app_hi" translatable="false">हिन्दी</string>
+    <string name="app_ja" translatable="false">日本語</string>
+    <string name="app_it" translatable="false">Italiano</string>
+    <string name="app_ko" translatable="false">한국어</string>
 
 
 
     <string name="use_agreement">Use Agreement</string>
-    <string name="version_log">Version Log</string>
+    <string name="version_log">Release Notes</string>
     <string name="check_update">Check Update</string>
-    <string name="xdag_pool_setting">xdag_pool_setting</string>
-    <string name="current_version">current_version: %s</string>
+    <string name="xdag_pool_setting">Pool Settings</string>
+    <string name="current_version">Current Version：%s</string>
     <string name="wallet_name">Wallet Name</string>
     <string name="pwd">Password</string>
-    <string name="re_pwd">Retpye Password</string>
+    <string name="re_pwd">Confirm Password</string>
     <string name="keyword">Keyword</string>
     <string name="service_srivacy">I have carefully read and agree to <font color="#3E76EA"> the terms of service and privacy</font></string>
     <string name="dag_link_info">dagLink is a mobile light wallet app developed by members of the XDAG World Foundation. It is designed to provide users with secure, easy-to-use digital asset wallets.</string>
     <string name="wallet_notice">The password is used to protect the private key and the transaction authorization dagLink does not store the password and wallet file, nor can it be retrieved by you. Please be sure to remember and back it up.
 </string>
-    <string name="pwd_not_same">pwd not same</string>
-    <string name="change_pwd">change_pwd</string>
-    <string name="delete_wallet">delete wallet</string>
-    <string name="backup_wallet">backup wallet</string>
-    <string name="set_default_wallet">set_default_wallet</string>
-    <string name="backup_file">backup_file</string>
-    <string name="choose_file">choose file</string>
-    <string name="backup_file_not_selected">File not selected</string>
-    <string name="choose_wallet_file">choose_wallet_file</string>
+    <string name="pwd_not_same">Pasword Not Match</string>
+    <string name="change_pwd">Change Password</string>
+    <string name="delete_wallet">Delete Wallet</string>
+    <string name="backup_wallet">Backup Wallet</string>
+    <string name="set_default_wallet">Set Default Wallet</string>
+    <string name="backup_file">Backup File</string>
+    <string name="choose_file">Choose File</string>
+    <string name="backup_file_not_selected">File Not Selected</string>
+    <string name="choose_wallet_file">Choose Wallet File</string>
     <string name="copyed">Copied</string>
-    <string name="wallet_connecting_to_pool">connecting ...</string>
-    <string name="set_password">set password</string>
-    <string name="input_password">input password</string>
-    <string name="retype_password">retype password</string>
-    <string name="set_random_keys">set random keys</string>
+    <string name="wallet_connecting_to_pool">Connecting...</string>
+    <string name="set_password">Set Password</string>
+    <string name="input_password">Enter Password</string>
+    <string name="retype_password">Confirm Password</string>
+    <string name="set_random_keys">Enter Random Keys</string>
     <string name="creating_wallet">Creating Wallet</string>
     <string name="loading_wallet_tips">Need to connect to the main network data, normally takes 2-5 minutes</string>
-    <string name="creating_wallet_tips">You need to connect to the main network data. Normally, it takes 2 to 5 minutes. Please wait patiently. After the creation is completed, pay attention to timely backup.</string>
-    <string name="please_grant_permission">please_grant_permission</string>
-    <string name="load_wallet_error">Load Wallet Error</string>
-    <string name="load_wallet_error_re_select">Load Wallet Error,Please reselect the wallet.dat and the dnet_key.dat file. </string>
-    <string name="please_check_wallet_file">please check wallet file</string>
-    <string name="xfer_accout_cannot_zero">xfer accout cannot be zero</string>
-    <string name="please_check_xfer_accout">please check xfe accout legal</string>
-    <string name="xdag_xfer_error">xdag_xfer_error</string>
+    <string name="creating_wallet_tips">Connecting to the main Network and creating new wallet. It usually takes about 2-5 minutes so please be patient. It\'s strongly reeommended to backup wallet after created.</string>
+    <string name="please_grant_permission">Please Grant Permission</string>
+    <string name="load_wallet_error">Fail Loading Wallet</string>
+    <string name="load_wallet_error_re_select">Fail Loading Wallet File, Please Make Sure \"wallet.dat\" and \"dnet_key.dat\" are Selected.</string>
+    <string name="please_check_wallet_file">Please Check Wallet File</string>
+    <string name="xfer_accout_cannot_zero">Transfer Amount Cannot be Zero</string>
+    <string name="please_check_xfer_accout">Please Check Transfer Amount</string>
+    <string name="xdag_xfer_error">Transfer Failed</string>
 
     <!-- Notification -->
-    <string name="xdag_is_running">xdag is running</string>
-    <string name="transfer_success">transfer success</string>
-    <string name="default_wallet_name">default_wallet</string>
-    <string name="pay_attention_can_not_revert">Pay Attention,This Can Not Revert!</string>
+    <string name="xdag_is_running">XDAG is Running</string>
+    <string name="transfer_success">Transfer Success</string>
+    <string name="default_wallet_name">Default Wallet</string>
+    <string name="pay_attention_can_not_revert">Attention This Operation Cannot be Revoked</string>
 
-    <string name="state">status</string>
-    <string name="sender">Sender</string>
-    <string name="receiver">Receiver</string>
+    <string name="state">Status</string>
+    <string name="sender">Pay by</string>
+    <string name="receiver">Pay to</string>
     <string name="fee">Fee</string>
     <string name="hash">Hash</string>
     <string name="transaction_time">Transcation Time</string>
     <string name="success">Success</string>
 
-    <string name="loading_transaction_record">loading transaction record...</string>
-    <string name="get_transaction_record">get transaction record...</string>
+    <string name="loading_transaction_record">Loading Transaction Record...</string>
+    <string name="get_transaction_record">Downloading Transaction Record...</string>
     <string name="loading_more">Loading more...</string>
-    <string name="load_no_more">Load no more</string>
+    <string name="load_no_more">No More</string>
 
-    <string name="choose_backup_file_path_error">Choose Backup Wallet File Path Error,Please Retry!</string>
+    <string name="choose_backup_file_path_error">Invalid File Path, Please Retry</string>
     <string name="backup_success">Backup Success</string>
+    <string name="delete_success">Delete Success</string>
+    <string name="wallet_file_exit">Existing Backup File</string>
+    <string name="alert_wallet_file_exit">ATTENTION: Existing backup file, continue will override the original file</string>
+    <string name="cover_exist_wallet">Override </string>
+    <string name="delete_exist_wallet_fail_backup_error">Failed to Override Existing File, Backup Failed</string>
 </resources>

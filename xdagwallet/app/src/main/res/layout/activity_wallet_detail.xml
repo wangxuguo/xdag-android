@@ -143,7 +143,7 @@
         android:layout_width="match_parent"
         android:background="#5B605F"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginBottom="40dp"
         android:layout_height="40dp" />
     <TextView

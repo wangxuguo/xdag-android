@@ -19,6 +19,7 @@ public class FileUtils {
     public static final String WALLET_FILE = "/sdcard/xdag/wallet.dat";
     public static final String WALLET_NAME = "wallet.dat";
     public static final String DNET_KEY_FILE = "/sdcard/xdag/dnet_key.dat";
+    public static final String STORAGE_FILEDIR = "/sdcard/xdag/storage";
     public static final String DNET_KEY_NAME = "dnet_key.dat";
     public static final String XDAG_DATA_PATH = "xdag_data";
     public static final String XDAG_BACKUP_PATH = "xdag_backup";
@@ -86,5 +87,32 @@ public class FileUtils {
         }
 
         return -1;
+    }
+
+    public static int deleteFile(String filepath){
+        File file = new File(filepath);
+        if(file.exists()&&file.isFile()){
+            boolean isDeleted = file.delete();
+            if(isDeleted){
+                return 1;
+            }else {
+                return -1;
+            }
+        }
+        return 0;
+    }
+    public static int deleteFiles(String path){
+        File file = new File(path);
+        if(file.exists()&&file.isDirectory()){
+            File[] files = file.listFiles();
+            for (File f:files){
+                deleteFiles(f.getAbsolutePath());
+            }
+        }else if(file.exists()&&file.isFile()){
+            deleteFile(file.getAbsolutePath());
+        }else {
+
+        }
+        return 0;
     }
 }

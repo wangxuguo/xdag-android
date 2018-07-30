@@ -142,9 +142,38 @@ public class WalletDetailActivity extends XdagBaseActivity implements View.OnCli
                         } else {
                             filePath = file.getParentFile().getAbsolutePath();
                         }
-                        FileUtils.copyFile(FileUtils.WALLET_FILE, filePath + File.separator + FileUtils.WALLET_NAME);
-                        FileUtils.copyFile(FileUtils.DNET_KEY_FILE, filePath + File.separator + FileUtils.DNET_KEY_NAME);
-                        ToastUtil.showShort(this, getString(R.string.backup_success));
+                        final File walletFile = new File(filePath + File.separator + FileUtils.WALLET_NAME);
+                        final File dnetkeyFile = new File(filePath + File.separator + FileUtils.DNET_KEY_NAME);
+                        if(walletFile.exists()&&walletFile.isFile()){
+                            MyAlertDialog.Builder builder = new MyAlertDialog.Builder(this);
+                            final String finalFilePath = filePath;
+                            builder.setTitle(getString(R.string.wallet_file_exit))
+                                    .setMessage(R.string.alert_wallet_file_exit)
+                                    .setNegativeButton(R.string.cover_exist_wallet, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            if(walletFile.delete()&&dnetkeyFile.delete()){
+                                                FileUtils.copyFile(FileUtils.WALLET_FILE, finalFilePath + File.separator + FileUtils.WALLET_NAME);
+                                                FileUtils.copyFile(FileUtils.DNET_KEY_FILE, finalFilePath + File.separator + FileUtils.DNET_KEY_NAME);
+                                                ToastUtil.showShort(WalletDetailActivity.this, getString(R.string.backup_success));
+                                            }else {
+                                                ToastUtil.showShort(WalletDetailActivity.this,getString(R.string.delete_exist_wallet_fail_backup_error));
+                                            }
+                                        }
+                                    }).setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            MyAlertDialog myAlertDialog = builder.create();
+                            myAlertDialog.show();
+                        }else {
+                            FileUtils.copyFile(FileUtils.WALLET_FILE, filePath + File.separator + FileUtils.WALLET_NAME);
+                            FileUtils.copyFile(FileUtils.DNET_KEY_FILE, filePath + File.separator + FileUtils.DNET_KEY_NAME);
+                            ToastUtil.showShort(this, getString(R.string.backup_success));
+                        }
                     }
 //                    } else {
 //                        ToastUtil.showShort(this, getString(R.string.load_wallet_error_re_select));
@@ -169,7 +198,7 @@ public class WalletDetailActivity extends XdagBaseActivity implements View.OnCli
             case R.id.tv_delete_wallet:
 
                 MyAlertDialog.Builder builder = new MyAlertDialog.Builder(this);
-                builder.setTitle(getString(R.string.input_password));
+                builder.setTitle(getString(R.string.delete_wallet));
                 builder.setMessage(getString(R.string.pay_attention_can_not_revert));
                 View view = LayoutInflater.from(this).inflate(R.layout.layout_delete_wallet, null);
                 TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
@@ -179,16 +208,21 @@ public class WalletDetailActivity extends XdagBaseActivity implements View.OnCli
                 builder.setNegativeButton(R.string.make_sure, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String pwd = etInputPwd.getText().toString();
-
+                        FileUtils.deleteFile(FileUtils.WALLET_FILE);
+                        FileUtils.deleteFile(FileUtils.DNET_KEY_FILE);
+                        FileUtils.deleteFiles(FileUtils.STORAGE_FILEDIR);
+                        ToastUtil.showShort(WalletDetailActivity.this, getString(R.string.delete_success));
+                        dialog.dismiss();
                     }
                 }).setNegativeTextColor(getResources().getColor(R.color.text_blue_bg))
                         .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                dialog.dismiss();
                             }
                         }).setPositiveTextColor(getResources().getColor(R.color.text_blue_bg));
+                MyAlertDialog myAlertDialog = builder.create();
+                myAlertDialog.show();
                 break;
             case R.id.tv_backup_wallet:
                 String backFilePath = FileUtils.rootPath + File.separator + FileUtils.XDAG_BACKUP_PATH;//+"/"+FileUtils.WALLET_NAME;
@@ -203,20 +237,18 @@ public class WalletDetailActivity extends XdagBaseActivity implements View.OnCli
                         FileUtils.copyFile(FileUtils.WALLET_FILE, targetFile.getAbsolutePath() + File.separator + FileUtils.WALLET_NAME);
                         FileUtils.copyFile(FileUtils.DNET_KEY_FILE, targetFile.getAbsolutePath() + File.separator + FileUtils.DNET_KEY_NAME);
                     }
-                } else { //已经备份？
+                } else { //已经备份
 
                 }
                 new LFilePicker()
                         .withActivity(WalletDetailActivity.this)
                         .withRequestCode(REQUESTCODE_FROM_ACTIVITY)
                         .withStartPath(FileUtils.rootPath)
-//                        .withIsGreater(false)
+                        .withBackgroundColor("#506BFD")
                         .withTitle(getString(R.string.choose_wallet_file))//标题文字
-//                        .withTitleColor("#FF99CC")//文字颜色
-//                        .withMutilyMode(false)
+                        .withTitleColor("#FFFFFF")//文字颜色
                         .withChooseMode(false)
                         .withIconStyle(Constant.ICON_STYLE_BLUE)
-//                        .withFileSize(500 * 1024)
                         .start();
                 break;
             case R.id.tv_set_default_wallet:

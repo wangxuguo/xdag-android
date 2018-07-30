@@ -1,5 +1,6 @@
 package com.xdag.wallet.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.xdag.wallet.model.XdagState;
 import com.xdag.wallet.model.XdagWalletModel;
 import com.xdag.wallet.ui.widget.XdagProgressDialog;
 import com.xdag.wallet.utils.FileUtils;
+import com.xdag.wallet.utils.PermissionUtils;
 import com.xdag.wallet.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,6 +77,7 @@ public class LoadWalletActivity extends XdagBaseActivity {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         setContentView(R.layout.activity_load_wallet);
+        checkPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
         findViews();
         initViews();
     }

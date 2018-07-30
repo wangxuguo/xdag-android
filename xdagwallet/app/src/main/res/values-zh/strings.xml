@@ -42,8 +42,8 @@
     <string name="finish">完成</string>
     <string name="enter_address">数字资产地址</string>
     <string name="enter_name">请输入名称</string>
-    <string name="name_is_empty" >empty</string>
-    <string name="address_is_empty">empty</string>
+    <string name="name_is_empty" >名字不可以为空</string>
+    <string name="address_is_empty">地址不可以为空</string>
     <string name="create_wallet" >创建钱包</string>
     <string name="load_wallet" >导入钱包</string>
     <string name="save">保存</string>
@@ -58,7 +58,7 @@
     <string name="keyword" >关键词</string>
     <string name="service_srivacy" >我已经仔细阅读并同意<font color='#3E76EA'>服务及隐私条款</font></string>
     <string name="dag_link_info">dagLink 是一款移动端轻钱包App，它是由XDAG世界基金会成员开发，旨在为用户提供安全放心、简单好用的数字资产钱包。</string>
-    <string name="wallet_notice">密码用于保护私钥和交易授权dagLink 不存储密码和钱包文件，也无法帮您找回，请务必牢记和备份，密码无法修改，请谨慎操作，妥善保存</string>
+    <string name="wallet_notice">密码用于保护私钥和交易授权。每次连接矿池和转帐都需要输入密码。密码不可以更改。dagLink 不存储密码和钱包文件，也无法帮您找回，请务必牢记和备份，密码无法修改，请谨慎操作，妥善保存</string>
     <string name="pwd_not_same">两次输入的密码不同</string>
     <string name="change_pwd">修改密码</string>
     <string name="backup_wallet">备份钱包</string>
@@ -77,7 +77,7 @@
     <string name="set_random_keys">甚至随机数</string>
     <string name="creating_wallet">钱包创建中···</string>
     <string name="creating_wallet_tips">需要连接主网络数据，正常需要2-5分钟请耐心等待，创建完成后，请注意及时备份！</string>
-    <string name="please_grant_permission">please_grant_permission</string>
+    <string name="please_grant_permission">请给app授予运行所需的权限</string>
     <string name="loading_wallet">钱包导入中···</string>
     <string name="loading_wallet_tips">需要连接主网络数据，正常需要2-5分钟</string>
     <string name="load_wallet_error">导入钱包出错</string>
@@ -92,7 +92,7 @@
     <string name="xdag_is_running">xdag 正在运行</string>
     <string name="transfer_success">转账成功</string>
     <string name="default_wallet_name">默认钱包</string>
-    <string name="pay_attention_can_not_revert">Pay Attention,This Can Not Revert!</string>
+    <string name="pay_attention_can_not_revert">请注意，无法撤销该操作！</string>
     <string name="state">状态</string>
     <string name="sender">发送方</string>
     <string name="receiver">接收方</string>
@@ -108,4 +108,9 @@
 
     <string name="choose_backup_file_path_error">选择备份钱包文件夹失败，请重新选择!</string>
     <string name="backup_success">备份成功！</string>
+    <string name="delete_success">删除成功！</string>
+    <string name="wallet_file_exit">备份文件已经存在</string>
+    <string name="alert_wallet_file_exit">备份文件已经存在，此操作会删除原文件夹中的文件</string>
+    <string name="cover_exist_wallet">覆盖原有文件</string>
+    <string name="delete_exist_wallet_fail_backup_error">删除原有文件失败，备份失败</string>
 </resources>
